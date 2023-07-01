@@ -33,7 +33,7 @@ class CustomTextField: UITextField {
         
         // Set background color and corner radius
         self.backgroundColor = .white
-        self.layer.cornerRadius = 29
+        self.layer.cornerRadius = 15
         
         // Set shadow
         self.layer.shadowColor = UIColor(red: 112/255, green: 144/255, blue: 176/255, alpha: 0.2).cgColor

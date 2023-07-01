@@ -33,7 +33,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="73" y="4"/>
+            <point key="canvasLocation" x="170" y="15"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="mPX-g5-ND3">
@@ -61,6 +61,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaz-ro-t1j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="958" y="15"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="ZEx-tQ-v5w">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="ljn-f4-f1S" customClass="RegisterViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KK6-zJ-9Ug">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FG5-V8-h2K">
+                                <rect key="frame" x="165" y="136" width="63" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="duH-VC-cgV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FG5-V8-h2K" firstAttribute="centerX" secondItem="KK6-zJ-9Ug" secondAttribute="centerX" id="QuN-ce-wuU"/>
+                            <constraint firstItem="FG5-V8-h2K" firstAttribute="top" secondItem="duH-VC-cgV" secondAttribute="top" constant="77" id="aDF-jo-oTh"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4se-ft-Src" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1772" y="15"/>
         </scene>
     </scenes>
     <resources>

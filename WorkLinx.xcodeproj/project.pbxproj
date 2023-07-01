@@ -9,21 +9,33 @@
 /* Begin PBXBuildFile section */
 		C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */; };
 		C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */; };
-		C77BE0002A4AA1F0007A8D06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFF2A4AA1F0007A8D06 /* ViewController.swift */; };
+		C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */; };
 		C77BE0032A4AA1F0007A8D06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C77BE0012A4AA1F0007A8D06 /* Main.storyboard */; };
 		C77BE0052A4AA1F5007A8D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C77BE0042A4AA1F5007A8D06 /* Assets.xcassets */; };
 		C77BE0082A4AA1F5007A8D06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C77BE0062A4AA1F5007A8D06 /* LaunchScreen.storyboard */; };
+		C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE0112A4AB216007A8D06 /* CustomTextField.swift */; };
+		C77BE0152A4AB2B6007A8D06 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */; };
+		C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */; };
+		C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */; };
+		C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */; };
+		C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C77BDFF82A4AA1F0007A8D06 /* WorkLinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkLinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C77BDFFF2A4AA1F0007A8D06 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		C77BE0022A4AA1F0007A8D06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C77BE0042A4AA1F5007A8D06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C77BE0072A4AA1F5007A8D06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C77BE0092A4AA1F5007A8D06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C77BE0112A4AB216007A8D06 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInForm.swift; sourceTree = "<group>"; };
+		C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
+		C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +68,45 @@
 		C77BDFFA2A4AA1F0007A8D06 /* WorkLinx */ = {
 			isa = PBXGroup;
 			children = (
+				C77BE0132A4AB222007A8D06 /* Components */,
+				C77BE0102A4AAF94007A8D06 /* ViewControllers */,
+				C77BE00F2A4AAF4A007A8D06 /* UI */,
 				C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */,
 				C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */,
-				C77BDFFF2A4AA1F0007A8D06 /* ViewController.swift */,
-				C77BE0012A4AA1F0007A8D06 /* Main.storyboard */,
 				C77BE0042A4AA1F5007A8D06 /* Assets.xcassets */,
 				C77BE0062A4AA1F5007A8D06 /* LaunchScreen.storyboard */,
 				C77BE0092A4AA1F5007A8D06 /* Info.plist */,
 			);
 			path = WorkLinx;
+			sourceTree = "<group>";
+		};
+		C77BE00F2A4AAF4A007A8D06 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C77BE0012A4AA1F0007A8D06 /* Main.storyboard */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C77BE0102A4AAF94007A8D06 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
+				C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */,
+				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C77BE0132A4AB222007A8D06 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
+				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
+				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
+				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +180,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C77BE0002A4AA1F0007A8D06 /* ViewController.swift in Sources */,
+				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
+				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
+				C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */,
+				C77BE0152A4AB2B6007A8D06 /* AuthViewController.swift in Sources */,
 				C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */,
+				C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
+				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
+				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
