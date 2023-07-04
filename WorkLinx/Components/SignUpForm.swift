@@ -48,29 +48,16 @@ class SignUpForm {
     }
     
     @objc private func continueButtonTapped() {
+        // validate email and password
         // continue if email is unique and password match
         if passwordTextField.text == confirmPasswordTextField.text {
-            print("Email: \(emailTextField.text ?? "")")
-            print("Password: \(passwordTextField.text ?? "")")
+            Utils.emailAddress = emailTextField.text!
+            Utils.password = passwordTextField.text!
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let registerViewController = storyboard.instantiateViewController(withIdentifier: "RegisterViewController") as? RegisterViewController else {
-                fatalError("Unable to instantiate RegisterViewController from storyboard")
-            }
-            registerViewController.modalPresentationStyle = .fullScreen
-
-            // Pass data to RegisterViewController
-            registerViewController.emailAddress = emailTextField.text!
-            registerViewController.password = passwordTextField.text!
-
-            // Customize the transition animation
-            let transition = CATransition()
-            transition.duration = 0.2
-            transition.type = .fade
-            transition.subtype = .fromBottom
-            viewController.view.window?.layer.add(transition, forKey: kCATransition)
-
-            viewController.present(registerViewController, animated: false, completion: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterView")
+            
+            Utils.navigate(vc, viewController)
 
         } else {
             print("Password not matching")

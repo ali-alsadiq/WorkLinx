@@ -19,6 +19,11 @@
 		C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */; };
 		C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */; };
 		C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */; };
+		C7E050672A53F3F80026971C /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E050662A53F3F80026971C /* CustomNavigationBar.swift */; };
+		C7E050692A53F4120026971C /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E050682A53F4120026971C /* BackButton.swift */; };
+		C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */; };
+		C7E0506D2A5410030026971C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506C2A5410030026971C /* Utils.swift */; };
+		C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
 		C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		C7E050662A53F3F80026971C /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
+		C7E050682A53F4120026971C /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmployeeViewController.swift; sourceTree = "<group>"; };
+		C7E0506C2A5410030026971C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmployerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +78,7 @@
 		C77BDFFA2A4AA1F0007A8D06 /* WorkLinx */ = {
 			isa = PBXGroup;
 			children = (
+				C7E0506C2A5410030026971C /* Utils.swift */,
 				C77BE0132A4AB222007A8D06 /* Components */,
 				C77BE0102A4AAF94007A8D06 /* ViewControllers */,
 				C77BE00F2A4AAF4A007A8D06 /* UI */,
@@ -94,6 +105,8 @@
 				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
 				C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */,
 				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
+				C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */,
+				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -104,7 +117,9 @@
 				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
 				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
 				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
+				C7E050662A53F3F80026971C /* CustomNavigationBar.swift */,
 				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
+				C7E050682A53F4120026971C /* BackButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -182,13 +197,18 @@
 			files = (
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
+				C7E050692A53F4120026971C /* BackButton.swift in Sources */,
 				C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */,
 				C77BE0152A4AB2B6007A8D06 /* AuthViewController.swift in Sources */,
+				C7E0506D2A5410030026971C /* Utils.swift in Sources */,
+				C7E050672A53F3F80026971C /* CustomNavigationBar.swift in Sources */,
 				C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */,
 				C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
+				C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */,
+				C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,7 +44,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WorkLinx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9O3-4V-JAD">
-                                <rect key="frame" x="161" y="130" width="71" height="21"/>
+                                <rect key="frame" x="161" y="174" width="71" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -57,22 +57,64 @@
                             <constraint firstItem="9O3-4V-JAD" firstAttribute="centerX" secondItem="OQl-16-str" secondAttribute="centerX" id="ryo-6g-0ON"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="2Tw-FB-Vem"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aaz-ro-t1j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="958" y="15"/>
+            <point key="canvasLocation" x="1883.206106870229" y="14.788732394366198"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="ZEx-tQ-v5w">
             <objects>
-                <viewController storyboardIdentifier="RegisterViewController" id="ljn-f4-f1S" customClass="RegisterViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterView" id="ljn-f4-f1S" customClass="RegisterViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KK6-zJ-9Ug">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FG5-V8-h2K">
-                                <rect key="frame" x="165" y="136" width="63" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WorkLinx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FG5-V8-h2K">
+                                <rect key="frame" x="161" y="136" width="71" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBx-em-yTw">
+                                <rect key="frame" x="36.666666666666657" y="306" width="320" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="Ngw-Vh-Hxy"/>
+                                    <constraint firstAttribute="width" constant="320" id="gCV-gi-egC"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.34509803919999998" green="0.81176470590000005" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="employeeBttnTapped:" destination="ljn-f4-f1S" eventType="touchUpInside" id="wns-Yw-1IF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hb8-Lo-Ku0">
+                                <rect key="frame" x="36.666666666666657" y="462" width="320" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="M78-VC-Bbd"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="hLU-I0-oAS"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.34509803919999998" green="0.81176470590000005" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="employerBttnTapped" destination="ljn-f4-f1S" eventType="touchUpInside" id="WtW-v5-8Iu"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to WorkLinx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAP-Am-jIc">
+                                <rect key="frame" x="80.666666666666671" y="210" width="231.66666666666663" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="91n-qf-s6S"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -80,14 +122,91 @@
                         <viewLayoutGuide key="safeArea" id="duH-VC-cgV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Hb8-Lo-Ku0" firstAttribute="centerX" secondItem="KK6-zJ-9Ug" secondAttribute="centerX" id="36M-Xo-5eJ"/>
+                            <constraint firstItem="duH-VC-cgV" firstAttribute="bottom" secondItem="Hb8-Lo-Ku0" secondAttribute="bottom" constant="236" id="6zY-pH-WrO"/>
+                            <constraint firstItem="Hb8-Lo-Ku0" firstAttribute="top" secondItem="WBx-em-yTw" secondAttribute="bottom" constant="36" id="Gro-g3-pp1"/>
+                            <constraint firstItem="WBx-em-yTw" firstAttribute="centerX" secondItem="KK6-zJ-9Ug" secondAttribute="centerX" id="H3R-Ok-A5v"/>
+                            <constraint firstItem="VAP-Am-jIc" firstAttribute="top" secondItem="FG5-V8-h2K" secondAttribute="bottom" constant="53" id="HiM-Yz-HeF"/>
                             <constraint firstItem="FG5-V8-h2K" firstAttribute="centerX" secondItem="KK6-zJ-9Ug" secondAttribute="centerX" id="QuN-ce-wuU"/>
+                            <constraint firstItem="VAP-Am-jIc" firstAttribute="centerX" secondItem="KK6-zJ-9Ug" secondAttribute="centerX" id="T6v-uk-q40"/>
                             <constraint firstItem="FG5-V8-h2K" firstAttribute="top" secondItem="duH-VC-cgV" secondAttribute="top" constant="77" id="aDF-jo-oTh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="employeeBttn" destination="WBx-em-yTw" id="vLV-Tt-H48"/>
+                        <outlet property="employerBttn" destination="Hb8-Lo-Ku0" id="bU1-XS-b6z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4se-ft-Src" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1772" y="15"/>
+            <point key="canvasLocation" x="2698.4732824427479" y="14.788732394366198"/>
+        </scene>
+        <!--Register Employer View Controller-->
+        <scene sceneID="1qp-Sm-34n">
+            <objects>
+                <viewController storyboardIdentifier="RegisterEmployerView" id="v5g-G4-4mW" customClass="RegisterEmployerViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bzf-ez-PbU">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Employer Register" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kZ-qN-SYd">
+                                <rect key="frame" x="127" y="134" width="139" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mTS-6Y-YzO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VIu-AY-mQ9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3443.5114503816794" y="439.43661971830988"/>
+        </scene>
+        <!--Register Employee View Controller-->
+        <scene sceneID="vL0-6L-emt">
+            <objects>
+                <viewController storyboardIdentifier="RegisterEmployeeView" id="K6g-pY-4W5" customClass="RegisterEmployeeViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="baf-Dp-cRG">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Employee signup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39W-GL-K2e">
+                                <rect key="frame" x="131" y="109" width="130" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="icD-o2-I0a"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="oFO-e8-IbL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OcE-zG-4ts" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3458.7786259541981" y="-229.57746478873241"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6Cp-wg-hdP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hcc-JH-h6v" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oxk-Am-2v7">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NQM-hk-Ukw" kind="relationship" relationship="rootViewController" id="YaA-B3-SW3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CKi-QR-4H2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="956.48854961832058" y="14.788732394366198"/>
         </scene>
     </scenes>
     <resources>
