@@ -22,7 +22,6 @@ class RegisterViewController: UIViewController {
         Utils.navigate(vc, self)
     }
     
-    
     @IBAction func employerBttnTapped() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "RegisterEmployerView")
@@ -61,8 +60,6 @@ class RegisterViewController: UIViewController {
         
         employerBttn.setAttributedTitle(employerAttributedText, for: .normal)
         employerBttn.titleLabel?.numberOfLines = 0
-        
-        
     }
     
     @objc func goBack() {
