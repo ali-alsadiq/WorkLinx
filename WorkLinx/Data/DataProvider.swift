@@ -32,8 +32,8 @@ class DataProvider {
                           workSpacesAndPayRate: [(workspace1, 50)],
                           defaltWorkspace: workspace1)
         
-        workspace1.admins?.append(admin1)
-        workspace1.employees?.append(employee1)
+        workspace1.admins.append(admin1)
+        workspace1.employees.append(employee1)
         
         // Second workspace
         workspace2 = Workspace(name: "Workspace2",
@@ -51,8 +51,8 @@ class DataProvider {
                           workSpacesAndPayRate: [(workspace2, 55)],
                           defaltWorkspace: workspace2)
         
-        workspace2.admins?.append(admin2)
-        workspace2.employees?.append(employee2)
+        workspace2.admins.append(admin2)
+        workspace2.employees.append(employee2)
         
         // Add to static vars
         workSpaces.append(workspace1)

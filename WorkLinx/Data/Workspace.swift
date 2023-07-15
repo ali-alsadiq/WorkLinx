@@ -10,8 +10,8 @@ import Foundation
 struct Workspace {
     var name: String
     var address: String
-    var admins: [User]?
-    var employees: [User]?
+    var admins: [User] = []
+    var employees: [User] = []
     var openShifts: [Shift]?
     var shiftRequest: [Shift]?
     var timeOffRequests: [TimeOff]?

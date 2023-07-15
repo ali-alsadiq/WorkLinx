@@ -1,91 +1,67 @@
 import UIKit
 
 class RegisterEmployeeViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        checkWorkInvitation()
     }
     
-    func checkWorkInvitation() {
-        // Check if the employee has any work invitations
-        let hasInvitations = checkIfEmployeeHasInvitations()
-        
-        if hasInvitations {
+    override func viewDidAppear(_ animated: Bool) {
+        if isInvited() {
             // Employee has invitations
-            showInvitationOptions()
+            showDashboardView()
         } else {
             // Employee doesn't have any invitations
-            showNoInvitationsMessage()
+            showNoWorkInvitationAlert()
         }
     }
     
-    func checkIfEmployeeHasInvitations() -> Bool {
-        // Logic to check if the employee has any work invitations
-        // You can fetch the invitations from your data source (e.g., database)
-        // and return true if there are invitations for the employee's email address,
-        // otherwise return false
-        
-        // Replace the below return statement with your implementation
-        
+    func isInvited() -> Bool {
+        for workspace in DataProvider.workSpaces {
+            for user in workspace.employees {
+                if user.emailAddress.lowercased() == Utils.user.emailAddress.lowercased() {
+                    Utils.user.defaltWorkspace = workspace
+                    print("\(workspace.name)")
+                    return true
+                }
+                
+            }
+        }
         return false
     }
     
-    func showInvitationOptions() {
-        // Present a view or alert allowing the employee to select and confirm
-        // or reject the work invitation(s)
-        // Implement the necessary UI and interaction logic
+    
+    func showNoWorkInvitationAlert() {
+        let title = "No Work Invitation"
+        let message = "You don't have any work invitations. Please create a workspace or contact your workspace admin to receive an invitation."
         
-        // Replace the below code with your implementation
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let alert = UIAlertController(title: "Work Invitation", message: "You have work invitation(s).", preferredStyle: .alert)
+        let createWorkspaceAction = UIAlertAction(title: "Create Workspace", style: .default) { (_) in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterEmployerView")
+            
+            Utils.navigate(vc, self)
+        }
         
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
-            // Handle invitation confirmation
-            self.showHomeView()
-        }))
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.showDashboardView()
+        }
         
-        alert.addAction(UIAlertAction(title: "Reject", style: .destructive, handler: { _ in
-            // Handle invitation rejection
-            self.showHomeView()
-        }))
+        alertController.addAction(createWorkspaceAction)
+        alertController.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        let alertControllerContainer = alertController.view.subviews.first?.subviews.first?.subviews.first
+        alertControllerContainer?.backgroundColor = .white
+        
+        present(alertController, animated: true, completion: nil)
     }
     
-    func showNoInvitationsMessage() {
-        // Show a message indicating that there are no work invitations for the employee
-        // Implement the necessary UI and display the message
-        
-        // Replace the below code with your implementation
-        
-        let noInvitationsLabel = UILabel()
-        noInvitationsLabel.text = "No work invitations under this email."
-        noInvitationsLabel.textAlignment = .center
-        noInvitationsLabel.numberOfLines = 0
-        
-        view.addSubview(noInvitationsLabel)
-        
-        // Add constraints to position the label
-        noInvitationsLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            noInvitationsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            noInvitationsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        // Optionally, you can add additional styling to the label as per your app's design
-    }
     
-    func showHomeView() {
-        // Present the home view to the employee
-        // Implement the necessary logic to navigate to the home view
-        
-        // Replace the below code with your implementation
-        
+    func showDashboardView() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+        let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
         
-        navigationController?.setViewControllers([homeViewController], animated: true)
+        Utils.navigate(vc, self)
     }
 }
