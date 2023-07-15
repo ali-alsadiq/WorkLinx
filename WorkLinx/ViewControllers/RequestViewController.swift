@@ -14,6 +14,6 @@ class RequestViewController: MenuBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Dashboard")
+        print("Request")
     }
 }

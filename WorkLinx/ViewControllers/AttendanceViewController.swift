@@ -14,6 +14,6 @@ class AttendanceViewController: MenuBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Dashboard")
+        print("Attendance")
     }
 }

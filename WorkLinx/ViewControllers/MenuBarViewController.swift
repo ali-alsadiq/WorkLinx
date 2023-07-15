@@ -15,14 +15,16 @@ enum UserRole {
 class MenuBarViewController: UIViewController {
     // Change this to .employee if it's an employee page
     public var userRole: UserRole {
-            return .admin
+            return .employee
     }
+    
+    var stackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Create the stack view
-        let stackView = UIStackView()
+        stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 0
@@ -37,6 +39,7 @@ class MenuBarViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 50) // Adjust height as needed
+            
         ])
         
         // Create and add the buttons from stack view
