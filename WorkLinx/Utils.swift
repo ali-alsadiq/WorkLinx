@@ -8,63 +8,94 @@
 import Foundation
 import UIKit
 
-struct Cell
+struct CellMore
 {
     var icon: String
     var text: String
     var isExtendable: Bool
 }
 
+struct CellDashboard
+{
+    var number: Int
+    var text: String
+}
+
 class Utils{
     static var emailAddress = ""
     static var password = ""
     
-    static func getTableData(isManger: Bool) -> [(String, [Cell])]
+    static func getDashboardTableData(isManger: Bool) -> [(String, [CellDashboard])]
     {
-        var CallDataArray: [(String, [Cell])] = []
+        var CallDataArray: [(String, [CellDashboard])] = []
+        var requestsSection: [CellDashboard] = []
+        var scheduleSection: [CellDashboard] = []
         
-        // Get the user and check if is manger
-        var isManger: Bool = isManger
+        // Workspace data
+        requestsSection.append(CellDashboard(number: 0, text: "Time Off Requests"))
+        requestsSection.append(CellDashboard(number: 0, text: "Shift Requests"))
+        requestsSection.append(CellDashboard(number: 0, text: "OpenShift Requests"))
         
-        var userSection: [Cell] = []
-        var workspaceSection: [Cell] = []
-        var mangerSection: [Cell] = []
+        // User data
+        scheduleSection.append(CellDashboard(number: 0, text: "My Shifts"))
+        
+        if !isManger {
+            // User Requests
+            scheduleSection.append(CellDashboard(number: 0, text: "Time Off Requests"))
+            scheduleSection.append(CellDashboard(number: 0, text: "Shift Requests"))
+        }
+        
+        scheduleSection.append(CellDashboard(number: 0, text: "OpenShift Available"))
+        
+        if isManger {  CallDataArray.append(("Requests Needing Approval", requestsSection)) }
+        CallDataArray.append(("My Schedule", scheduleSection))
+        
+        return CallDataArray
+    }
+    
+    static func getMoreTableData(isManger: Bool) -> [(String, [CellMore])]
+    {
+        var CallDataArray: [(String, [CellMore])] = []
+        
+        var userSection: [CellMore] = []
+        var workspaceSection: [CellMore] = []
+        var mangerSection: [CellMore] = []
         
         // User section
-        userSection.append(Cell(icon : "person.circle", text: "Profile Settings", isExtendable: true))
-        userSection.append(Cell(icon : "bell", text: "Alert Prefrences", isExtendable: true))
-        userSection.append(Cell(icon : "calendar", text: "Calendeat Sync", isExtendable: false))
-        userSection.append(Cell(icon : "checkmark.circle", text: "Availabilty", isExtendable: true))
-        userSection.append(Cell(icon : "list.clipboard", text: "My Hours", isExtendable: true))
-        userSection.append(Cell(icon : "switch.2", text: "Switch Workplaces", isExtendable: true))
-        userSection.append(Cell(icon : "power", text: "Log Out", isExtendable: false))
+        userSection.append(CellMore(icon : "person.circle", text: "Profile Settings", isExtendable: true))
+        userSection.append(CellMore(icon : "bell", text: "Alert Prefrences", isExtendable: true))
+        userSection.append(CellMore(icon : "calendar", text: "Calendeat Sync", isExtendable: false))
+        userSection.append(CellMore(icon : "checkmark.circle", text: "Availabilty", isExtendable: true))
+        userSection.append(CellMore(icon : "list.clipboard", text: "My Hours", isExtendable: true))
+        userSection.append(CellMore(icon : "switch.2", text: "Switch Workplaces", isExtendable: true))
+        userSection.append(CellMore(icon : "power", text: "Log Out", isExtendable: false))
         if !isManger
         {
-            userSection.append(Cell(icon : "trash", text: "Delete Profile", isExtendable: false))
+            userSection.append(CellMore(icon : "trash", text: "Delete Profile", isExtendable: false))
         }
 
         // Workspace section
-        workspaceSection.append(Cell (icon : "doc.plaintext", text: "Documents", isExtendable: true))
-        workspaceSection.append(Cell (icon : "envelope", text: "Send Message", isExtendable: false))
+        workspaceSection.append(CellMore (icon : "doc.plaintext", text: "Documents", isExtendable: true))
+        workspaceSection.append(CellMore (icon : "envelope", text: "Send Message", isExtendable: false))
         if isManger
         {
-            workspaceSection.append(Cell (icon : "person", text: "Users", isExtendable: true))
-            workspaceSection.append(Cell (icon : "person.text.rectangle", text: "Positions", isExtendable: true))
-            workspaceSection.append(Cell (icon : "tag", text: "Tags", isExtendable: true))
-            workspaceSection.append(Cell (icon : "location.north.circle", text: "Job Sites", isExtendable: true))
-            workspaceSection.append(Cell (icon : "checklist", text: "Task Lists", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "person", text: "Users", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "person.text.rectangle", text: "Positions", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "tag", text: "Tags", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "location.north.circle", text: "Job Sites", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "checklist", text: "Task Lists", isExtendable: true))
         }
         else
         {
-            workspaceSection.append(Cell (icon : "person.3", text: "Coworkers", isExtendable: true))
+            workspaceSection.append(CellMore (icon : "person.3", text: "Coworkers", isExtendable: true))
         }
         
         // Manger section
         if isManger
         {
-            mangerSection.append(Cell (icon : "antenna.radiowaves.left.and.right", text: "Publish & Notify", isExtendable: false))
-            mangerSection.append(Cell (icon : "pin", text: "Add Annotation", isExtendable: true))
-            mangerSection.append(Cell (icon : "person.badge.plus", text: "Import Users From Contacts", isExtendable: false))
+            mangerSection.append(CellMore (icon : "antenna.radiowaves.left.and.right", text: "Publish & Notify", isExtendable: false))
+            mangerSection.append(CellMore (icon : "pin", text: "Add Annotation", isExtendable: true))
+            mangerSection.append(CellMore (icon : "person.badge.plus", text: "Import Users From Contacts", isExtendable: false))
         }
        
         // Replace with actual username and workspace name

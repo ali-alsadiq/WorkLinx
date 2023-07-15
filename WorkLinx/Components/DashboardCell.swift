@@ -1,23 +1,37 @@
 //
-//  MoreCell.swift
+//  DashboardCell.swift
 //  WorkLinx
 //
-//  Created by Ali Alsadiq on 2023-07-14.
+//  Created by Ali Alsadiq on 2023-07-15.
 //
 
 import Foundation
 import UIKit
 
-class MoreCell: UITableViewCell {
+class DashboardCell: UITableViewCell {
     
-    lazy var cellIcon: UIImageView = {
-        let iv = UIImageView()
-        iv.translatesAutoresizingMaskIntoConstraints=false
-        iv.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        iv.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        iv.layer.cornerRadius = 35
-        return iv
+    lazy var cellNumber: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textAlignment = .center
+        label.textColor = .darkGray
+        
+        let diameter: CGFloat = 40
+        
+        label.layer.borderWidth = 2
+        label.layer.borderColor = UIColor.lightGray.cgColor
+        label.layer.cornerRadius = diameter / 2
+        label.clipsToBounds = true
+        
+        NSLayoutConstraint.activate([
+            label.widthAnchor.constraint(equalToConstant: diameter),
+            label.heightAnchor.constraint(equalToConstant: diameter)
+        ])
+        
+        return label
     }()
+
     
     lazy var cellText: UILabel = {
         let label = UILabel()
@@ -29,8 +43,8 @@ class MoreCell: UITableViewCell {
     lazy var extendIcon: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints=false
-        iv.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        iv.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        iv.widthAnchor.constraint(equalToConstant: 25).isActive = true
         iv.layer.cornerRadius = 30
         return iv
     }()
@@ -40,7 +54,7 @@ class MoreCell: UITableViewCell {
         stack.axis = .horizontal
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 10
-        stack.addArrangedSubview(cellIcon)
+        stack.addArrangedSubview(cellNumber)
         stack.addArrangedSubview(cellText)
         
         let spacer = UIView()
@@ -51,7 +65,7 @@ class MoreCell: UITableViewCell {
         stack.alignment = .leading
         stack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stack.alignment = .center
-        
+
         return stack
     }()
     
@@ -72,17 +86,19 @@ class MoreCell: UITableViewCell {
         cellStack.translatesAutoresizingMaskIntoConstraints = false
         let padding: CGFloat = 10
         
+        // Set constraints to center the stack view vertically within the cell
         NSLayoutConstraint.activate([
             cellStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             cellStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             cellStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
         ])
+        
     }
     
-    func updateView(icon: UIImage?, text: String, arrow: UIImage?) {
-        cellIcon.image = icon
+    func updateView(number: Int, text: String) {
+        cellNumber.text = String(number)
         cellText.text = text
-        extendIcon.image = arrow
+        extendIcon.image = UIImage(systemName: "chevron.right")
     }
     
 }

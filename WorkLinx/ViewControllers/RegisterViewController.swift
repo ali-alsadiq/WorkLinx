@@ -34,7 +34,7 @@ class RegisterViewController: UIViewController {
         print(emailAddress, password)
         
         // Add nav bar with back button
-        let navigationBar = CustomNavigationBar(title: "")
+        let navigationBar = CustomNavigationBar(title: "Register")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
         
         navigationBar.items?.first?.leftBarButtonItem = backButton

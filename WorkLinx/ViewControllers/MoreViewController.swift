@@ -13,12 +13,11 @@ class MoreViewController : MenuBarViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getTableData(isManger: true)
+    let data = Utils.getMoreTableData(isManger: true)
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationItem.title = "More"
-        
     }
     
     override func viewDidLoad() {
@@ -50,18 +49,17 @@ class MoreViewController : MenuBarViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    
 }
 
 extension MoreViewController: UITableViewDelegate{
-    
+    // Change to go to the next view for each row using cellData.text
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sectionData = data[indexPath.section]
         let cellData = sectionData.1[indexPath.row]
         print("Selected cell text: \(cellData.text)")
     }
 }
+
 extension MoreViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -92,7 +90,6 @@ extension MoreViewController: UITableViewDataSource{
         )
         
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -20,20 +20,20 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         
         let logoImageView = UIImageView(image: UIImage(named: "LogoBlack"))
-            logoImageView.contentMode = .scaleAspectFit
-            
-            // Set the frame for the logo image view
-            let logoWidth: CGFloat = 100.0
-            let logoHeight: CGFloat = 40.0
-            let logoFrame = CGRect(x: 0, y: 0, width: logoWidth, height: logoHeight)
-            logoImageView.frame = logoFrame
-            
-            // Create a container view to hold the logo image view
-            let logoContainerView = UIView(frame: logoFrame)
-            logoContainerView.addSubview(logoImageView)
-            
-            // Set the container view as the title view of the navigation bar
-            navigationItem.titleView = logoContainerView
+        logoImageView.contentMode = .scaleAspectFit
+        
+        // Set the frame for the logo image view
+        let logoWidth: CGFloat = 100.0
+        let logoHeight: CGFloat = 40.0
+        let logoFrame = CGRect(x: 0, y: 0, width: logoWidth, height: logoHeight)
+        logoImageView.frame = logoFrame
+        
+        // Create a container view to hold the logo image view
+        let logoContainerView = UIView(frame: logoFrame)
+        logoContainerView.addSubview(logoImageView)
+        
+        // Set the container view as the title view of the navigation bar
+        navigationItem.titleView = logoContainerView
         
         // Create Sign In and Sign Up Buttons
         signInButton = createButton(title: "Sign In", action: #selector(buttonTapped(_:)))
