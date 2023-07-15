@@ -54,12 +54,14 @@ class RegisterViewController: UIViewController {
         
         employeeBttn.setAttributedTitle(employeeAttributedText, for: .normal)
         employeeBttn.titleLabel?.numberOfLines = 0
+
         
         let employerAttributedText = NSMutableAttributedString(string: "I’m setting up my business\n\nI want to create a workplace, set a schedule and invite employees.")
         employerAttributedText.addAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)], range: NSRange(location: 0, length: 26))
         
         employerBttn.setAttributedTitle(employerAttributedText, for: .normal)
         employerBttn.titleLabel?.numberOfLines = 0
+
     }
     
     @objc func goBack() {
