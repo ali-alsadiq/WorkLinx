@@ -51,7 +51,7 @@ class AuthViewController: UIViewController {
         
         // Create Auth forms
         signInForm = SignInForm(viewController: self)
-        signUpForm = SignUpForm(viewController: self)
+        signUpForm = SignUpForm(viewController: self, signInform: signInForm)
         
         formStackView = UIStackView(arrangedSubviews: [signInForm.view, signUpForm.view])
         formStackView.axis = .vertical
