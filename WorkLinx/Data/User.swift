@@ -12,8 +12,8 @@ struct User {
     var password: String
     var firstName: String?
     var lastName: String?
-    var workSpacesAndPayRate: [(Workspace, Int)]
-    var defaltWorkspace: Workspace
+    var workSpacesAndPayRate: [(Workspace, Int)]?
+    var defaltWorkspace: Workspace?
     var position: String?
     var availabilty: [Shift]?
     var timeOffRequests: [TimeOff]?

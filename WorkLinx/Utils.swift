@@ -22,6 +22,7 @@ struct CellDashboard
 }
 
 class Utils{
+    static var user = User(emailAddress: "", password: "")
     static var emailAddress = ""
     static var password = ""
     

@@ -11,12 +11,11 @@ class DashboardViewController: MenuBarViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getDashboardTableData(isManger: true)
+    let data = Utils.getDashboardTableData(isManger: false)
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationItem.title = "WorkLinx"
-        
     }
     
     override func viewDidLoad() {

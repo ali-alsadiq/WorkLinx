@@ -15,7 +15,7 @@ enum UserRole {
 class MenuBarViewController: UIViewController {
     // Change this to .employee if it's an employee page
     public var userRole: UserRole {
-            return .employee
+            return .admin
     }
     
     var stackView: UIStackView!

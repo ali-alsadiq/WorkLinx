@@ -50,7 +50,7 @@ class AuthViewController: UIViewController {
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         
         // Create Auth forms
-        signInForm = SignInForm()
+        signInForm = SignInForm(viewController: self)
         signUpForm = SignUpForm(viewController: self)
         
         formStackView = UIStackView(arrangedSubviews: [signInForm.view, signUpForm.view])
