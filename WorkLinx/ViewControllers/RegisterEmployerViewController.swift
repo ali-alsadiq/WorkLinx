@@ -66,12 +66,55 @@ class RegisterEmployerViewController: UIViewController {
     }
     
     @objc func createBttnTapped() {
-        // Code to be executed when the button is tapped
-        print("Create Button tapped!")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
+        // Check if the text fields are not empty
+        guard let companyName = texboxComopanyName.text, !companyName.isEmpty,
+              let address = textBoxAddress.text, !address.isEmpty else {
+            // Show alert for empty fields
+            showEmptyFieldsAlert()
+            return
+        }
         
-        Utils.navigate(vc, self)
+        // Check if the workspace name is unique
+        if isWorkspaceNameUnique(companyName) {
+            // Create the workspace
+            let newWorkspace = Workspace(name: companyName, address: address, admins: [], employees: [])
+            DataProvider.workSpaces.append(newWorkspace)
+            
+            // Navigate to the dashboard view
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
+            Utils.navigate(vc, self)
+        } else {
+            // Show alert for non-unique workspace name
+            showNonUniqueNameAlert()
+        }
+    }
+
+    func isWorkspaceNameUnique(_ name: String) -> Bool {
+        // Check if there is any workspace with the same name
+        return !DataProvider.workSpaces.contains { $0.name == name }
+    }
+
+    func showEmptyFieldsAlert() {
+        let alertController = UIAlertController(title: "Empty Fields",
+                                                message: "Please enter a name and address for the workspace.",
+                                                preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func showNonUniqueNameAlert() {
+        let alertController = UIAlertController(title: "Workspace Name must be unique",
+                                                message: "A workspace with the same name already exists. Please enter a unique name.",
+                                                preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @objc func goBack() {

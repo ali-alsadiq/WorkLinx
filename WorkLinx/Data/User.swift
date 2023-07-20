@@ -18,5 +18,4 @@ struct User {
     var availabilty: [Shift]?
     var timeOffRequests: [TimeOff]?
     var shifts: [Shift]?
-    
 }

@@ -63,7 +63,6 @@ class SignUpForm {
             Utils.user = User(emailAddress: emailTextField.text!.lowercased(),
                               password: passwordTextField.text!)
            
-            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "RegisterView")
             
