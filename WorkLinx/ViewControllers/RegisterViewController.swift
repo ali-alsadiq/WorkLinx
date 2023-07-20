@@ -8,8 +8,6 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
-    public var emailAddress: String = ""
-    public var password: String = ""
     
     @IBOutlet weak var employeeBttn: UIButton!
     @IBOutlet weak var employerBttn: UIButton!
@@ -31,7 +29,6 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(emailAddress, password)
         
         // Add nav bar with back button
         let navigationBar = CustomNavigationBar(title: "Register")

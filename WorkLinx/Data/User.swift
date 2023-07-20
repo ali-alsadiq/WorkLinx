@@ -7,15 +7,20 @@
 
 import Foundation
 
-struct User {
+class User {
     var emailAddress: String
     var password: String
     var firstName: String?
     var lastName: String?
-    var workSpacesAndPayRate: [(Workspace, Int)]?
-    var defaltWorkspace: Workspace?
+    var workSpacesAndPayRate: [(workspace: Workspace, payRate: Int)] = []
+    var defaultWorkspace: Workspace?
     var position: String?
-    var availabilty: [Shift]?
-    var timeOffRequests: [TimeOff]?
-    var shifts: [Shift]?
+    var availability: [Shift] = []
+    var timeOffRequests: [TimeOff] = []
+    var shifts: [Shift] = []
+    
+    init(emailAddress: String, password: String) {
+        self.emailAddress = emailAddress
+        self.password = password
+    }
 }

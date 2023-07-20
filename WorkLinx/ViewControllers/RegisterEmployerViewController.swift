@@ -77,7 +77,18 @@ class RegisterEmployerViewController: UIViewController {
         // Check if the workspace name is unique
         if isWorkspaceNameUnique(companyName) {
             // Create the workspace
-            let newWorkspace = Workspace(name: companyName, address: address, admins: [], employees: [])
+            let newWorkspace = Workspace(name: companyName, address: address)
+            
+            // Make it the default workspace for the user
+            Utils.user.defaultWorkspace = newWorkspace
+            
+            // Append the workspace and pay rate to the user's workSpacesAndPayRate
+            Utils.user.workSpacesAndPayRate.append((workspace: newWorkspace, payRate: 0))
+            
+            // Add the user to the employees and admins array of the new workspace
+            newWorkspace.admins.append(Utils.user)
+            newWorkspace.employees.append(Utils.user)
+            
             DataProvider.workSpaces.append(newWorkspace)
             
             // Navigate to the dashboard view
@@ -89,12 +100,12 @@ class RegisterEmployerViewController: UIViewController {
             showNonUniqueNameAlert()
         }
     }
-
+    
     func isWorkspaceNameUnique(_ name: String) -> Bool {
         // Check if there is any workspace with the same name
         return !DataProvider.workSpaces.contains { $0.name == name }
     }
-
+    
     func showEmptyFieldsAlert() {
         let alertController = UIAlertController(title: "Empty Fields",
                                                 message: "Please enter a name and address for the workspace.",
@@ -105,7 +116,7 @@ class RegisterEmployerViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-
+    
     func showNonUniqueNameAlert() {
         let alertController = UIAlertController(title: "Workspace Name must be unique",
                                                 message: "A workspace with the same name already exists. Please enter a unique name.",

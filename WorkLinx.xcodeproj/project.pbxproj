@@ -133,13 +133,13 @@
 				C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */,
 				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
 				C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */,
+				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
 				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
 				C7E0A2502A58824C00003473 /* MenuBarViewController.swift */,
-				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

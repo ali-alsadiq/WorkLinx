@@ -20,7 +20,7 @@ class RegisterEmployeeViewController: UIViewController {
         for workspace in DataProvider.workSpaces {
             for user in workspace.employees {
                 if user.emailAddress.lowercased() == Utils.user.emailAddress.lowercased() {
-                    Utils.user.defaltWorkspace = workspace
+                    Utils.user.defaultWorkspace = workspace
                     print("\(workspace.name)")
                     return true
                 }

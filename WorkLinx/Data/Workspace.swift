@@ -7,14 +7,17 @@
 
 import Foundation
 
-struct Workspace {
+class Workspace {
     var name: String
     var address: String
     var admins: [User] = []
     var employees: [User] = []
-    var openShifts: [Shift]?
-    var shiftRequest: [Shift]?
-    var timeOffRequests: [TimeOff]?
+    var openShifts: [Shift] = []
+    var shiftRequest: [Shift] = []
+    var timeOffRequests: [TimeOff] = []
+    
+    init(name: String, address: String) {
+        self.name = name
+        self.address = address
+    }
 }
-
-
