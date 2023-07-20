@@ -63,6 +63,7 @@ class SignInForm {
         } else if userExists && !validPassword {
             showWrongPasswordAlert()
         } else if let currentUser = DataProvider.users.first(where: { user in
+            // Login user
             return user.emailAddress.lowercased() == emailTextField.text?.lowercased()
                    && user.password == passwordTextField.text}) {
             
@@ -86,8 +87,14 @@ class SignInForm {
         
         let signUpAction = UIAlertAction(title: "Sign Up", style: .default) { (_) in
             // Handle Sign Up button action
-            print("Sign Up button tapped")
-            // Perform sign up logic here
+            // Create user
+            Utils.user = User(emailAddress: self.emailTextField.text!.lowercased(),
+                              password: self.passwordTextField.text!)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterView")
+            
+            Utils.navigate(vc, self.viewController)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
@@ -136,8 +143,6 @@ class SignInForm {
         print("Forgot Password button tapped")
         // Perform forgot password logic here
     }
-    
-    
     
     func show() {
         stackView.isHidden = false
