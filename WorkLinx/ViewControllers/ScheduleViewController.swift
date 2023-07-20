@@ -8,10 +8,6 @@
 import UIKit
 
 class ScheduleViewController: MenuBarViewController {
-    override var userRole: UserRole {
-            return .admin
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Schedule")

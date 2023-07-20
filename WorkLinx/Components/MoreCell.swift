@@ -16,6 +16,7 @@ class MoreCell: UITableViewCell {
         iv.heightAnchor.constraint(equalToConstant: 30).isActive = true
         iv.widthAnchor.constraint(equalToConstant: 30).isActive = true
         iv.layer.cornerRadius = 35
+        iv.contentMode = .scaleAspectFit
         return iv
     }()
     

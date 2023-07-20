@@ -8,10 +8,6 @@
 import UIKit
 
 class AttendanceViewController: MenuBarViewController {
-    override var userRole: UserRole {
-            return .admin
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Attendance")

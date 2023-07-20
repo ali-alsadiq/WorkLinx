@@ -92,9 +92,7 @@ class RegisterEmployerViewController: UIViewController {
             DataProvider.workSpaces.append(newWorkspace)
             
             // Navigate to the dashboard view
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
-            Utils.navigate(vc, self)
+            Utils.navigate("DashboardView", self)
         } else {
             // Show alert for non-unique workspace name
             showNonUniqueNameAlert()

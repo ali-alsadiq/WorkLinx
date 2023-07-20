@@ -10,10 +10,9 @@ import UIKit
 
 class MoreViewController : MenuBarViewController {
     
-    
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getMoreTableData(isManger: true)
+    let data = Utils.getMoreTableData()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -49,6 +48,44 @@ class MoreViewController : MenuBarViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
+    
+    func showLogoutAlert() {
+        let alertController = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        let logoutAction = UIAlertAction(title: "Log Out", style: .destructive) { (_) in
+            // Perform the logout action here
+            print("Logged out successfully!")
+            Utils.user = User(emailAddress: "", password: "")
+            
+            // Go back to splash screen
+            Utils.navigate("SplashView", self, transitionTime: 0.4)
+        }
+        alertController.addAction(logoutAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func showDeleteProfileAlert() {
+        let alertController = UIAlertController(title: "Delete Profile", message: "Are you sure you want to delete your profile?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (_) in
+            // Perform the delete profile action here
+            // Remove from workspaces and users array in DB
+            print("Profile deleted successfully!")
+            Utils.user = User(emailAddress: "", password: "")
+            
+            // Go back to splash screen
+            Utils.navigate("SplashView", self, transitionTime: 0.4)
+        }
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
 }
 
 extension MoreViewController: UITableViewDelegate{
@@ -56,9 +93,53 @@ extension MoreViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sectionData = data[indexPath.section]
         let cellData = sectionData.1[indexPath.row]
-        print("Selected cell text: \(cellData.text)")
+        
+        switch(cellData.text)
+        {
+            case "Profile Settings":
+                print(cellData.text)
+            case "Alert Prefrences":
+                print(cellData.text)
+            case "Calendar Sync":
+                print(cellData.text)
+            case "Availabilty":
+                print(cellData.text)
+            case "My Hours":
+                print(cellData.text)
+            case "Switch Workplaces":
+                print(cellData.text)
+            case "Log Out":
+                showLogoutAlert()
+            case "Delete Profile":
+                showDeleteProfileAlert()
+            case "Documents":
+                print(cellData.text)
+            case "Send Message":
+                print(cellData.text)
+            case "Users":
+                print(cellData.text)
+            case "Positions":
+                print(cellData.text)
+            case "Tags":
+                print(cellData.text)
+            case "Job Sites":
+                print(cellData.text)
+            case "Task Lists":
+                print(cellData.text)
+            case "Coworkers":
+                print(cellData.text)
+            case "Publish & Notify":
+                print(cellData.text)
+            case "Add Annotation":
+                print(cellData.text)
+            case "Import Users From Contacts":
+                print(cellData.text)
+            default:
+                print("Error Cell text not found: (\(cellData.text))")
+        }
     }
 }
+
 
 extension MoreViewController: UITableViewDataSource{
     

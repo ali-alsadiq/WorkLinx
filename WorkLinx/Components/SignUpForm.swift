@@ -62,11 +62,8 @@ class SignUpForm {
         else if passwordTextField.text?.lowercased() == confirmPasswordTextField.text?.lowercased() {
             Utils.user = User(emailAddress: emailTextField.text!.lowercased(),
                               password: passwordTextField.text!)
-           
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterView")
             
-            Utils.navigate(vc, viewController)
+            Utils.navigate("RegisterView", viewController)
 
         } else {
             showPasswordMismatchAlert()

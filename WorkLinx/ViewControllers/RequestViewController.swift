@@ -8,10 +8,6 @@
 import UIKit
 
 class RequestViewController: MenuBarViewController {
-    override var userRole: UserRole {
-            return .admin
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Request")

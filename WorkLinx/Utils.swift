@@ -23,6 +23,7 @@ struct CellDashboard
 
 class Utils{
     static var user = User(emailAddress: "", password: "")
+    static var isAdmin = Utils.user.defaultWorkspace!.admins.contains(where: { $0 === Utils.user })
     
     static func getDashboardTableData(isAdmin: Bool) -> [(String, [CellDashboard])]
     {
@@ -43,7 +44,6 @@ class Utils{
                                                      .count
         requestsSection.append(CellDashboard(number: shiftRequests, text: "Shift Requests"))
 
-        
         // User data
         let userShifts = user.shifts.filter { $0.workspace.name == user.defaultWorkspace?.name }.count
         scheduleSection.append(CellDashboard(number: userShifts, text: "My Shifts"))
@@ -66,23 +66,23 @@ class Utils{
         return CallDataArray
     }
     
-    static func getMoreTableData(isManger: Bool) -> [(String, [CellMore])]
+    static func getMoreTableData() -> [(String, [CellMore])]
     {
         var CallDataArray: [(String, [CellMore])] = []
         
         var userSection: [CellMore] = []
         var workspaceSection: [CellMore] = []
-        var mangerSection: [CellMore] = []
+        var adminSection: [CellMore] = []
         
         // User section
         userSection.append(CellMore(icon : "person.circle", text: "Profile Settings", isExtendable: true))
         userSection.append(CellMore(icon : "bell", text: "Alert Prefrences", isExtendable: true))
-        userSection.append(CellMore(icon : "calendar", text: "Calendeat Sync", isExtendable: false))
+        userSection.append(CellMore(icon : "calendar", text: "Calendar Sync", isExtendable: false))
         userSection.append(CellMore(icon : "checkmark.circle", text: "Availabilty", isExtendable: true))
         userSection.append(CellMore(icon : "list.clipboard", text: "My Hours", isExtendable: true))
         userSection.append(CellMore(icon : "switch.2", text: "Switch Workplaces", isExtendable: true))
         userSection.append(CellMore(icon : "power", text: "Log Out", isExtendable: false))
-        if !isManger
+        if !isAdmin
         {
             userSection.append(CellMore(icon : "trash", text: "Delete Profile", isExtendable: false))
         }
@@ -90,7 +90,7 @@ class Utils{
         // Workspace section
         workspaceSection.append(CellMore (icon : "doc.plaintext", text: "Documents", isExtendable: true))
         workspaceSection.append(CellMore (icon : "envelope", text: "Send Message", isExtendable: false))
-        if isManger
+        if isAdmin
         {
             workspaceSection.append(CellMore (icon : "person", text: "Users", isExtendable: true))
             workspaceSection.append(CellMore (icon : "person.text.rectangle", text: "Positions", isExtendable: true))
@@ -103,28 +103,30 @@ class Utils{
             workspaceSection.append(CellMore (icon : "person.3", text: "Coworkers", isExtendable: true))
         }
         
-        // Manger section
-        if isManger
+        // Admin section
+        if isAdmin
         {
-            mangerSection.append(CellMore (icon : "antenna.radiowaves.left.and.right", text: "Publish & Notify", isExtendable: false))
-            mangerSection.append(CellMore (icon : "pin", text: "Add Annotation", isExtendable: true))
-            mangerSection.append(CellMore (icon : "person.badge.plus", text: "Import Users From Contacts", isExtendable: false))
+            adminSection.append(CellMore (icon : "antenna.radiowaves.left.and.right", text: "Publish & Notify", isExtendable: false))
+            adminSection.append(CellMore (icon : "pin", text: "Add Annotation", isExtendable: true))
+            adminSection.append(CellMore (icon : "person.badge.plus", text: "Import Users From Contacts", isExtendable: false))
         }
        
         // Replace with actual username and workspace name
         CallDataArray.append( ("UserName", userSection))
         CallDataArray.append(("WorkspaceName", workspaceSection))
-        if isManger {  CallDataArray.append(("Manager Tools", mangerSection)) }
+        if isAdmin {  CallDataArray.append(("Manager Tools", adminSection)) }
         
         return CallDataArray
     }
     
-    static func navigate(_ vc: UIViewController,
+    static func navigate(_ storyboardId: String,
                          _ sender: UIViewController,
                          transitionTime: Double = 0.2)
     {
         DispatchQueue.main.asyncAfter(deadline: .now() + transitionTime)
         {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: storyboardId)
             
             vc.modalPresentationStyle = .fullScreen
         
@@ -138,7 +140,4 @@ class Utils{
             sender.present(vc, animated: false, completion: nil)
         }
     }
-
-
-    
 }

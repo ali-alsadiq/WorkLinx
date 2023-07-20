@@ -71,10 +71,7 @@ class SignInForm {
             Utils.user = currentUser
             
             // Go to Dashboard View
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
-            
-            Utils.navigate(vc, viewController)
+            Utils.navigate("DashboardView", viewController)
         }
     }
     
@@ -91,10 +88,7 @@ class SignInForm {
             Utils.user = User(emailAddress: self.emailTextField.text!.lowercased(),
                               password: self.passwordTextField.text!)
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterView")
-            
-            Utils.navigate(vc, self.viewController)
+            Utils.navigate("RegisterView", self.viewController)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in

@@ -8,8 +8,6 @@
 import Foundation
 
 class DataProvider {
-    
-    
     static var employee1 = User(emailAddress: "john@email.com", password: "123123")
     static var employee2 = User(emailAddress: "emma@email.com", password: "123123")
     static var employee3 = User(emailAddress: "mike@email.com", password: "123123")

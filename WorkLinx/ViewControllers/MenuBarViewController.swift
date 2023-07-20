@@ -7,17 +7,8 @@
 
 import UIKit
 
-enum UserRole {
-    case admin
-    case employee
-}
-
 class MenuBarViewController: UIViewController {
     // Change this to .employee if it's an employee page
-    public var userRole: UserRole {
-            return .admin
-    }
-    
     var stackView: UIStackView!
     
     override func viewDidLoad() {
@@ -49,7 +40,7 @@ class MenuBarViewController: UIViewController {
         stackView.addArrangedSubview(dashboardButton)
         stackView.addArrangedSubview(scheduleButton)
         
-        if userRole == .admin {
+        if Utils.isAdmin {
             let attendanceButton = createButton(title: "Attendance", imageName: "person.2")
             stackView.addArrangedSubview(attendanceButton)
         }
@@ -100,11 +91,11 @@ class MenuBarViewController: UIViewController {
             case 0:
                 dashboardButtonTapped()
             case 1:
-                scheduleButtonTapped(isAdmin: userRole == .admin)
+                scheduleButtonTapped()
             case 2:
-                userRole == .admin ? attendanceButtonTapped() : requestButtonTapped()
+                Utils.isAdmin ? attendanceButtonTapped() : requestButtonTapped()
             case 3:
-                userRole == .admin ? requestButtonTapped() : moreButtonTapped()
+                Utils.isAdmin ? requestButtonTapped() : moreButtonTapped()
             case 4:
                 moreButtonTapped()
 
@@ -114,52 +105,22 @@ class MenuBarViewController: UIViewController {
     }
     
     @objc private func dashboardButtonTapped() {
-        // Perform action for Dashboard button
-        print("Dashboard button tapped")
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("DashboardView", self)
     }
     
-    @objc private func scheduleButtonTapped(isAdmin: Bool) {
-        // Perform action for Schedule button
-        print( isAdmin ? "Scheduler button tapped" : "Schedule button tapped")
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "ScheduleView")
-        
-        Utils.navigate(vc, self)
+    @objc private func scheduleButtonTapped() {
+        Utils.navigate("ScheduleView", self)
     }
     
     @objc private func requestButtonTapped() {
-        // Perform action for Request button
-        print("Request button tapped")
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RequestView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("RequestView", self)
     }
     
     @objc private func moreButtonTapped() {
-        // Perform action for More button
-        print("More button tapped")
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "MoreView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("MoreView", self)
     }
     
     @objc private func attendanceButtonTapped() {
-        // Perform action for Attendance button
-        print("Attendance button tapped")
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "AttendanceView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("AttendanceView", self)
     }
 }

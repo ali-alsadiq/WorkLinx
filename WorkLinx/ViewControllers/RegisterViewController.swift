@@ -14,17 +14,11 @@ class RegisterViewController: UIViewController {
 
     
     @IBAction func employeeBttnTapped() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RegisterEmployeeView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("RegisterEmployeeView", self)
     }
     
     @IBAction func employerBttnTapped() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RegisterEmployerView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("RegisterEmployerView", self)
     }
     
     override func viewDidLoad() {

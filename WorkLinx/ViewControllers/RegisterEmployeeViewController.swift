@@ -38,10 +38,7 @@ class RegisterEmployeeViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let createWorkspaceAction = UIAlertAction(title: "Create Workspace", style: .default) { (_) in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "RegisterEmployerView")
-            
-            Utils.navigate(vc, self)
+            Utils.navigate("RegisterEmployerView", self)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
@@ -59,9 +56,6 @@ class RegisterEmployeeViewController: UIViewController {
     
     
     func showDashboardView() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "DashboardView")
-        
-        Utils.navigate(vc, self)
+        Utils.navigate("DashboardView", self)
     }
 }

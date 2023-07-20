@@ -13,10 +13,6 @@ class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         DataProvider.createData()
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let authView = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
-        Utils.navigate(authView, self, transitionTime: 0.8)
-        
+        Utils.navigate("AuthViewController", self, transitionTime: 0.8)
     }
 }
