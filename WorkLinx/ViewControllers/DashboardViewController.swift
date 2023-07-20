@@ -11,7 +11,8 @@ class DashboardViewController: MenuBarViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getDashboardTableData(isManger: false)
+    // Chek using ID?
+    let data = Utils.getDashboardTableData(isAdmin: Utils.user.defaultWorkspace!.admins.contains(where: { $0.emailAddress == Utils.user.emailAddress }))
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -47,8 +48,6 @@ class DashboardViewController: MenuBarViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    
 }
 
 extension DashboardViewController: UITableViewDelegate{
@@ -59,6 +58,7 @@ extension DashboardViewController: UITableViewDelegate{
         print("Selected cell text: \(cellData.text)")
     }
 }
+
 extension DashboardViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,7 +88,6 @@ extension DashboardViewController: UITableViewDataSource{
         )
         
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

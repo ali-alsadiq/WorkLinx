@@ -15,9 +15,9 @@ class User {
     var workSpacesAndPayRate: [(workspace: Workspace, payRate: Int)] = []
     var defaultWorkspace: Workspace?
     var position: String?
-    var availability: [Shift] = []
-    var timeOffRequests: [TimeOff] = []
-    var shifts: [Shift] = []
+    var availability: [(workspace: Workspace, shift: Shift)] = []
+    var timeOffRequests: [(workspace: Workspace, timeoff: TimeOff)] = []
+    var shifts: [(workspace: Workspace, shift: Shift)] = []
     
     init(emailAddress: String, password: String) {
         self.emailAddress = emailAddress

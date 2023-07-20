@@ -13,8 +13,6 @@ class Workspace {
     var admins: [User] = []
     var employees: [User] = []
     var openShifts: [Shift] = []
-    var shiftRequest: [Shift] = []
-    var timeOffRequests: [TimeOff] = []
     
     init(name: String, address: String) {
         self.name = name

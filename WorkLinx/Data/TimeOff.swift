@@ -10,5 +10,4 @@ import Foundation
 struct TimeOff {
     var startTime: Date
     var endTime: Date
-    var employee: User
 }

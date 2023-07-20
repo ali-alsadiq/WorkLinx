@@ -24,29 +24,43 @@ struct CellDashboard
 class Utils{
     static var user = User(emailAddress: "", password: "")
     
-    static func getDashboardTableData(isManger: Bool) -> [(String, [CellDashboard])]
+    static func getDashboardTableData(isAdmin: Bool) -> [(String, [CellDashboard])]
     {
         var CallDataArray: [(String, [CellDashboard])] = []
         var requestsSection: [CellDashboard] = []
         var scheduleSection: [CellDashboard] = []
         
         // Workspace data
-        requestsSection.append(CellDashboard(number: 0, text: "Time Off Requests"))
-        requestsSection.append(CellDashboard(number: 0, text: "Shift Requests"))
-        requestsSection.append(CellDashboard(number: 0, text: "OpenShift Requests"))
+        let defaultWorkspace = user.defaultWorkspace!
+
+        let timeOffRequests = defaultWorkspace.employees.flatMap { $0.timeOffRequests }
+                                                    .filter { $0.workspace === defaultWorkspace }
+                                                    .count
+        requestsSection.append(CellDashboard(number: timeOffRequests, text: "Time Off Requests"))
+
+        let shiftRequests = defaultWorkspace.employees.flatMap { $0.availability }
+                                                     .filter { $0.workspace === defaultWorkspace }
+                                                     .count
+        requestsSection.append(CellDashboard(number: shiftRequests, text: "Shift Requests"))
+
         
         // User data
-        scheduleSection.append(CellDashboard(number: 0, text: "My Shifts"))
-        
-        if !isManger {
+        let userShifts = user.shifts.filter { $0.workspace.name == user.defaultWorkspace?.name }.count
+        scheduleSection.append(CellDashboard(number: userShifts, text: "My Shifts"))
+
+        if !isAdmin {
             // User Requests
-            scheduleSection.append(CellDashboard(number: 0, text: "Time Off Requests"))
-            scheduleSection.append(CellDashboard(number: 0, text: "Shift Requests"))
+            let userTimeOffRequest = user.timeOffRequests.filter({$0.workspace.name == user.defaultWorkspace!.name}).count
+            scheduleSection.append(CellDashboard(number: userTimeOffRequest, text: "Time Off Requests"))
+            
+            let userOpenShifts = user.availability.filter({$0.workspace.name == user.defaultWorkspace!.name}).count
+            scheduleSection.append(CellDashboard(number: userOpenShifts, text: "Shift Requests"))
         }
         
-        scheduleSection.append(CellDashboard(number: 0, text: "OpenShift Available"))
-        
-        if isManger {  CallDataArray.append(("Requests Needing Approval", requestsSection)) }
+        let workSpaceOpenShifts = user.defaultWorkspace!.openShifts.count
+        scheduleSection.append(CellDashboard(number: workSpaceOpenShifts, text: "OpenShift Available"))
+
+        if isAdmin {  CallDataArray.append(("Requests Needing Approval", requestsSection)) }
         CallDataArray.append(("My Schedule", scheduleSection))
         
         return CallDataArray
