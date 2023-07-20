@@ -63,7 +63,6 @@ class DataProvider {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         
         // Create time off requests for employee1
-
         let timeOffRequest1Employee1 = TimeOff(startTime: dateFormatter.date(from: "2023-08-03 09:00")!, endTime: dateFormatter.date(from: "2023-08-03 13:00")!)
         let timeOffRequest2Employee1 = TimeOff(startTime: dateFormatter.date(from: "2023-08-10 09:00")!, endTime: dateFormatter.date(from: "2023-08-10 17:00")!)
         

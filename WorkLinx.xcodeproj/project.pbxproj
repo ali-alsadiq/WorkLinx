@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */; };
+		C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */; };
+		C70AB40F2A69BFA2009736B8 /* CreateWorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40E2A69BFA2009736B8 /* CreateWorkspaceCell.swift */; };
 		C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */; };
 		C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */; };
 		C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */; };
@@ -40,6 +43,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkPlaceViewController.swift; sourceTree = "<group>"; };
+		C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCell.swift; sourceTree = "<group>"; };
+		C70AB40E2A69BFA2009736B8 /* CreateWorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWorkspaceCell.swift; sourceTree = "<group>"; };
 		C77BDFF82A4AA1F0007A8D06 /* WorkLinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkLinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +112,7 @@
 			children = (
 				C7E0506C2A5410030026971C /* Utils.swift */,
 				C7ECD8482A625C3900D494EB /* Data */,
+				C7D43BC52A69D9CB00798A63 /* Cells */,
 				C77BE0132A4AB222007A8D06 /* Components */,
 				C77BE0102A4AAF94007A8D06 /* ViewControllers */,
 				C77BE00F2A4AAF4A007A8D06 /* UI */,
@@ -137,6 +144,7 @@
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
 				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
+				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
 				C7E0A2502A58824C00003473 /* MenuBarViewController.swift */,
@@ -149,14 +157,23 @@
 			children = (
 				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
 				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
-				C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */,
-				C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */,
 				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
 				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
 				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
 				C7E050682A53F4120026971C /* BackButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		C7D43BC52A69D9CB00798A63 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */,
+				C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */,
+				C70AB40E2A69BFA2009736B8 /* CreateWorkspaceCell.swift */,
+				C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		C7ECD8482A625C3900D494EB /* Data */ = {
@@ -243,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
+				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
 				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
 				C7E0A2552A59B23700003473 /* ScheduleViewController.swift in Sources */,
 				C7E050692A53F4120026971C /* BackButton.swift in Sources */,
@@ -258,8 +276,10 @@
 				C7E0A2592A59B25800003473 /* RequestViewController.swift in Sources */,
 				C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */,
 				C7ECD8412A6258AC00D494EB /* Workspace.swift in Sources */,
+				C70AB40F2A69BFA2009736B8 /* CreateWorkspaceCell.swift in Sources */,
 				C7E0A2512A58824C00003473 /* MenuBarViewController.swift in Sources */,
 				C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */,
+				C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */,
 				C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,

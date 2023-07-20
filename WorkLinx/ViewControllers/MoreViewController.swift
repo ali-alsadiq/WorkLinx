@@ -107,7 +107,7 @@ extension MoreViewController: UITableViewDelegate{
             case "My Hours":
                 print(cellData.text)
             case "Switch Workplaces":
-                print(cellData.text)
+                Utils.navigate("SelectWorkplace", self)
             case "Log Out":
                 showLogoutAlert()
             case "Delete Profile":

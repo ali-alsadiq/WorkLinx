@@ -21,6 +21,18 @@ struct CellDashboard
     var text: String
 }
 
+struct CellWorkspace
+{
+    var workspace: Workspace
+    var userType: String
+    var isExtendable: Bool
+}
+
+struct CellCreateWorkspace{
+    var cellText: String
+    var icon: String
+}
+
 class Utils{
     static var user = User(emailAddress: "", password: "")
     static var isAdmin = Utils.user.defaultWorkspace!.admins.contains(where: { $0 === Utils.user })
@@ -64,6 +76,27 @@ class Utils{
         CallDataArray.append(("My Schedule", scheduleSection))
         
         return CallDataArray
+    }
+    
+    static func getWorkspaceData() -> [(String, [Any])]
+    {
+        var CellDataArray: [(String, [Any])] = []
+
+        var workspaces: [CellWorkspace] = []
+        var createOrJoin: [CellCreateWorkspace] = []
+
+        var userType: String
+        for item in Utils.user.workSpacesAndPayRate {
+            userType = item.workspace.admins.contains(where: { $0 === Utils.user }) ? "Admin" : "Employee"
+            workspaces.append(CellWorkspace(workspace: item.workspace, userType: userType, isExtendable: false))
+        }
+
+        createOrJoin.append(CellCreateWorkspace(cellText: "Join an Existing One", icon: "icloud.and.arrow.up"))
+        createOrJoin.append(CellCreateWorkspace(cellText: "Create a New One", icon: "macwindow.badge.plus"))
+
+        CellDataArray.append(("My Workspaces", workspaces))
+        CellDataArray.append(("Looking for another workspace", createOrJoin))
+        return CellDataArray
     }
     
     static func getMoreTableData() -> [(String, [CellMore])]

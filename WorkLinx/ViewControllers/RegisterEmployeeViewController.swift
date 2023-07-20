@@ -21,10 +21,8 @@ class RegisterEmployeeViewController: UIViewController {
             for user in workspace.employees {
                 if user.emailAddress.lowercased() == Utils.user.emailAddress.lowercased() {
                     Utils.user.defaultWorkspace = workspace
-                    print("\(workspace.name)")
                     return true
                 }
-                
             }
         }
         return false
@@ -53,7 +51,6 @@ class RegisterEmployeeViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-    
     
     func showDashboardView() {
         Utils.navigate("DashboardView", self)
