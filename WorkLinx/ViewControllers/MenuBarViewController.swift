@@ -8,28 +8,29 @@
 import UIKit
 
 class MenuBarViewController: UIViewController {
-    // Change this to .employee if it's an employee page
-    var stackView: UIStackView!
+    var menuBarStack: UIStackView!
+    
+    let isAdmin =  Utils.user.defaultWorkspace!.admins.contains(where: { $0.emailAddress == Utils.user.emailAddress })
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Create the stack view
-        stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        menuBarStack = UIStackView()
+        menuBarStack.axis = .horizontal
+        menuBarStack.distribution = .fillEqually
+        menuBarStack.spacing = 0
+        menuBarStack.translatesAutoresizingMaskIntoConstraints = false
         
         // Add the stack view to the view
-        view.addSubview(stackView)
+        view.addSubview(menuBarStack)
         
         // Set constraints for the stack view
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 50) // Adjust height as needed
+            menuBarStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            menuBarStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            menuBarStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            menuBarStack.heightAnchor.constraint(equalToConstant: 50) // Adjust height as needed
             
         ])
         
@@ -37,19 +38,19 @@ class MenuBarViewController: UIViewController {
         let dashboardButton = createButton(title: "Dashboard", imageName: "square.and.pencil")
         let scheduleButton = createButton(title: "Schedule", imageName: "calendar")
         
-        stackView.addArrangedSubview(dashboardButton)
-        stackView.addArrangedSubview(scheduleButton)
+        menuBarStack.addArrangedSubview(dashboardButton)
+        menuBarStack.addArrangedSubview(scheduleButton)
         
-        if Utils.isAdmin {
+        if isAdmin {
             let attendanceButton = createButton(title: "Attendance", imageName: "person.2")
-            stackView.addArrangedSubview(attendanceButton)
+            menuBarStack.addArrangedSubview(attendanceButton)
         }
         
         let requestButton = createButton(title: "Request", imageName: "clock")
         let moreButton = createButton(title: "More", imageName: "ellipsis")
         
-        stackView.addArrangedSubview(requestButton)
-        stackView.addArrangedSubview(moreButton)
+        menuBarStack.addArrangedSubview(requestButton)
+        menuBarStack.addArrangedSubview(moreButton)
     }
     
     private func createButton(title: String, imageName: String) -> UIStackView {
@@ -93,9 +94,9 @@ class MenuBarViewController: UIViewController {
             case 1:
                 scheduleButtonTapped()
             case 2:
-                Utils.isAdmin ? attendanceButtonTapped() : requestButtonTapped()
+                isAdmin ? attendanceButtonTapped() : requestButtonTapped()
             case 3:
-                Utils.isAdmin ? requestButtonTapped() : moreButtonTapped()
+                isAdmin ? requestButtonTapped() : moreButtonTapped()
             case 4:
                 moreButtonTapped()
 

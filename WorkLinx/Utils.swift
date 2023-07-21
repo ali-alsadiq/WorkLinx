@@ -35,7 +35,6 @@ struct CellCreateWorkspace{
 
 class Utils{
     static var user = User(emailAddress: "", password: "")
-    static var isAdmin = Utils.user.defaultWorkspace!.admins.contains(where: { $0 === Utils.user })
     
     static func getDashboardTableData(isAdmin: Bool) -> [(String, [CellDashboard])]
     {
@@ -99,7 +98,7 @@ class Utils{
         return CellDataArray
     }
     
-    static func getMoreTableData() -> [(String, [CellMore])]
+    static func getMoreTableData(isAdmin: Bool) -> [(String, [CellMore])]
     {
         var CallDataArray: [(String, [CellMore])] = []
         
@@ -152,6 +151,7 @@ class Utils{
         return CallDataArray
     }
     
+    // Navigate using Storyboard ID
     static func navigate(_ storyboardId: String,
                          _ sender: UIViewController,
                          transitionTime: Double = 0.2)
@@ -161,6 +161,26 @@ class Utils{
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: storyboardId)
             
+            vc.modalPresentationStyle = .fullScreen
+        
+            // Customize the transition animation
+            let transition = CATransition()
+            transition.duration = 0.5
+            transition.type = .fade
+            transition.subtype = .fromBottom
+            sender.view.window?.layer.add(transition, forKey: kCATransition)
+            
+            sender.present(vc, animated: false, completion: nil)
+        }
+    }
+    
+    // Navigate using UIViewController
+    static func navigate(_ vc: UIViewController,
+                         _ sender: UIViewController,
+                         transitionTime: Double = 0.2)
+    {
+        DispatchQueue.main.asyncAfter(deadline: .now() + transitionTime)
+        {
             vc.modalPresentationStyle = .fullScreen
         
             // Customize the transition animation

@@ -12,7 +12,7 @@ class MoreViewController : MenuBarViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getMoreTableData()
+    let data = Utils.getMoreTableData(isAdmin: Utils.user.defaultWorkspace!.admins.contains(where: { $0.emailAddress == Utils.user.emailAddress }))
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -39,7 +39,7 @@ class MoreViewController : MenuBarViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: stackView.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: menuBarStack.topAnchor),
             tableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor)
         ])
         
@@ -135,7 +135,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Import Users From Contacts":
                 print(cellData.text)
             default:
-                print("Error Cell text not found: (\(cellData.text))")
+                break
         }
     }
 }

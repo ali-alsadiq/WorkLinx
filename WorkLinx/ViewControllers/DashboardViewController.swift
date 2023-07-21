@@ -23,7 +23,7 @@ class DashboardViewController: MenuBarViewController {
         super.viewDidLoad()
         
         // Add nav bar
-        let navigationBar = CustomNavigationBar(title: "WorkLinx")
+        let navigationBar = CustomNavigationBar(title: Utils.user.defaultWorkspace!.name)
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(navigationBar)
@@ -39,7 +39,7 @@ class DashboardViewController: MenuBarViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: stackView.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: menuBarStack.topAnchor),
             tableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor)
         ])
         
@@ -55,7 +55,25 @@ extension DashboardViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sectionData = data[indexPath.section]
         let cellData = sectionData.1[indexPath.row]
-        print("Selected cell text: \(cellData.text)")
+        switch cellData.text
+        {
+            case "Time Off Requests", "Shift Requests", "OpenShift Available"
+                : navigateToRequestView(tab: cellData.text)
+            case "My Shifts"
+                : Utils.navigate("ScheduleView", self)
+            default
+                : break
+        }
+    }
+    
+    func navigateToRequestView(tab: String)
+    {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "RequestView") as! RequestViewController
+        vc.isGoingBack = true
+        vc.tab = tab
+
+        Utils.navigate(vc, self)
     }
 }
 

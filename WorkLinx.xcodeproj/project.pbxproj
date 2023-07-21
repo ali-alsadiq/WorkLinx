@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705144A2A6A79C2003A69EA /* ButtonGroup.swift */; };
 		C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */; };
 		C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */; };
 		C70AB40F2A69BFA2009736B8 /* CreateWorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40E2A69BFA2009736B8 /* CreateWorkspaceCell.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C705144A2A6A79C2003A69EA /* ButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonGroup.swift; sourceTree = "<group>"; };
 		C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkPlaceViewController.swift; sourceTree = "<group>"; };
 		C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCell.swift; sourceTree = "<group>"; };
 		C70AB40E2A69BFA2009736B8 /* CreateWorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWorkspaceCell.swift; sourceTree = "<group>"; };
@@ -91,6 +93,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C70514492A6A5838003A69EA /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */,
+				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
+				C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */,
+				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		C77BDFEF2A4AA1F0007A8D06 = {
 			isa = PBXGroup;
 			children = (
@@ -137,10 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
-				C77BE0142A4AB2B6007A8D06 /* AuthViewController.swift */,
-				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
-				C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */,
-				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
+				C70514492A6A5838003A69EA /* Auth */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
 				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
@@ -161,6 +171,7 @@
 				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
 				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
 				C7E050682A53F4120026971C /* BackButton.swift */,
+				C705144A2A6A79C2003A69EA /* ButtonGroup.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -285,6 +296,7 @@
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
+				C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */,
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,
 				C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */,
 				C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */,
