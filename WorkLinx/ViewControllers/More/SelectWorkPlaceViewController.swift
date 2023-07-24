@@ -13,10 +13,17 @@ class SelectWorkPlaceViewController: UIViewController {
     
     @IBOutlet weak var selectWorkplaceTable: UITableView!
     
-    let data = Utils.getWorkspaceData()
+    var data: [(String, [Any])] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Utils.getWorkspaceData { [weak self] data in
+                self?.data = data
+                DispatchQueue.main.async {
+                    self?.selectWorkplaceTable.reloadData() // Reload the table view with the new data
+                }
+            }
         
         // Add nav bar
         let navigationBar = CustomNavigationBar(title: "Select Workspace")
@@ -64,7 +71,7 @@ extension SelectWorkPlaceViewController: UITableViewDelegate{
         let cellData = sectionData.1[indexPath.row]
         
         if let cellWorkspace = cellData as? CellWorkspace {
-            Utils.user.defaultWorkspace = cellWorkspace.workspace
+            Utils.user.defaultWorkspaceId = cellWorkspace.workspace.workspaceId
             Utils.navigate("DashboardView", self)
         } else if let createWorkspaceCell = cellData as? CellCreateWorkspace {
             if createWorkspaceCell.cellText.lowercased().contains("create".lowercased()){
@@ -95,7 +102,7 @@ extension SelectWorkPlaceViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let sectionData = data[indexPath.section]
         let cellData = sectionData.1[indexPath.row]
-
+        
         if let cellWorkspace = cellData as? CellWorkspace {
             // Dequeue and configure the WorkspaceCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "workspaceCell", for: indexPath) as! WorkspaceCell
@@ -107,11 +114,11 @@ extension SelectWorkPlaceViewController: UITableViewDataSource{
             cell.updateView(cellText: createWorkspaceCell.cellText, icon: UIImage(systemName: createWorkspaceCell.icon)!)
             return cell
         }
-
+        
         // If the cell type is not recognized, return a default cell
         return UITableViewCell()
     }
-
+    
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return data[section].0

@@ -121,4 +121,18 @@ class AuthViewController: UIViewController {
             }
         }
     }
+    
+    func showInvalidPasswordAlert() {
+        let alertController = UIAlertController(title: "Invalid Password",
+                                                message: "Password must be at least 6 characters long.",
+                                                preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+
+        alertController.addAction(okAction)
+
+        // Present the alert
+        // Make sure to have a reference to the current view controller and use it to present the alert
+        present(alertController, animated: true, completion: nil)
+    }
 }

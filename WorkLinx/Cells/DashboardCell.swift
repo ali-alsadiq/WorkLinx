@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 class DashboardCell: UITableViewCell {
-    
+    private var userInput: [String?] = []
+
     lazy var cellNumber: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -100,5 +101,8 @@ class DashboardCell: UITableViewCell {
         cellText.text = text
         extendIcon.image = UIImage(systemName: "chevron.right")
     }
+    
+
+    
     
 }

@@ -9,12 +9,17 @@ import UIKit
 
 class MenuBarViewController: UIViewController {
     var menuBarStack: UIStackView!
-    
-    let isAdmin =  Utils.user.defaultWorkspace!.admins.contains(where: { $0.emailAddress == Utils.user.emailAddress })
-    
+
+//    let defaultWorkspace =
+//    let isAdmin =  Workspace.getWorkspaceByID(workspaceID: Utils.user.defaultWorkspaceId)!.admins.contains(where: { $0 == Utils.user.id })
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(Utils.user.description)
+        print(Utils.workspace.description)
+
         // Create the stack view
         menuBarStack = UIStackView()
         menuBarStack.axis = .horizontal
@@ -41,7 +46,7 @@ class MenuBarViewController: UIViewController {
         menuBarStack.addArrangedSubview(dashboardButton)
         menuBarStack.addArrangedSubview(scheduleButton)
         
-        if isAdmin {
+        if Utils.isAdmin {
             let attendanceButton = createButton(title: "Attendance", imageName: "person.2")
             menuBarStack.addArrangedSubview(attendanceButton)
         }
@@ -94,9 +99,9 @@ class MenuBarViewController: UIViewController {
             case 1:
                 scheduleButtonTapped()
             case 2:
-                isAdmin ? attendanceButtonTapped() : requestButtonTapped()
+                Utils.isAdmin ? attendanceButtonTapped() : requestButtonTapped()
             case 3:
-                isAdmin ? requestButtonTapped() : moreButtonTapped()
+                Utils.isAdmin ? requestButtonTapped() : moreButtonTapped()
             case 4:
                 moreButtonTapped()
 

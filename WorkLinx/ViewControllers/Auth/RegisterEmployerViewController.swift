@@ -1,4 +1,6 @@
 import UIKit
+import SwiftUI
+import FirebaseFirestore
 
 class RegisterEmployerViewController: UIViewController {
     var texboxComopanyName: CustomTextField!
@@ -65,34 +67,157 @@ class RegisterEmployerViewController: UIViewController {
         createButton.addTarget(self, action: #selector(createBttnTapped), for: .touchUpInside)
     }
     
+    
+    
     @objc func createBttnTapped() {
-        // Check if the text fields are not empty
-        guard let companyName = texboxComopanyName.text, !companyName.isEmpty,
-              let address = textBoxAddress.text, !address.isEmpty else {
-            // Show alert for empty fields
-            showEmptyFieldsAlert()
-            return
-        }
         
         // Check if the workspace name is unique
-        if isWorkspaceNameUnique(companyName) {
+        if isWorkspaceNameUnique(texboxComopanyName.text!) {
             // Create the workspace
-            let newWorkspace = Workspace(name: companyName, address: address)
+            let companyName = texboxComopanyName.text!
+            let companyAddress = textBoxAddress.text!
             
-            // Make it the default workspace for the user
-            Utils.user.defaultWorkspace = newWorkspace
+            // Create a serial DispatchQueue to execute tasks sequentially on the same thread
+            let serialQueue = DispatchQueue(label: "SignUp Employer")
             
-            // Append the workspace and pay rate to the user's workSpacesAndPayRate
-            Utils.user.workSpacesAndPayRate.append((workspace: newWorkspace, payRate: 0))
-            
-            // Add the user to the employees and admins array of the new workspace
-            newWorkspace.admins.append(Utils.user)
-            newWorkspace.employees.append(Utils.user)
-            
-            DataProvider.workSpaces.append(newWorkspace)
-            
-            // Navigate to the dashboard view
-            Utils.navigate("DashboardView", self)
+            // Execute the functions sequentially
+            serialQueue.async {
+                var workspaceId: String?
+                var createUserError: Error?
+                var userDataError: Error?
+                
+                // Create user if not already created
+                if Utils.user.id.count == 0
+                {
+                    // Execute createUser function
+                    let createUserGroup = DispatchGroup()
+                    createUserGroup.enter()
+                    Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { result in
+                        switch result {
+                        case .success(let authResult):
+                            // User successfully created
+                            Utils.user.id = authResult.user.uid // Update the user ID with the ID from Firebase Authentication
+                        case .failure(let error):
+                            // Error occurred while creating the user
+                            print("Error creating user: \(error.localizedDescription)")
+                            createUserError = error
+                        }
+                        createUserGroup.leave()
+                    }
+                    createUserGroup.wait() // Wait for the completion of createUser function
+                    
+                    // Check if user creation was successful
+                    if createUserError != nil {
+                        print("User creation failed.")
+                        return
+                    }
+                }
+                
+                // User successfully created, now create the workspace
+                let createWorkspaceGroup = DispatchGroup()
+                createWorkspaceGroup.enter()
+                Workspace.createWorkspace(name: companyName, address: companyAddress) { result in
+                    switch result {
+                    case .success(let id):
+                        workspaceId = id
+                    case .failure(let error):
+                        // Error occurred while creating the workspace
+                        print("Error creating workspace: \(error.localizedDescription)")
+                    }
+                    createWorkspaceGroup.leave()
+                }
+                createWorkspaceGroup.wait() // Wait for the completion of createWorkspace function
+                
+                
+                // Check if workspace creation was successful
+                if let workspaceId = workspaceId {
+                    
+                    // Create userData if not already created
+                    if Utils.user.id.count != 0
+                    {
+                        // Workspace successfully created, now create user data
+                        let createUserDataGroup = DispatchGroup()
+                        createUserDataGroup.enter()
+                        
+                        Utils.user.defaultWorkspaceId = workspaceId
+                        Utils.user.workSpacesAndPayRate.append(User.WorkSpacePayRate(workspaceId: workspaceId, payRate: 0))
+                        
+                        Utils.user.setUserData() { userDataResult in
+                            switch userDataResult {
+                            case .success:
+                                createUserDataGroup.leave()
+                            case .failure(let error):
+                                // Error occurred while saving user data
+                                print("Error saving user data: \(error.localizedDescription)")
+                                userDataError = error
+                                createUserDataGroup.leave()
+                            }
+                        }
+                        createUserDataGroup.wait() // Wait for the completion of createUserData function
+                        
+                        // Check if there was an error while creating user data
+                        if userDataError != nil {
+                            // Handle the user data creation failure
+                            // Show an alert or perform any other necessary action
+                            print("User data creation failed.")
+                            return
+                        }
+                    } else {
+                        
+                        // Creating aditional workspace
+                        Utils.user.workSpacesAndPayRate.append(User.WorkSpacePayRate(workspaceId: workspaceId, payRate: 0))
+                        
+                        Utils.user.setUserData { result in
+                            switch result {
+                            case .success:
+                                print("Workspace added successfully!")
+                                
+                                // Set new workspace and navigate to dashboard
+                                Workspace.getWorkspaceByID(workspaceID: workspaceId) { workspace in
+                                    if let workspace = workspace {
+                                        Utils.workspace = workspace
+                                        Utils.user.defaultWorkspaceId = workspaceId
+                                        Utils.isAdmin = true
+                                        // Navigate to the DashboardView inside the completion block
+                                        Utils.navigate("DashboardView", self)
+                                    } else {
+                                        // Failed to fetch the workspace or some data is missing
+                                        // Handle the error or show an appropriate alert
+                                        print ("error")
+                                    }
+                                }
+                            case .failure(let error):
+                                print("Error adding workspace: \(error)")
+                            }
+                        }
+                    }
+                    
+                    // Add the initial admin
+                    let addInitialAdminGroup = DispatchGroup()
+                    addInitialAdminGroup.enter()
+                    Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [], employees: [])
+                    Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
+                        switch adminResult {
+                            
+                        case .success:
+                            print("Initial admin and employee added successfully.")
+                            
+                            // All tasks completed, navigate to the dashboard view
+                            // isAdmin is initially true in MenuBarViewController
+                            Utils.navigate("DashboardView", self)
+                        case .failure(let error):
+                            print("Error adding initial admin: \(error.localizedDescription)")
+                            // Handle the error appropriately.
+                        }
+                    }
+                    
+                    addInitialAdminGroup.wait() // Wait for the completion of addInitialAdmin function
+                } else {
+                    // Handle the workspace creation failure
+                    // Show an alert or perform any other necessary action
+                    print("Workspace creation failed.")
+                }
+            }
         } else {
             // Show alert for non-unique workspace name
             showNonUniqueNameAlert()
@@ -101,7 +226,7 @@ class RegisterEmployerViewController: UIViewController {
     
     func isWorkspaceNameUnique(_ name: String) -> Bool {
         // Check if there is any workspace with the same name
-        return !DataProvider.workSpaces.contains { $0.name == name }
+        return true
     }
     
     func showEmptyFieldsAlert() {
@@ -130,5 +255,4 @@ class RegisterEmployerViewController: UIViewController {
         // Pop the current view controller from the navigation stack
         dismiss(animated: true, completion: nil)
     }
-    
 }

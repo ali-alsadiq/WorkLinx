@@ -12,7 +12,7 @@ class MoreViewController : MenuBarViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let data = Utils.getMoreTableData(isAdmin: Utils.user.defaultWorkspace!.admins.contains(where: { $0.emailAddress == Utils.user.emailAddress }))
+    var data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -22,6 +22,7 @@ class MoreViewController : MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
         // Add nav bar
         let navigationBar = CustomNavigationBar(title: "More")
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +59,7 @@ class MoreViewController : MenuBarViewController {
         let logoutAction = UIAlertAction(title: "Log Out", style: .destructive) { (_) in
             // Perform the logout action here
             print("Logged out successfully!")
-            Utils.user = User(emailAddress: "", password: "")
+            Utils.user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
             
             // Go back to splash screen
             Utils.navigate("SplashView", self, transitionTime: 0.4)
@@ -77,7 +78,7 @@ class MoreViewController : MenuBarViewController {
             // Perform the delete profile action here
             // Remove from workspaces and users array in DB
             print("Profile deleted successfully!")
-            Utils.user = User(emailAddress: "", password: "")
+            Utils.user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
             
             // Go back to splash screen
             Utils.navigate("SplashView", self, transitionTime: 0.4)
@@ -97,7 +98,7 @@ extension MoreViewController: UITableViewDelegate{
         switch(cellData.text)
         {
             case "Profile Settings":
-                print(cellData.text)
+                navigateToProfileSettings()
             case "Alert Prefrences":
                 print(cellData.text)
             case "Calendar Sync":
@@ -137,6 +138,14 @@ extension MoreViewController: UITableViewDelegate{
             default:
                 break
         }
+    }
+    
+    func navigateToProfileSettings() {
+        let userProfileVC = UserProfileTableViewController()
+        
+        // Present the UserProfileTableViewController modally
+        userProfileVC.modalPresentationStyle = .fullScreen
+        present(userProfileVC, animated: true, completion: nil)
     }
 }
 

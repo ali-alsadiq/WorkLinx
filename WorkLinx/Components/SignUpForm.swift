@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SignUpForm {
     private var emailTextField: CustomTextField!
@@ -52,23 +53,43 @@ class SignUpForm {
     
     
     @objc private func continueButtonTapped() {
-        let userExists = DataProvider.users.contains { user in
-            return user.emailAddress.lowercased() == emailTextField.text?.lowercased()
-        }
+        // Check if the email already exists in the "users" collection in Firestore
+        let email = emailTextField.text!.lowercased()
+        let usersCollection = Firestore.firestore().collection("usersData")
         
-        if userExists{
-            showEmailAlreadyExistsAlert()
+        // Check if the password is invalid
+        if passwordTextField.text!.isEmpty || passwordTextField.text!.count < 6 {
+            viewController.showInvalidPasswordAlert()
+            return
         }
-        else if passwordTextField.text?.lowercased() == confirmPasswordTextField.text?.lowercased() {
-            Utils.user = User(emailAddress: emailTextField.text!.lowercased(),
-                              password: passwordTextField.text!)
-            
-            Utils.navigate("RegisterView", viewController)
-
-        } else {
-            showPasswordMismatchAlert()
+        else {
+            usersCollection.whereField("emailAddress", isEqualTo: email).getDocuments { (snapshot, error) in
+                if let error = error {
+                    // Error occurred while querying the database
+                    print("Error querying database: \(error.localizedDescription)")
+                    return
+                }
+                
+                if self.passwordTextField.text?.lowercased() != self.confirmPasswordTextField.text?.lowercased() {
+                    self.showPasswordMismatchAlert()
+                    return
+                }
+                
+                if let snapshot = snapshot {
+                    if snapshot.documents.isEmpty {
+                        Utils.user = User(id: "", emailAddress: email, defaultWorkspaceId: "")
+                        Utils.password = self.passwordTextField.text!
+                        Utils.navigate("RegisterView", self.viewController)
+                    } else {
+                        // User with the provided email already exists
+                        print("User with the provided email already exists.")
+                        self.showEmailAlreadyExistsAlert()
+                    }
+                }
+            }
         }
     }
+    
     
     func showPasswordMismatchAlert() {
         let alertController = UIAlertController(title: "Password Mismatch",
@@ -82,7 +103,7 @@ class SignUpForm {
         // Present the alert
         viewController?.present(alertController, animated: true, completion: nil)
     }
-
+    
     
     func showEmailAlreadyExistsAlert() {
         let alertController = UIAlertController(title: "Email Already Exists",
@@ -92,7 +113,9 @@ class SignUpForm {
         let signInAction = UIAlertAction(title: "Sign In", style: .default) { (_) in
             // Handle Sign In button action
             self.hide()
+            // Fill up the email address text field with the existing email
             self.signInForm.show()
+            self.signInForm.emailTextField.text = self.emailTextField.text
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
@@ -107,7 +130,7 @@ class SignUpForm {
         // Make sure to have a reference to the current view controller and use it to present the alert
         viewController?.present(alertController, animated: true, completion: nil)
     }
-
+    
     func show() {
         stackView.isHidden = false
         clearForm()

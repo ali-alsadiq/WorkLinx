@@ -12,7 +12,7 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataProvider.createData()
+//        DataProvider.createData()
         Utils.navigate("AuthViewController", self, transitionTime: 0.8)
     }
 }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController {
     
@@ -59,5 +61,17 @@ class RegisterViewController: UIViewController {
         // Pop the current view controller from the navigation stack
         dismiss(animated: true, completion: nil)
     }
+    
+    static func registerUser(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                // Error occurred while creating the user
+                completion(.failure(error))
+            } else if let authResult = authResult {
+                // User successfully created
+                completion(.success(authResult))
+                
+            }
+        }
+    }
 }
-

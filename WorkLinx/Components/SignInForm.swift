@@ -6,20 +6,20 @@
 //
 
 import UIKit
+import Firebase
 
 class SignInForm {
-    private var emailTextField: CustomTextField!
+    public var emailTextField: CustomTextField!
     private var passwordTextField: CustomTextField!
     private var signInButton: CustomButton!
-    
+    private var viewController: AuthViewController!
+
     var view: UIView {
         return stackView
     }
     
-    private let viewController: UIViewController
     
-    
-    init(viewController: UIViewController) {
+    init(viewController: AuthViewController) {
         self.viewController = viewController
     }
     
@@ -42,40 +42,92 @@ class SignInForm {
     }()
     
     @objc private func signInButtonTapped() {
-        print("Email: \(emailTextField.text ?? "")")
-        print("Password: \(passwordTextField.text ?? "")")
+        let email = emailTextField.text!.lowercased()
+        let password = passwordTextField.text!
         
-        let userExists = DataProvider.users.contains { user in
-            return user.emailAddress.lowercased() == emailTextField.text?.lowercased()
-        }
-        
-        let validPassword = DataProvider.users.contains { user in
-            return user.emailAddress.lowercased() == emailTextField.text?.lowercased()
-                   && user.password == passwordTextField.text
-        }
-        
+        // Check if the email field is empty
         if !emailTextField.hasText {
             showEmptyEmailAlert()
-        } else if !passwordTextField.hasText {
+            return
+        }
+        
+        // Check if the password field is empty
+        if !passwordTextField.hasText {
             showEmptyPasswordAlert()
-        } else if !userExists {
-            noAccountFound()
-        } else if userExists && !validPassword {
-            showWrongPasswordAlert()
-        } else if let currentUser = DataProvider.users.first(where: { user in
-            // Login user
-            return user.emailAddress.lowercased() == emailTextField.text?.lowercased()
-                   && user.password == passwordTextField.text}) {
-            
-            // User with valid email and password found
-            Utils.user = currentUser
-            
-            // Go to Dashboard View
-            Utils.navigate("DashboardView", viewController)
+            return
+        }
+        
+        // Check if the password is invalid
+        if passwordTextField.text!.isEmpty || passwordTextField.text!.count < 6 {
+            viewController.showInvalidPasswordAlert()
+            return
+        }
+        
+        signInUser(email: email, password: password) { result in
+            switch result {
+            case .success(let authResult):
+                // User sign-in successful
+                let user = authResult.user
+                print("User signed in: \(user.uid)")
+                
+                let db = Firestore.firestore()
+                let userDataCollection = db.collection("usersData")
+
+                userDataCollection.whereField("emailAddress", isEqualTo: user.email!).getDocuments { (snapshot, error) in
+                    if let error = error {
+                        // Error occurred while querying the database
+                        print("Error querying database: \(error.localizedDescription)")
+                        return
+                    }
+                    print(user.email!)
+                    print(self.emailTextField.text!.lowercased())
+                    print("snap \(String(describing: snapshot?.description))")
+
+                    if let snapshot = snapshot, let userData = snapshot.documents.first {
+                        let defaultWorkspaceId = userData["defaultWorkspaceId"] as! String
+                        let email = userData["emailAddress"] as! String
+                        let userId = userData["userId"] as! String
+                        
+                        Workspace.getWorkspaceByID(workspaceID: defaultWorkspaceId) { workspace in
+                            if let workspace = workspace {
+                                Utils.workspace = workspace
+                                Utils.user = User(id: userId, emailAddress: email, defaultWorkspaceId: defaultWorkspaceId)
+                                Utils.isAdmin = workspace.admins.contains(userId)
+                                // Navigate to the DashboardView inside the completion block
+                                Utils.navigate("DashboardView", self.viewController)
+                            } else {
+                                // Failed to fetch the workspace or some data is missing
+                                // Handle the error or show an appropriate alert
+                                print ("error")
+                            }
+                        }
+                    }
+                }
+                
+                
+            case .failure(let error):
+                // User sign-in failed
+                print("Error signing in: \(error.localizedDescription)")
+                // Show an alert indicating that the password is incorrect
+                self.showWrongPasswordAlert()
+            }
         }
     }
+
+
+    func showSignInErrorAlert() {
+        let alertController = UIAlertController(
+            title: "Error",
+            message: "An error occurred while signing in. Please try again later.",
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+
     
-    func noAccountFound() {
+    func showNoAccountFoundAlert() {
         let alertController = UIAlertController(
             title: "No Account Found",
             message: "There is no account with the given email address. Do you want to sign up?",
@@ -85,8 +137,7 @@ class SignInForm {
         let signUpAction = UIAlertAction(title: "Sign Up", style: .default) { (_) in
             // Handle Sign Up button action
             // Create user
-            Utils.user = User(emailAddress: self.emailTextField.text!.lowercased(),
-                              password: self.passwordTextField.text!)
+            Utils.user = User(id: "", emailAddress: self.emailTextField.text!.lowercased(), defaultWorkspaceId: "")
             
             Utils.navigate("RegisterView", self.viewController)
         }
@@ -150,5 +201,17 @@ class SignInForm {
     private func clearForm() {
         emailTextField.text = ""
         passwordTextField.text = ""
+    }
+    
+    func signInUser(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                // Error occurred while signing in the user
+                completion(.failure(error))
+            } else if let authResult = authResult {
+                // User successfully signed in
+                completion(.success(authResult))
+            }
+        }
     }
 }

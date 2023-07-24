@@ -17,15 +17,16 @@ class RegisterEmployeeViewController: UIViewController {
     }
     
     func isInvited() -> Bool {
-        for workspace in DataProvider.workSpaces {
-            for user in workspace.employees {
-                if user.emailAddress.lowercased() == Utils.user.emailAddress.lowercased() {
-                    Utils.user.defaultWorkspace = workspace
-                    return true
-                }
-            }
-        }
-        return false
+//        for workspace in DataProvider.workSpaces {
+//            for user in workspace.employees {
+//                if user.emailAddress.lowercased() == Utils.user.emailAddress.lowercased() {
+//                    Utils.user.defaultWorkspace = workspace
+//                    return true
+//                }
+//            }
+//        }
+//        return false
+        true
     }
     
     
@@ -53,6 +54,23 @@ class RegisterEmployeeViewController: UIViewController {
     }
     
     func showDashboardView() {
+        // Register user in DB
+        RegisterViewController.registerUser(email: Utils.user.emailAddress.lowercased(), password: Utils.password) { result in
+            switch result {
+            case .success(let authResult):
+                // User creation successful
+                let user = authResult.user
+                print("User created: \(user.uid)")
+                
+                // Perform any other actions after user registration
+            case .failure(let error):
+                // User creation failed
+                print("Error creating user: \(error.localizedDescription)")
+                
+                // Display an error message to the user or handle the error appropriately
+            }
+        }
+        
         Utils.navigate("DashboardView", self)
     }
 }
