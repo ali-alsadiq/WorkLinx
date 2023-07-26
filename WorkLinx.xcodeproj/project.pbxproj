@@ -50,6 +50,7 @@
 		C7ECD8432A6258B700D494EB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8422A6258B700D494EB /* User.swift */; };
 		C7ECD8452A625A4700D494EB /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8442A625A4700D494EB /* Shift.swift */; };
 		C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8462A625BA400D494EB /* TimeOff.swift */; };
+		FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		C7ECD8422A6258B700D494EB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C7ECD8442A625A4700D494EB /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
 		C7ECD8462A625BA400D494EB /* TimeOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOff.swift; sourceTree = "<group>"; };
+		FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailabilityViewController.swift; path = WorkLinx/ViewControllers/More/AvailabilityViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
 				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
+				FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				C7B0C15E2A626193007DCCEC /* DataProvider.swift in Sources */,
 				C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */,
 				C7E0A2572A59B24700003473 /* AttendanceViewController.swift in Sources */,
+				FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */,
 				C77BE0152A4AB2B6007A8D06 /* AuthViewController.swift in Sources */,
 				C7ECD8452A625A4700D494EB /* Shift.swift in Sources */,
 				C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */,
