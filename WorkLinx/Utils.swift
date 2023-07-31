@@ -188,6 +188,23 @@ class Utils{
             completion(CellDataArray) // Call the completion handler with the fetched data
         }
     }
+    
+    static func getPositionsData() -> [(String, [String])]
+    {
+        var CallDataArray: [(String, [String])] = []
+        let adminsSection = workspace.positions.admins
+        let employeesSection = workspace.positions.employees
+        
+        if  adminsSection.count > 0 {
+            CallDataArray.append(("Admins Positions", workspace.positions.admins))
+        }
+        
+        if  employeesSection.count > 0 {
+            CallDataArray.append(("Employees Positions", workspace.positions.admins))
+        }
+        
+        return CallDataArray
+    }
 
     
     static func getMoreTableData(isAdmin: Bool) -> [(String, [CellMore])]

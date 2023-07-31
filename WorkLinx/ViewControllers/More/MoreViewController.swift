@@ -120,7 +120,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Users":
                 print(cellData.text)
             case "Positions":
-                print(cellData.text)
+                navigateToPositionsViewController()
             case "Tags":
                 print(cellData.text)
             case "Job Sites":
@@ -146,6 +146,13 @@ extension MoreViewController: UITableViewDelegate{
         // Present the UserProfileTableViewController modally
         userProfileVC.modalPresentationStyle = .fullScreen
         present(userProfileVC, animated: true, completion: nil)
+    }
+    
+    func navigateToPositionsViewController() {
+        let positionsVC = PositionsViewController()
+        positionsVC.modalPresentationStyle = .fullScreen
+
+        present(positionsVC, animated: true, completion: nil)
     }
 }
 

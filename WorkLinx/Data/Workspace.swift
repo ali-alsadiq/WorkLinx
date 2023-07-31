@@ -18,6 +18,12 @@ class Workspace: Codable {
     var admins: [String] = []
     var employees: [String] = []
     var openShiftsIds: [String] = []
+    var positions: Positions = Positions(admins: [], employees: [])
+    
+    struct Positions: Codable {
+        var admins: [String]
+        var employees: [String]
+    }
     
     enum CodingKeys: String, CodingKey {
         case workspaceId
@@ -26,6 +32,7 @@ class Workspace: Codable {
         case admins
         case employees
         case openShiftsIds
+        case positions
     }
     
     
@@ -71,6 +78,33 @@ class Workspace: Codable {
         }
     }
     
+    // Update workspace Data
+    static func updateWorkspace(workspace: Workspace, completion: @escaping (Error?) -> Void) {
+        do {
+            // Encode the workspace instance to JSON data using the provided encodeData function
+            guard let workspaceData = try Utils.encodeData(data: workspace) else {
+                print("Error encoding Workspace data.")
+                completion(NSError(domain: "WorkspaceUpdateError", code: 0, userInfo: nil))
+                return
+            }
+            
+            // Update the Firestore document with the new data
+            Workspace.workspacesCollection.document(workspace.workspaceId).setData(workspaceData, merge: true) { error in
+                if let error = error {
+                    print("Error updating workspace: \(error.localizedDescription)")
+                    completion(error)
+                } else {
+                    print("Workspace updated successfully")
+                    completion(nil)
+                }
+            }
+        } catch {
+            print("Error encoding workspace data: \(error.localizedDescription)")
+            completion(error)
+        }
+    }
+    
+    // Get workspace by id
     static func getWorkspaceByID(workspaceID: String, completion: @escaping (Workspace?) -> Void) {
         guard !workspaceID.isEmpty else {
             // The workspaceID is empty, call the completion handler with nil

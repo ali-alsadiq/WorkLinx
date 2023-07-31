@@ -86,7 +86,7 @@ class SignInForm {
                     if let snapshot = snapshot, let userData = snapshot.documents.first {
                         let defaultWorkspaceId = userData["defaultWorkspaceId"] as! String
                         let email = userData["emailAddress"] as! String
-                        let userId = userData["userId"] as! String
+                        let userId = userData["id"] as! String
                         
                         Workspace.getWorkspaceByID(workspaceID: defaultWorkspaceId) { workspace in
                             if let workspace = workspace {
