@@ -140,7 +140,7 @@ class RegisterEmployerViewController: UIViewController {
                         createUserDataGroup.enter()
                         
                         Utils.user.defaultWorkspaceId = workspaceId
-                        Utils.user.workSpacesAndPayRate.append(User.WorkSpacePayRate(workspaceId: workspaceId, payRate: 0))
+                        Utils.user.workSpaces.append(workspaceId)
                         
                         Utils.user.setUserData() { userDataResult in
                             switch userDataResult {
@@ -165,7 +165,7 @@ class RegisterEmployerViewController: UIViewController {
                     } else {
                         
                         // Creating aditional workspace
-                        Utils.user.workSpacesAndPayRate.append(User.WorkSpacePayRate(workspaceId: workspaceId, payRate: 0))
+                        Utils.user.workSpaces.append(workspaceId)
                         
                         Utils.user.setUserData { result in
                             switch result {
@@ -195,7 +195,7 @@ class RegisterEmployerViewController: UIViewController {
                     // Add the initial admin
                     let addInitialAdminGroup = DispatchGroup()
                     addInitialAdminGroup.enter()
-                    Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [], employees: [])
+                    Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [])
                     Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
                         switch adminResult {
                             

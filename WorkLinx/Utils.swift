@@ -42,7 +42,7 @@ struct CellCreateWorkspace{
 }
 
 class Utils{
-    static var workspace = Workspace(workspaceId: "", name: "", address: "", admins: [], employees: [])
+    static var workspace = Workspace(workspaceId: "", name: "", address: "", admins: [])
     static var user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
     static var password = ""
     static var isAdmin = true
@@ -161,10 +161,10 @@ class Utils{
         
         let dispatchGroup = DispatchGroup() // Create a dispatch group
         
-        for item in Utils.user.workSpacesAndPayRate {
+        for workspaceId in Utils.user.workSpaces {
             dispatchGroup.enter() // Enter the dispatch group before starting the async call
             print("dispaching")
-            Workspace.getWorkspaceByID(workspaceID: item.workspaceId) { workspace in
+            Workspace.getWorkspaceByID(workspaceID: workspaceId) { workspace in
                 if let workspace = workspace {
                     print(workspace.description)
                     userType = workspace.admins.contains(where: { $0 == Utils.user.id }) ? "Admin" : "Employee"
@@ -192,15 +192,15 @@ class Utils{
     static func getPositionsData() -> [(String, [String])]
     {
         var CallDataArray: [(String, [String])] = []
-        let adminsSection = workspace.positions.admins
-        let employeesSection = workspace.positions.employees
+        let adminsSection = workspace.positions.admins.sorted()
+        let employeesSection = workspace.positions.employees.sorted()
         
         if  adminsSection.count > 0 {
-            CallDataArray.append(("Admins Positions", workspace.positions.admins))
+            CallDataArray.append(("Admins Positions", adminsSection))
         }
         
         if  employeesSection.count > 0 {
-            CallDataArray.append(("Employees Positions", workspace.positions.admins))
+            CallDataArray.append(("Employees Positions", employeesSection))
         }
         
         return CallDataArray

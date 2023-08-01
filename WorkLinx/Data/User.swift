@@ -15,25 +15,20 @@ struct User : Codable {
     var emailAddress: String
     var firstName = ""
     var lastName = ""
-    var workSpacesAndPayRate: [WorkSpacePayRate] = []
+    var workSpaces: [String] = []
     var defaultWorkspaceId: String
     var position = ""
     var availabilityIds: [String] = []
     var timeOffRequestIds: [String] = []
     var shiftIds: [String] = []
     
-    struct WorkSpacePayRate: Codable {
-        var workspaceId: String
-        var payRate: Int
-    }
-        
     // CodingKeys to specify custom mappings for Codable properties
     enum CodingKeys: String, CodingKey {
         case id
         case emailAddress
         case firstName
         case lastName
-        case workSpacesAndPayRate
+        case workSpaces
         case defaultWorkspaceId
         case position
         case availabilityIds
@@ -86,4 +81,84 @@ struct User : Codable {
             print("Error encoding user data: \(error.localizedDescription)")
         }
     }
+    
+    
+    // Function to fetch a user by ID from Firestore
+    static func fetchUserByID(userID: String, completion: @escaping (User?) -> Void) {
+        let query =  Utils.db.collection("usersData").whereField("id", isEqualTo: userID)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching user: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion(nil)
+                return
+            }
+            
+            if let document = documents.first {
+                let data = document.data()
+                
+                do {
+                    // Use JSONSerialization to convert the Firestore document data to JSON data
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                    
+                    // Use JSONDecoder to decode the JSON data into a User object
+                    let decoder = JSONDecoder()
+                    let user = try decoder.decode(User.self, from: jsonData)
+                    
+                    completion(user)
+                } catch {
+                    print("Error decoding user: \(error.localizedDescription)")
+                    completion(nil)
+                }
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    
+    // Function to fetch an array of users by IDs from Firestore
+    static func fetchUsersByIDs(userIDs: [String], completion: @escaping ([User]) -> Void) {
+        let query = Utils.db.collection("usersData").whereField("id", in: userIDs)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching users: \(error.localizedDescription)")
+                completion([])
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion([])
+                return
+            }
+            
+            var users: [User] = []
+            
+            for document in documents {
+                let data = document.data()
+                
+                do {
+                    // Use JSONSerialization to convert the Firestore document data to JSON data
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                    
+                    // Use JSONDecoder to decode the JSON data into a User object
+                    let decoder = JSONDecoder()
+                    let user = try decoder.decode(User.self, from: jsonData)
+                    
+                    users.append(user)
+                } catch {
+                    print("Error decoding user: \(error.localizedDescription)")
+                }
+            }
+            
+            completion(users)
+        }
+    }
+    
 }

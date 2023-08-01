@@ -16,13 +16,19 @@ class Workspace: Codable {
     var name: String
     var address: String
     var admins: [String] = []
-    var employees: [String] = []
+    var employees: [Employee] = []
     var openShiftsIds: [String] = []
     var positions: Positions = Positions(admins: [], employees: [])
     
     struct Positions: Codable {
         var admins: [String]
         var employees: [String]
+    }
+    
+    struct Employee: Codable {
+        var employeeId: String
+        var payrate: Double
+        var position: String
     }
     
     enum CodingKeys: String, CodingKey {
@@ -36,22 +42,21 @@ class Workspace: Codable {
     }
     
     
-    init(workspaceId: String, name: String, address: String, admins: [String], employees: [String]) {
+    init(workspaceId: String, name: String, address: String, admins: [String]) {
         self.workspaceId = workspaceId
         self.name = name
         self.address = address
         self.admins = admins
-        self.employees = employees
     }
     
     var description: String {
-        return "Workspace ID: \(workspaceId), Name: \(name), Address: \(address), Admins: \(admins), Employees: \(employees)"
+        return "Workspace ID: \(workspaceId), Name: \(name), Address: \(address), Admins: \(admins), Employees: \(employees.map {$0.employeeId})"
     }
     
     // Function to create a new workspace in Firestore
     static func createWorkspace(name: String, address: String, completion: @escaping (Result<String, Error>) -> Void) {
         do {
-            Utils.workspace = Workspace(workspaceId: "", name: name , address: address, admins: [], employees: [])
+            Utils.workspace = Workspace(workspaceId: "", name: name , address: address, admins: [])
             
             let workspaceDocumentData = try Utils.encodeData(data: Utils.workspace)
             
@@ -150,28 +155,38 @@ class Workspace: Codable {
     // Function to add initial admin and employee to the workspace
     func addInitialAdminAndEmployee(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         admins.append(userId)
-        employees.append(userId)
+        employees.append(Employee(employeeId: userId, payrate: 0, position: ""))
         
-        // Update the employees and admins field in Firestore
-        Workspace.workspacesCollection.document(workspaceId).setData([
-            "admins": admins,
-            "employees": employees
-        ], merge: true) { error in
-            if let error = error {
-                print("Error updating employees in Firestore: \(error.localizedDescription)")
-                completion(.failure(error)) // Pass the error to the completion closure
-            } else {
-                print("Employees updated in Firestore")
-                completion(.success(())) // Call the completion handler with success (empty tuple)
+        do {
+            // Encode the entire workspace object to JSON data
+            guard let workspaceData = try Utils.encodeData(data: self) else {
+                print("Error encoding workspace data.")
+                completion(.failure(NSError(domain: "WorkspaceEncodingError", code: 0, userInfo: nil)))
+                return
             }
+            
+            // Update the employees and admins field in Firestore
+            Workspace.workspacesCollection.document(workspaceId).setData(workspaceData, merge: true) { error in
+                if let error = error {
+                    print("Error updating employees in Firestore: \(error.localizedDescription)")
+                    completion(.failure(error)) // Pass the error to the completion closure
+                } else {
+                    print("Employees updated in Firestore")
+                    completion(.success(())) // Call the completion handler with success (empty tuple)
+                }
+            }
+        } catch {
+            print("Error encoding workspace data: \(error.localizedDescription)")
+            completion(.failure(error)) // Pass the error to the completion closure
         }
     }
+
     
     
     // Function to add an employee to the workspace
     func addEmployee(userId: String, completion: @escaping (Error?) -> Void) {
-        employees.append(userId)
-        
+        employees.append(Employee(employeeId: userId, payrate: 0, position: ""))
+
         // Update the employees field in Firestore
         Workspace.workspacesCollection.document(workspaceId).setData([
             "employees": employees

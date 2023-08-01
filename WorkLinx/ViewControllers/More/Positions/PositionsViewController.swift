@@ -14,7 +14,7 @@ class PositionsViewController: UIViewController {
     private var arrowImageView: UIImageView?
     private var navigationBar: CustomNavigationBar!
     
-    var data = Utils.getPositionsData()
+    private var data = Utils.getPositionsData()
     
     
     override func viewDidLoad() {
@@ -22,7 +22,7 @@ class PositionsViewController: UIViewController {
         super.viewDidLoad()
         
         positionsTableView = UITableView()
-        view.backgroundColor = UIColor.white // Set a background color for testing
+        view.backgroundColor = UIColor.white
         
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "Positions")
@@ -69,6 +69,10 @@ class PositionsViewController: UIViewController {
         positionsTableView.delegate = self
     }
     
+    public func reloadData() {
+        data = Utils.getPositionsData()
+        positionsTableView.reloadData()
+    }
     
     @objc func goBack() {
         // Pop the current view controller from the navigation stack
@@ -77,12 +81,16 @@ class PositionsViewController: UIViewController {
     
     // Function to handle the + button tap
     @objc func addButtonTapped() {
-        print("Add button tapped")
+        let positionsVC = AddPositionViewController()
+        positionsVC.positionsTableView = self
+        positionsVC.modalPresentationStyle = .fullScreen
+
+        present(positionsVC, animated: true, completion: nil)
     }
     
     // Function to update the info message view based on data availability
     func setupInfoMessageView() {
-        if data.isEmpty {
+        if  data.isEmpty {
             if infoMessageView == nil {
                 // Create the info message view
                 let infoMessageView = UIView()
@@ -143,9 +151,14 @@ class PositionsViewController: UIViewController {
 }
 
 extension PositionsViewController: UITableViewDelegate {
-    // Change to go to the next view for each row using cellData.text
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //handle onClick
+        let role = data[indexPath.section].0.contains("Admins") ? "Administrator" : "User"
+        let position = data[indexPath.section].1[indexPath.row]
+        
+        let editPositionVC = EditPositionViewController(currentPosition: position, role: role, positionsTableView: self)
+        editPositionVC.modalPresentationStyle = .fullScreen
+
+        present(editPositionVC, animated: true, completion: nil)
     }
 }
 
@@ -166,7 +179,7 @@ extension PositionsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PositionCell", for: indexPath) as! PositionCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "positionCell", for: indexPath) as! PositionCell
         
         let postion = data[indexPath.section].1[indexPath.row]
         
