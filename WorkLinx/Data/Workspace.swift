@@ -19,6 +19,7 @@ class Workspace: Codable {
     var employees: [Employee] = []
     var openShiftsIds: [String] = []
     var positions: Positions = Positions(admins: [], employees: [])
+    var invitedUsers: [String] = []
     
     struct Positions: Codable {
         var admins: [String]
@@ -39,6 +40,7 @@ class Workspace: Codable {
         case employees
         case openShiftsIds
         case positions
+        case invitedUsers
     }
     
     

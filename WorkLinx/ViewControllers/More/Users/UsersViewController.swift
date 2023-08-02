@@ -10,7 +10,7 @@ import UIKit
 class UsersViewController: UIViewController {
     
     private var navigationBar: CustomNavigationBar!
-
+    private var usersTable: UITableView!
     
     
     override func viewDidLoad() {
@@ -44,6 +44,8 @@ class UsersViewController: UIViewController {
         ])
         
         
+        // Add users table and invited user table
+        usersTable = UITableView()
     }
     
     @objc func goBack() {
