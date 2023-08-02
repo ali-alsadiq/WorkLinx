@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ADE020C1423B2A4CF858B658 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ED3205EA674E87235640FD /* Pods_WorkLinx.framework */; };
 		C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705144A2A6A79C2003A69EA /* ButtonGroup.swift */; };
 		C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */; };
 		C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */; };
@@ -56,9 +57,13 @@
 		C7ECD8432A6258B700D494EB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8422A6258B700D494EB /* User.swift */; };
 		C7ECD8452A625A4700D494EB /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8442A625A4700D494EB /* Shift.swift */; };
 		C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8462A625BA400D494EB /* TimeOff.swift */; };
+		FA00D2952A7A48970084A40E /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00D2942A7A48970084A40E /* MessageViewController.swift */; };
+		FA00D2972A7A4E4B0084A40E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00D2962A7A4E4B0084A40E /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77ED3205EA674E87235640FD /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9901C5B0D922EDAC7D1CF56A /* Pods-WorkLinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkLinx.release.xcconfig"; path = "Target Support Files/Pods-WorkLinx/Pods-WorkLinx.release.xcconfig"; sourceTree = "<group>"; };
 		C705144A2A6A79C2003A69EA /* ButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonGroup.swift; sourceTree = "<group>"; };
 		C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWorkPlaceViewController.swift; sourceTree = "<group>"; };
 		C70AB40C2A6987E4009736B8 /* WorkspaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCell.swift; sourceTree = "<group>"; };
@@ -104,6 +109,9 @@
 		C7ECD8422A6258B700D494EB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C7ECD8442A625A4700D494EB /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
 		C7ECD8462A625BA400D494EB /* TimeOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOff.swift; sourceTree = "<group>"; };
+		E7D50191D9F1134661EC9C07 /* Pods-WorkLinx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkLinx.debug.xcconfig"; path = "Target Support Files/Pods-WorkLinx/Pods-WorkLinx.debug.xcconfig"; sourceTree = "<group>"; };
+		FA00D2942A7A48970084A40E /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		FA00D2962A7A4E4B0084A40E /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,12 +125,21 @@
 				C70CCEB52A6B7D4A000677F1 /* FirebaseDatabase in Frameworks */,
 				C70CCEB72A6B7D4A000677F1 /* FirebaseFirestore in Frameworks */,
 				C70CCEB12A6B7D4A000677F1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				ADE020C1423B2A4CF858B658 /* Pods_WorkLinx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F8823B0899BE11AEE028AEE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77ED3205EA674E87235640FD /* Pods_WorkLinx.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C70514492A6A5838003A69EA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +157,7 @@
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
 				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
+				FA00D2932A7A485B0084A40E /* Message */,
 				C7DDC4F22A790082007E3564 /* Positions */,
 			);
 			path = More;
@@ -150,6 +168,8 @@
 			children = (
 				C77BDFFA2A4AA1F0007A8D06 /* WorkLinx */,
 				C77BDFF92A4AA1F0007A8D06 /* Products */,
+				CFE486D6A2B3D95DCC2A2735 /* Pods */,
+				8F8823B0899BE11AEE028AEE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -254,6 +274,24 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		CFE486D6A2B3D95DCC2A2735 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E7D50191D9F1134661EC9C07 /* Pods-WorkLinx.debug.xcconfig */,
+				9901C5B0D922EDAC7D1CF56A /* Pods-WorkLinx.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FA00D2932A7A485B0084A40E /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				FA00D2942A7A48970084A40E /* MessageViewController.swift */,
+				FA00D2962A7A4E4B0084A40E /* ChatViewController.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,9 +299,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C77BE00C2A4AA1F5007A8D06 /* Build configuration list for PBXNativeTarget "WorkLinx" */;
 			buildPhases = (
+				B2122F04A5A1663BBCF62C1B /* [CP] Check Pods Manifest.lock */,
 				C77BDFF42A4AA1F0007A8D06 /* Sources */,
 				C77BDFF52A4AA1F0007A8D06 /* Frameworks */,
 				C77BDFF62A4AA1F0007A8D06 /* Resources */,
+				09D01FBA8AF6FBBC286A29B9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -332,6 +372,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		09D01FBA8AF6FBBC286A29B9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WorkLinx/Pods-WorkLinx-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WorkLinx/Pods-WorkLinx-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WorkLinx/Pods-WorkLinx-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2122F04A5A1663BBCF62C1B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WorkLinx-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C77BDFF42A4AA1F0007A8D06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -367,12 +449,14 @@
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */,
+				FA00D2952A7A48970084A40E /* MessageViewController.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
 				C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */,
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,
 				C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */,
 				C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */,
+				FA00D2972A7A4E4B0084A40E /* ChatViewController.swift in Sources */,
 				C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,
 				C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */,
@@ -517,6 +601,7 @@
 		};
 		C77BE00D2A4AA1F5007A8D06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7D50191D9F1134661EC9C07 /* Pods-WorkLinx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -545,6 +630,7 @@
 		};
 		C77BE00E2A4AA1F5007A8D06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9901C5B0D922EDAC7D1CF56A /* Pods-WorkLinx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
