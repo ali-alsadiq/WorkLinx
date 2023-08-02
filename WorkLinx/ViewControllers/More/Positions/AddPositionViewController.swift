@@ -183,16 +183,24 @@ class AddPositionViewController: UIViewController {
         
         let position = positionTextField.text!
         
-        // Add position to positions array
-        if role == "User"{
-            Utils.workspace.positions.employees.append(position)
+        // Check if the position already exists
+        if role == "User" {
+            if Utils.workspace.positions.employees.contains(position) {
+                // Position already exists, show an alert
+                showAlert(message: "Position '\(position)' already exists for employees.")
+                return
+            } else {
+                Utils.workspace.positions.employees.append(position)
+            }
+        } else {
+            if Utils.workspace.positions.admins.contains(position) {
+                // Position already exists, show an alert
+                showAlert(message: "Position '\(position)' already exists for administrators.")
+                return
+            } else {
+                Utils.workspace.positions.admins.append(position)
+            }
         }
-        else{
-            Utils.workspace.positions.admins.append(position)
-        }
-        
-        // Update position for selected employees
-        print(AddPositionViewController.assignedUsers.count)
         
         let employeeIds = AddPositionViewController.assignedUsers.map { $0.id }
         
@@ -218,5 +226,12 @@ class AddPositionViewController: UIViewController {
         
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Position Already Exists", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

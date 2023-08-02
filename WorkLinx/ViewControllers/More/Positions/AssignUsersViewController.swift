@@ -167,7 +167,7 @@ extension AssignUsersViewController: UITableViewDataSource, UITableViewDelegate 
                 AddPositionViewController.assignedUsers.append(user)
             }
             tableView.reloadRows(at: [indexPath], with: .none)
-            doneButton.isEnabled = !AddPositionViewController.assignedUsers.isEmpty || isEditMode
+            doneButton.isEnabled = (!isEditMode && !AddPositionViewController.assignedUsers.isEmpty) || (isEditMode && previouslyAssignedUsers != AddPositionViewController.assignedUsers)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -21,15 +21,20 @@ class EditPositionViewController: UIViewController {
     private var positionTextField: CustomTextField!
     private var adminButton: UIButton!
     private var userButton: UIButton!
-    
-    private var assignButton: UIButton!
         
+    private var assignButton: UIButton!
+    private var deleteButton: UIButton!
+    private var editButtonsStack: UIStackView!
+    
+    private var userIds: [String]!
+    
     
     init(currentPosition: String, role: String, positionsTableView: PositionsViewController) {
         self.currentPosition = currentPosition
         self.role = role
         self.positionsTableView = positionsTableView
         self.initialRole = role
+       
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,6 +49,20 @@ class EditPositionViewController: UIViewController {
         
         view.backgroundColor = UIColor.white
         
+        // Filter employees to get only those whose positions match the current position
+        let filteredEmployees = Utils.workspace.employees.filter { $0.position == currentPosition }
+        
+        // Extract user IDs from the filtered employees
+        userIds = filteredEmployees.map { $0.employeeId }
+        
+        if userIds.count > 0 {
+            // Fetch users by IDs
+            User.fetchUsersByIDs(userIDs: userIds) { fetchedUsers in
+                // Assign fetched users to AddPositionViewController.assignedUsers
+                AddPositionViewController.assignedUsers = fetchedUsers
+            }
+        }
+        
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "Position")
         backButton = BackButton(text: nil, target: self, action: #selector(goBack))
@@ -53,7 +72,7 @@ class EditPositionViewController: UIViewController {
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonTapped)
         cancelButton.isEnabled = true
-
+        
         editButton = UIBarButtonItem()
         editButton.title = "Edit"
         editButton.target = self
@@ -87,8 +106,6 @@ class EditPositionViewController: UIViewController {
         positionTextField.isEnabled = false
         positionTextField.text = currentPosition
         positionTextField.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
-
-        
         
         view.addSubview(positionTextField)
         
@@ -116,8 +133,8 @@ class EditPositionViewController: UIViewController {
         userButton.layer.cornerRadius = 15
         userButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         userButton.isEnabled = false
-        
         userButton.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(userButton)
         
         role == "Administrator" ? adminButtonTapped() : userButtonTapped()
@@ -127,8 +144,6 @@ class EditPositionViewController: UIViewController {
         buttonsStack.spacing = 20
         buttonsStack.distribution = .fillEqually
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         
         view.addSubview(buttonsStack)
         
@@ -142,7 +157,6 @@ class EditPositionViewController: UIViewController {
             buttonsStack.heightAnchor.constraint(equalToConstant: 45)
         ])
         
-        
         // Add Assign users button
         assignButton = UIButton()
         assignButton.setTitle("Assign Users", for: .normal)
@@ -155,16 +169,35 @@ class EditPositionViewController: UIViewController {
         assignButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         assignButton.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(assignButton)
-
+        // Add Assign users button
+        deleteButton = UIButton()
+        deleteButton.setTitle("Delete Position", for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        deleteButton.layer.borderWidth = 1.0
+        deleteButton.layer.borderColor = UIColor.red.cgColor
+        deleteButton.setTitleColor(.red, for: .normal)
+        deleteButton.backgroundColor = .white
+        deleteButton.layer.cornerRadius = 15
+        deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        editButtonsStack = UIStackView()
+        editButtonsStack.axis = .horizontal
+        editButtonsStack.distribution = .equalCentering
+        editButtonsStack.addArrangedSubview(assignButton)
+        editButtonsStack.addArrangedSubview(deleteButton)
+        editButtonsStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(editButtonsStack)
+        
         NSLayoutConstraint.activate([
-            assignButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -85),
-            assignButton.heightAnchor.constraint(equalToConstant: 55),
-            assignButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
-            assignButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            editButtonsStack.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -85),
+            editButtonsStack.heightAnchor.constraint(equalToConstant: 55),
+            editButtonsStack.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
+            editButtonsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deleteButton.widthAnchor.constraint(equalTo: editButtonsStack.widthAnchor, multiplier: 0.47),
+            assignButton.widthAnchor.constraint(equalTo: editButtonsStack.widthAnchor, multiplier: 0.47),
         ])
-        
-        
     }
     
     // Use the textFieldDidChange method to capture text changes
@@ -185,9 +218,69 @@ class EditPositionViewController: UIViewController {
         assignVC.isEditMode = true
         assignVC.currentPosition = currentPosition
         assignVC.editView = self
+        assignVC.previouslyAssignedUsers = AddPositionViewController.assignedUsers
         
         present(assignVC, animated: true, completion: nil)
     }
+    
+    @objc func deleteButtonTapped() {
+        
+        // Create an alert to confirm deletion
+        let alertController = UIAlertController(
+            title: "Confirm Deletion",
+            message: "Are you sure you want to delete this position?",
+            preferredStyle: .alert
+        )
+        
+        // Add Delete and Cancel actions
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            self.confirmDeletePosition()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        // Present the alert
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func confirmDeletePosition() {
+        // Delete the position from the positions in the workspace
+        if role == "Administrator" {
+            if let index = Utils.workspace.positions.admins.firstIndex(of: currentPosition) {
+                Utils.workspace.positions.admins.remove(at: index)
+            }
+        } else {
+            if let index = Utils.workspace.positions.employees.firstIndex(of: currentPosition) {
+                Utils.workspace.positions.employees.remove(at: index)
+            }
+        }
+        
+        // Set the position of every employee with that position to an empty string
+        Utils.workspace.employees = Utils.workspace.employees.map { employee in
+            var mutableEmployee = employee
+            if employee.position == currentPosition {
+                mutableEmployee.position = ""
+            }
+            return mutableEmployee
+        }
+        
+        // Update the workspace on Firestore
+        Workspace.updateWorkspace(workspace: Utils.workspace) { error in
+            if let error = error {
+                print("Error updating workspace: \(error.localizedDescription)")
+            } else {
+                print("Workspace updated successfully")
+                // Reload table data or update UI as needed
+                self.positionsTableView.reloadData()
+            }
+        }
+        
+        // Dismiss the current view controller
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     @objc func adminButtonTapped() {
         role = "Administrator"
@@ -214,14 +307,13 @@ class EditPositionViewController: UIViewController {
     @objc func cancelButtonTapped() {
         positionTextField.text = currentPosition
         
-        assignButton.isHidden = false
+        editButtonsStack.isHidden = false
         adminButton.isEnabled = false
         userButton.isEnabled = false
         
         navigationBar.items?.first?.rightBarButtonItem = editButton
         navigationBar.items?.first?.leftBarButtonItem = backButton
     }
-    
     
     @objc func goBack() {
         // Pop the current view controller from the navigation stack
@@ -231,23 +323,20 @@ class EditPositionViewController: UIViewController {
     @objc func editButtonTapped() {
         // enable text field
         positionTextField.isEnabled = true
-        view.addSubview(assignButton)
         navigationBar.items?.first?.rightBarButtonItem = saveButton
         navigationBar.items?.first?.leftBarButtonItem = cancelButton
-
         
         positionTextField.backgroundColor = .white
         adminButton.isEnabled = true
         userButton.isEnabled = true
-        assignButton.isHidden = true
-        // add assign user and delete position at the bottom
+        editButtonsStack.isHidden = true
     }
     
     // Function to handle the save button tap
     @objc func saveButtonTapped() {
-        assignButton.isHidden = false
+        editButtonsStack.isHidden = false
         navigationBar.items?.first?.leftBarButtonItem = backButton
-
+        
         let position = positionTextField.text!
         
         // Update position
@@ -280,26 +369,13 @@ class EditPositionViewController: UIViewController {
             }
         }
         
-        // Filter employees to get only those whose positions match the current position
-        let filteredEmployees = Utils.workspace.employees.filter { $0.position == currentPosition }
-
-        // Extract user IDs from the filtered employees
-        let userIds = filteredEmployees.map { $0.employeeId }
-                
-        if userIds.count > 0 {
-            // Fetch users by IDs
-            User.fetchUsersByIDs(userIDs: userIds) { fetchedUsers in
-                // Assign fetched users to AddPositionViewController.assignedUsers
-                AddPositionViewController.assignedUsers = fetchedUsers
-            }
-        }
-        
         // Get the user IDs of all users in AddPositionViewController.assignedUsers
         let assignedUserIds = AddPositionViewController.assignedUsers.map { $0.id }
-
+        
+        
         // Get the user IDs of users that are in previouslyAssignedUsers but not in AddPositionViewController.assignedUsers
         let usersToRemoveIds = userIds.filter { !assignedUserIds.contains($0) }
-
+    
         // Update the positions of users in the workspace with the IDs found in usersToRemoveIds
         Utils.workspace.employees = Utils.workspace.employees.map { employee in
             if usersToRemoveIds.contains(employee.employeeId) {
@@ -310,7 +386,7 @@ class EditPositionViewController: UIViewController {
                 return employee // Return the employee as it is, without any changes
             }
         }
-
+        
         Utils.workspace.employees = Utils.workspace.employees.map { employee in
             if assignedUserIds.contains(employee.employeeId) {
                 var mutableEmployee = employee // Create a mutable copy of the employee
@@ -335,4 +411,3 @@ class EditPositionViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
-

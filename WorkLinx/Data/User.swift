@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 
-struct User : Codable {
+struct User : Codable, Equatable {
     var id: String // Add a property to store the user ID from Firestore
     var emailAddress: String
     var firstName = ""
@@ -34,6 +34,16 @@ struct User : Codable {
         case availabilityIds
         case timeOffRequestIds
         case shiftIds
+    }
+    
+    // Equatable conformance: Compare users by their ID
+    static func == (lhs: User, rhs: User) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    // Inequality operator, utilizing the `==` operator
+    static func != (lhs: User, rhs: User) -> Bool {
+        return !(lhs == rhs)
     }
     
     init(id: String, emailAddress: String, defaultWorkspaceId: String) {
