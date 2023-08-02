@@ -268,7 +268,6 @@ class Utils{
         userSection.append(CellUserProfile(titleLabel: "First Name", textLabel: user.firstName))
         userSection.append(CellUserProfile(titleLabel: "Last Name", textLabel: user.lastName))
         userSection.append(CellUserProfile(titleLabel: "Email Address", textLabel: user.emailAddress))
-        userSection.append(CellUserProfile(titleLabel: "Position", textLabel: user.position))
 
         if isAdmin {
             

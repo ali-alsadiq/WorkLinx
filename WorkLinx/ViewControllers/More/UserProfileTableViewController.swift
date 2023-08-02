@@ -84,14 +84,10 @@ class UserProfileTableViewController: UIViewController {
         let firstNameCell = userProfileTableView.cellForRow(at: IndexPath(row: 0, section: Utils.isAdmin ? 1 : 0)) as? UserProfileCell
         let lastNameCell = userProfileTableView.cellForRow(at: IndexPath(row: 1, section: Utils.isAdmin ? 1 : 0)) as? UserProfileCell
         let emailAddressCell = userProfileTableView.cellForRow(at: IndexPath(row: 2, section: Utils.isAdmin ? 1 : 0)) as? UserProfileCell
-        let positionCell = userProfileTableView.cellForRow(at: IndexPath(row: 3, section: Utils.isAdmin ? 1 : 0)) as? UserProfileCell
         
         Utils.user.firstName = firstNameCell?.textField.text ?? ""
         Utils.user.lastName = lastNameCell?.textField.text ?? ""
         Utils.user.emailAddress = emailAddressCell?.textField.text ?? ""
-        Utils.user.position = positionCell?.textField.text ?? ""
-
-        print(Utils.user.description)
        
         fetchDataForUserProfile()
 

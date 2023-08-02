@@ -42,6 +42,10 @@
 		C7DDC4F42A7900A2007E3564 /* AssignUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */; };
 		C7DDC4F62A790B56007E3564 /* AssignPositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F52A790B56007E3564 /* AssignPositionCell.swift */; };
 		C7DDC4F82A795FD3007E3564 /* EditPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F72A795FD3007E3564 /* EditPositionViewController.swift */; };
+		C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */; };
+		C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */; };
+		C7DDC4FF2A7A4C4C007E3564 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4FE2A7A4C4C007E3564 /* PickerView.swift */; };
+		C7DDC5012A7A64BF007E3564 /* EmailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC5002A7A64BF007E3564 /* EmailListView.swift */; };
 		C7E050692A53F4120026971C /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E050682A53F4120026971C /* BackButton.swift */; };
 		C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */; };
 		C7E0506D2A5410030026971C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506C2A5410030026971C /* Utils.swift */; };
@@ -90,6 +94,10 @@
 		C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignUsersViewController.swift; sourceTree = "<group>"; };
 		C7DDC4F52A790B56007E3564 /* AssignPositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignPositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F72A795FD3007E3564 /* EditPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPositionViewController.swift; sourceTree = "<group>"; };
+		C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
+		C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
+		C7DDC4FE2A7A4C4C007E3564 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
+		C7DDC5002A7A64BF007E3564 /* EmailListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailListView.swift; sourceTree = "<group>"; };
 		C7E050682A53F4120026971C /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmployeeViewController.swift; sourceTree = "<group>"; };
 		C7E0506C2A5410030026971C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -138,9 +146,10 @@
 			isa = PBXGroup;
 			children = (
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
+				C7DDC4F22A790082007E3564 /* Positions */,
+				C7DDC4FB2A7A48DF007E3564 /* Users */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
 				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
-				C7DDC4F22A790082007E3564 /* Positions */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -191,9 +200,9 @@
 		C77BE0102A4AAF94007A8D06 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
 				C70514492A6A5838003A69EA /* Auth */,
 				C73392C92A6D56FB004A7E60 /* More */,
-				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
 				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
@@ -207,6 +216,8 @@
 			children = (
 				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
 				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
+				C7DDC4FE2A7A4C4C007E3564 /* PickerView.swift */,
+				C7DDC5002A7A64BF007E3564 /* EmailListView.swift */,
 				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
 				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
 				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
@@ -240,6 +251,15 @@
 				C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */,
 			);
 			path = Positions;
+			sourceTree = "<group>";
+		};
+		C7DDC4FB2A7A48DF007E3564 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */,
+				C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */,
+			);
+			path = Users;
 			sourceTree = "<group>";
 		};
 		C7ECD8482A625C3900D494EB /* Data */ = {
@@ -359,21 +379,25 @@
 				C7ECD8412A6258AC00D494EB /* Workspace.swift in Sources */,
 				C70AB40F2A69BFA2009736B8 /* CreateWorkspaceCell.swift in Sources */,
 				C7E0A2512A58824C00003473 /* MenuBarViewController.swift in Sources */,
+				C7DDC5012A7A64BF007E3564 /* EmailListView.swift in Sources */,
 				C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */,
 				C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */,
 				C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */,
 				C7DDC4F42A7900A2007E3564 /* AssignUsersViewController.swift in Sources */,
+				C7DDC4FF2A7A4C4C007E3564 /* PickerView.swift in Sources */,
 				C73392C62A6D4B40004A7E60 /* UserProfileTableViewController.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
+				C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */,
 				C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */,
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,
 				C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */,
 				C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */,
 				C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */,
+				C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,
 				C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */,
 			);

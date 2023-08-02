@@ -118,7 +118,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Send Message":
                 print(cellData.text)
             case "Users":
-                print(cellData.text)
+                navigateToUsersViewController()
             case "Positions":
                 navigateToPositionsViewController()
             case "Tags":
@@ -138,6 +138,14 @@ extension MoreViewController: UITableViewDelegate{
             default:
                 break
         }
+    }
+    
+    func navigateToUsersViewController() {
+        let usersVC = UsersViewController()
+        
+        // Present the UserProfileTableViewController modally
+        usersVC.modalPresentationStyle = .fullScreen
+        present(usersVC, animated: true, completion: nil)
     }
     
     func navigateToProfileSettings() {
