@@ -104,6 +104,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Calendar Sync":
                 print(cellData.text)
             case "Availabilty":
+                
                 print(cellData.text)
             case "My Hours":
                 print(cellData.text)
