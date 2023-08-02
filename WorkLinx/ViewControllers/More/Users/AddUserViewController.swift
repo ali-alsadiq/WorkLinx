@@ -40,6 +40,7 @@ class AddUserViewController: UIViewController {
         ])
         
         emailTextField = CustomTextField(placeholder: "Email", textContentType: .emailAddress)
+        emailTextField.autocapitalizationType = .none
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         
         addButton = CustomButton(label: "Add")
@@ -101,32 +102,23 @@ class AddUserViewController: UIViewController {
         
         // Check if the user has already been invited
         if Utils.workspace.invitedUsers.contains(enteredEmail) {
-            showAlert(title: "User Invited", message: "The user has already been invited.")
+            Utils.showAlert(title: "User Invited", message: "The user has already been invited.", viewController: self)
         }
         else if emailListManager.emails.contains(enteredEmail) {
-            showAlert(title: "Email Already Added", message: "The email is already added to the list.")
+            Utils.showAlert(title: "Email Already Added", message: "The email is already added to the list.", viewController: self)
         }
         else {
             // Check if the entered text is a valid email address
-            if isValidEmail(enteredEmail) {
+            if Utils.isValidEmail(enteredEmail) {
                 emailListManager.addEmail(enteredEmail)
                 inviteButton.isEnabled = true
             } else {
-                showAlert(title: "Invalid Email", message: "Please enter a valid email address.")
+                Utils.showAlert(title: "Invalid Email", message: "Please enter a valid email address.", viewController: self)
             }
         }
     }
     
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "^[A-Z0-9a-z._%+-]{2,}@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
-    }
     
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
+    
+    
 }

@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
 
     
     @IBAction func employeeBttnTapped() {
-        Utils.navigate("RegisterEmployeeView", self)
+        Utils.navigate(RegisterEmployeeViewController(), self)
     }
     
     @IBAction func employerBttnTapped() {
@@ -70,7 +70,6 @@ class RegisterViewController: UIViewController {
             } else if let authResult = authResult {
                 // User successfully created
                 completion(.success(authResult))
-                
             }
         }
     }

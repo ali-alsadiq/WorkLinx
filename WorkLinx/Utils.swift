@@ -46,6 +46,7 @@ class Utils{
     static var user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
     static var password = ""
     static var isAdmin = true
+    static var invitingWorkspaces: [Workspace] = []
     
     static let db = Firestore.firestore()
 
@@ -325,5 +326,18 @@ class Utils{
             
             sender.present(vc, animated: false, completion: nil)
         }
+    }
+    
+    static func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Z0-9a-z._%+-]{2,}@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
+    
+    static func showAlert(title: String, message: String, viewController: UIViewController) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        viewController.present(alertController, animated: true, completion: nil)
     }
 }

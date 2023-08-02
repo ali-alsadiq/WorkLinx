@@ -1,3 +1,10 @@
+//
+//  RegisterEmployerViewController.swift
+//  WorkLinx
+//
+//  Created by Ali Alsadiq
+//
+
 import UIKit
 import SwiftUI
 import FirebaseFirestore
@@ -71,6 +78,14 @@ class RegisterEmployerViewController: UIViewController {
     
     @objc func createBttnTapped() {
         
+        // check if workspace name and address are not empty and valid
+        // else show alert and return
+        
+        // Show UserInfoFormViewController
+        
+        
+        // The rest of code is excuting from UserInfoFormViewController
+        
         // Check if the workspace name is unique
         if isWorkspaceNameUnique(texboxComopanyName.text!) {
             // Create the workspace
@@ -83,7 +98,6 @@ class RegisterEmployerViewController: UIViewController {
             // Execute the functions sequentially
             serialQueue.async {
                 var workspaceId: String?
-                var createUserError: Error?
                 var userDataError: Error?
                 
                 // Create user if not already created
@@ -100,17 +114,13 @@ class RegisterEmployerViewController: UIViewController {
                         case .failure(let error):
                             // Error occurred while creating the user
                             print("Error creating user: \(error.localizedDescription)")
-                            createUserError = error
+                            return
                         }
                         createUserGroup.leave()
                     }
                     createUserGroup.wait() // Wait for the completion of createUser function
                     
-                    // Check if user creation was successful
-                    if createUserError != nil {
-                        print("User creation failed.")
-                        return
-                    }
+                    
                 }
                 
                 // User successfully created, now create the workspace

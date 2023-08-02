@@ -25,6 +25,8 @@ class SignInForm {
     
     private lazy var stackView: UIStackView = {
         emailTextField = CustomTextField(placeholder: "Email", textContentType: .emailAddress)
+        emailTextField.autocapitalizationType = .none
+
         passwordTextField = CustomTextField(placeholder: "Password", textContentType: .password)
         
         passwordTextField.isSecureTextEntry = true
@@ -60,6 +62,11 @@ class SignInForm {
         // Check if the password is invalid
         if passwordTextField.text!.isEmpty || passwordTextField.text!.count < 6 {
             viewController.showInvalidPasswordAlert()
+            return
+        }
+        
+        if !Utils.isValidEmail(emailTextField.text!) {
+            Utils.showAlert(title: "Invalid Email", message: "Please enter a valid email address.", viewController: viewController)
             return
         }
         

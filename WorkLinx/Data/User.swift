@@ -15,6 +15,7 @@ struct User : Codable, Equatable {
     var emailAddress: String
     var firstName = ""
     var lastName = ""
+    var address = ""
     var workSpaces: [String] = []
     var defaultWorkspaceId: String
     var position = ""
@@ -28,6 +29,7 @@ struct User : Codable, Equatable {
         case emailAddress
         case firstName
         case lastName
+        case address
         case workSpaces
         case defaultWorkspaceId
         case position

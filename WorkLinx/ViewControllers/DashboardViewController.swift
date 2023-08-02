@@ -9,8 +9,9 @@ import UIKit
 
 class DashboardViewController: MenuBarViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var tableView: UITableView!
     
+    var tableView: UITableView!
     var data: [(String, [CellDashboard])] = [] // Initialize the data property with an empty array
     
     override func viewDidAppear(_ animated: Bool) {
@@ -20,8 +21,13 @@ class DashboardViewController: MenuBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        tableView = UITableView()
+        
+        
         // Add nav bar
-
         let navigationBar = CustomNavigationBar(title: Utils.workspace.name)
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -33,8 +39,11 @@ class DashboardViewController: MenuBarViewController {
             navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
+        view.addSubview(tableView)
+
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

@@ -25,6 +25,8 @@ class SignUpForm {
     
     private lazy var stackView: UIStackView = {
         emailTextField = CustomTextField(placeholder: "Email", textContentType: .emailAddress)
+        emailTextField.autocapitalizationType = .none
+
         passwordTextField = CustomTextField(placeholder: "Password", textContentType: .newPassword)
         confirmPasswordTextField = CustomTextField(placeholder: "Confirm Password", textContentType: .newPassword)
         
@@ -56,6 +58,11 @@ class SignUpForm {
         // Check if the email already exists in the "users" collection in Firestore
         let email = emailTextField.text!.lowercased()
         let usersCollection = Firestore.firestore().collection("usersData")
+        
+        if !Utils.isValidEmail(emailTextField.text!) {
+            Utils.showAlert(title: "Invalid Email", message: "Please enter a valid email address.", viewController: viewController)
+            return
+        }
         
         // Check if the password is invalid
         if passwordTextField.text!.isEmpty || passwordTextField.text!.count < 6 {

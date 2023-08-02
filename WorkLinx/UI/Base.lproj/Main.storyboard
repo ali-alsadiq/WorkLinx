@@ -246,31 +246,6 @@
             </objects>
             <point key="canvasLocation" x="6456" y="487"/>
         </scene>
-        <!--Register Employee View Controller-->
-        <scene sceneID="vL0-6L-emt">
-            <objects>
-                <viewController storyboardIdentifier="RegisterEmployeeView" id="K6g-pY-4W5" customClass="RegisterEmployeeViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="baf-Dp-cRG">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Employee signup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39W-GL-K2e">
-                                <rect key="frame" x="131" y="109" width="130" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="icD-o2-I0a"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="oFO-e8-IbL"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OcE-zG-4ts" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3458.7786259541981" y="-229.57746478873241"/>
-        </scene>
         <!--Request View Controller-->
         <scene sceneID="9QH-44-FAS">
             <objects>
