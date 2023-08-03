@@ -72,12 +72,12 @@ extension SelectWorkPlaceViewController: UITableViewDelegate{
         
         if let cellWorkspace = cellData as? CellWorkspace {
             Utils.user.defaultWorkspaceId = cellWorkspace.workspace.workspaceId
-            Utils.navigate("DashboardView", self)
+            Utils.navigate(DashboardViewController(), self)
         } else if let createWorkspaceCell = cellData as? CellCreateWorkspace {
             if createWorkspaceCell.cellText.lowercased().contains("create".lowercased()){
-                Utils.navigate("RegisterEmployerView", self)
-            } else if createWorkspaceCell.cellText.lowercased().contains("joint".lowercased()){
-                print("navigate to joining workspace page or show alert??")
+                Utils.navigate(CreateNewWorkspaceViewController(), self)
+            } else if createWorkspaceCell.cellText.lowercased().contains("join".lowercased()){
+                Utils.navigate(ConfirmInvitingWorkspacesViewController(isLoggedIn: true), self)
             }
         }
     }

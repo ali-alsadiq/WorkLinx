@@ -220,4 +220,33 @@ class Workspace: Codable {
             }
         }
     }
+    
+    static func updateInvitingWorkspaces(completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("workspaces").whereField("invitedUsers", arrayContains: Utils.user.emailAddress).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error.localizedDescription)")
+                completion()
+            } else {
+                if let documents = querySnapshot?.documents {
+                    Utils.invitingWorkspaces = documents.compactMap { document in
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: document.data(), options: [])
+                            let workspace = try JSONDecoder().decode(Workspace.self, from: jsonData)
+                            return workspace
+                        } catch {
+                            print("Error decoding workspace data: \(error)")
+                            return nil
+                        }
+                    }
+                } else {
+                    // No documents found
+                    Utils.invitingWorkspaces = []
+                }
+                
+                completion()
+            }
+        }
+    }
 }

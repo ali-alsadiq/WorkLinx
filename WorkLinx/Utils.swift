@@ -49,7 +49,7 @@ class Utils{
     static var invitingWorkspaces: [Workspace] = []
     
     static let db = Firestore.firestore()
-
+    
     static func encodeData(data: Encodable) throws -> [String: Any]? {
         do {
             // Encode the User instance to JSON data using JSONEncoder
@@ -69,7 +69,7 @@ class Utils{
     }
     
     static func getDashboardTableData(completion: @escaping ([(String, [CellDashboard])]) -> Void) {
-
+        
         // Fetch data related to the defaultWorkspace from Firestore
         let db = Firestore.firestore()
         
@@ -106,21 +106,21 @@ class Utils{
                 // Need to be fixed
                 
                 // Fetch user-specific data for the dashboard
-//                let userShiftsCount = user.shiftIds.filter { shiftId in
-//                    let shiftRef = db.collection("shifts").document(shiftId)
-//                    return workspace.shiftIds.contains(shiftRef.documentID)
-//                }.count
-//
-//                let userTimeOffRequestsCount = user.timeOffRequestIds.filter { requestId in
-//                    let requestRef = db.collection("timeOffRequests").document(requestId)
-//                    return workspace.timeOffRequestIds.contains(requestRef.documentID)
-//                }.count
-//
-//                let userOpenShiftsCount = user.availabilityIds.filter { availabilityId in
-//                    let availabilityRef = db.collection("availabilities").document(availabilityId)
-//                    return workspace.availabilityIds.contains(availabilityRef.documentID)
-//                }.count
-//
+                //                let userShiftsCount = user.shiftIds.filter { shiftId in
+                //                    let shiftRef = db.collection("shifts").document(shiftId)
+                //                    return workspace.shiftIds.contains(shiftRef.documentID)
+                //                }.count
+                //
+                //                let userTimeOffRequestsCount = user.timeOffRequestIds.filter { requestId in
+                //                    let requestRef = db.collection("timeOffRequests").document(requestId)
+                //                    return workspace.timeOffRequestIds.contains(requestRef.documentID)
+                //                }.count
+                //
+                //                let userOpenShiftsCount = user.availabilityIds.filter { availabilityId in
+                //                    let availabilityRef = db.collection("availabilities").document(availabilityId)
+                //                    return workspace.availabilityIds.contains(availabilityRef.documentID)
+                //                }.count
+                //
                 // Create dashboard data
                 var callDataArray: [(String, [CellDashboard])] = []
                 
@@ -133,16 +133,16 @@ class Utils{
                 }
                 
                 // Schedule section
-//                var scheduleSection: [CellDashboard] = []
-//                scheduleSection.append(CellDashboard(number: userShiftsCount, text: "My Shifts"))
-//                if !isAdmin {
-//                    scheduleSection.append(CellDashboard(number: userTimeOffRequestsCount, text: "Time Off Requests"))
-//                    scheduleSection.append(CellDashboard(number: userOpenShiftsCount, text: "Shift Requests"))
-//                }
-//                let workSpaceOpenShifts = workspace.openShifts.count
-//                scheduleSection.append(CellDashboard(number: workSpaceOpenShifts, text: "OpenShift Available"))
-//
-//                callDataArray.append(("My Schedule", scheduleSection))
+                //                var scheduleSection: [CellDashboard] = []
+                //                scheduleSection.append(CellDashboard(number: userShiftsCount, text: "My Shifts"))
+                //                if !isAdmin {
+                //                    scheduleSection.append(CellDashboard(number: userTimeOffRequestsCount, text: "Time Off Requests"))
+                //                    scheduleSection.append(CellDashboard(number: userOpenShiftsCount, text: "Shift Requests"))
+                //                }
+                //                let workSpaceOpenShifts = workspace.openShifts.count
+                //                scheduleSection.append(CellDashboard(number: workSpaceOpenShifts, text: "OpenShift Available"))
+                //
+                //                callDataArray.append(("My Schedule", scheduleSection))
                 
                 // Call the completion handler with the data
                 completion(callDataArray)
@@ -206,7 +206,7 @@ class Utils{
         
         return CallDataArray
     }
-
+    
     
     static func getMoreTableData(isAdmin: Bool) -> [(String, [CellMore])]
     {
@@ -269,7 +269,7 @@ class Utils{
         userSection.append(CellUserProfile(titleLabel: "First Name", textLabel: user.firstName))
         userSection.append(CellUserProfile(titleLabel: "Last Name", textLabel: user.lastName))
         userSection.append(CellUserProfile(titleLabel: "Email Address", textLabel: user.emailAddress))
-
+        
         if isAdmin {
             
             var workspaceSection: [CellUserProfile] = []
@@ -279,7 +279,7 @@ class Utils{
             
             CallDataArray.append(("Workspace Profile", workspaceSection))
         }
-       
+        
         CallDataArray.append(("User Profile", userSection))
         
         return CallDataArray
@@ -311,10 +311,9 @@ class Utils{
     // Navigate using UIViewController
     static func navigate(_ vc: UIViewController,
                          _ sender: UIViewController,
-                         transitionTime: Double = 0.2)
+                         delayTime: Double = 0)
     {
-        DispatchQueue.main.asyncAfter(deadline: .now() + transitionTime)
-        {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
             vc.modalPresentationStyle = .fullScreen
             
             // Customize the transition animation
@@ -324,9 +323,11 @@ class Utils{
             transition.subtype = .fromBottom
             sender.view.window?.layer.add(transition, forKey: kCATransition)
             
+           
             sender.present(vc, animated: false, completion: nil)
         }
     }
+
     
     static func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "^[A-Z0-9a-z._%+-]{2,}@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
@@ -340,4 +341,19 @@ class Utils{
         alertController.addAction(okAction)
         viewController.present(alertController, animated: true, completion: nil)
     }
+    
+//    static func replaceRootViewControllerWith(viewController: UIViewController) {
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let window = windowScene.windows.first {
+//            
+//            // Remove all existing view controllers from the window
+//            window.rootViewController = nil
+//            
+//            // Set the specified view controller as the new root
+//            window.rootViewController = viewController
+//            
+//            // Make the window visible
+//            window.makeKeyAndVisible()
+//        }
+//    }
 }

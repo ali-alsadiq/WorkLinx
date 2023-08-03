@@ -13,7 +13,7 @@ class SignInForm {
     private var passwordTextField: CustomTextField!
     private var signInButton: CustomButton!
     private var viewController: AuthViewController!
-
+    
     var view: UIView {
         return stackView
     }
@@ -26,7 +26,7 @@ class SignInForm {
     private lazy var stackView: UIStackView = {
         emailTextField = CustomTextField(placeholder: "Email", textContentType: .emailAddress)
         emailTextField.autocapitalizationType = .none
-
+        
         passwordTextField = CustomTextField(placeholder: "Password", textContentType: .password)
         
         passwordTextField.isSecureTextEntry = true
@@ -79,49 +79,63 @@ class SignInForm {
                 
                 let db = Firestore.firestore()
                 let userDataCollection = db.collection("usersData")
-
+                
                 userDataCollection.whereField("emailAddress", isEqualTo: user.email!).getDocuments { (snapshot, error) in
                     if let error = error {
                         // Error occurred while querying the database
                         print("Error querying database: \(error.localizedDescription)")
                         return
                     }
-                    print(user.email!)
-                    print(self.emailTextField.text!.lowercased())
-                    print("snap \(String(describing: snapshot?.description))")
-
-                    if let snapshot = snapshot, let userData = snapshot.documents.first {
-                        let defaultWorkspaceId = userData["defaultWorkspaceId"] as! String
-                        let email = userData["emailAddress"] as! String
-                        let userId = userData["id"] as! String
-                        
-                        Workspace.getWorkspaceByID(workspaceID: defaultWorkspaceId) { workspace in
-                            if let workspace = workspace {
-                                Utils.workspace = workspace
-                                Utils.user = User(id: userId, emailAddress: email, defaultWorkspaceId: defaultWorkspaceId)
-                                Utils.isAdmin = workspace.admins.contains(userId)
-                                // Navigate to the DashboardView inside the completion block
-                                Utils.navigate("DashboardView", self.viewController)
-                            } else {
-                                // Failed to fetch the workspace or some data is missing
-                                // Handle the error or show an appropriate alert
-                                print ("error")
+                    
+                    if let snapshot = snapshot {
+                        if let userData = snapshot.documents.first?.data() {
+                            do {
+                                let jsonData = try JSONSerialization.data(withJSONObject: userData)
+                                let decoder = JSONDecoder()
+                                let user = try decoder.decode(User.self, from: jsonData)
+                                
+                                // Set the decoded user to Utils.user
+                                Utils.user = user
+                                
+                            } catch {
+                                print("Error decoding user data: \(error)")
                             }
+                        } else {
+                            // User doesn't exist in the database
+                            self.showNoAccountFoundAlert()
+                        }
+                    }
+                    
+                    Workspace.getWorkspaceByID(workspaceID: Utils.user.defaultWorkspaceId) { workspace in
+                        if let workspace = workspace {
+                            Utils.workspace = workspace
+                            Utils.isAdmin = workspace.admins.contains(Utils.user.id)
+                            // Navigate to the DashboardView inside the completion block
+                            Utils.navigate(DashboardViewController(), self.viewController)
+                        } else {
+                            // Failed to fetch the workspace or some data is missing
+                            // Handle the error or show an appropriate alert
+                            print ("error")
                         }
                     }
                 }
-                
-                
             case .failure(let error):
                 // User sign-in failed
-                print("Error signing in: \(error.localizedDescription)")
-                // Show an alert indicating that the password is incorrect
-                self.showWrongPasswordAlert()
+                if let authError = error as NSError? {
+                    switch(authError)
+                    {
+                    case AuthErrorCode.userNotFound :
+                        self.showNoAccountFoundAlert()
+                    case AuthErrorCode.wrongPassword:
+                        self.showWrongPasswordAlert()
+                    default:
+                        self.showSignInErrorAlert()
+                    }
+                }
             }
         }
     }
-
-
+    
     func showSignInErrorAlert() {
         let alertController = UIAlertController(
             title: "Error",
@@ -132,7 +146,6 @@ class SignInForm {
         alertController.addAction(okAction)
         viewController.present(alertController, animated: true, completion: nil)
     }
-
     
     func showNoAccountFoundAlert() {
         let alertController = UIAlertController(
@@ -145,7 +158,6 @@ class SignInForm {
             // Handle Sign Up button action
             // Create user
             Utils.user = User(id: "", emailAddress: self.emailTextField.text!.lowercased(), defaultWorkspaceId: "")
-            
             Utils.navigate("RegisterView", self.viewController)
         }
         

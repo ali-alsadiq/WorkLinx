@@ -49,9 +49,8 @@
 		C7DDC5052A7ADF89007E3564 /* InvitingWorkspacesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */; };
 		C7DDC5072A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC5062A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift */; };
 		C7E050692A53F4120026971C /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E050682A53F4120026971C /* BackButton.swift */; };
-		C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */; };
 		C7E0506D2A5410030026971C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506C2A5410030026971C /* Utils.swift */; };
-		C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */; };
+		C7E0506F2A5428DE0026971C /* CreateNewWorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0506E2A5428DE0026971C /* CreateNewWorkspaceViewController.swift */; };
 		C7E0A2512A58824C00003473 /* MenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0A2502A58824C00003473 /* MenuBarViewController.swift */; };
 		C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0A2522A59A90E00003473 /* DashboardViewController.swift */; };
 		C7E0A2552A59B23700003473 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E0A2542A59B23700003473 /* ScheduleViewController.swift */; };
@@ -104,9 +103,8 @@
 		C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitingWorkspacesList.swift; sourceTree = "<group>"; };
 		C7DDC5062A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmInvitingWorkspacesViewController.swift; sourceTree = "<group>"; };
 		C7E050682A53F4120026971C /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
-		C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmployeeViewController.swift; sourceTree = "<group>"; };
 		C7E0506C2A5410030026971C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEmployerViewController.swift; sourceTree = "<group>"; };
+		C7E0506E2A5428DE0026971C /* CreateNewWorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWorkspaceViewController.swift; sourceTree = "<group>"; };
 		C7E0A2502A58824C00003473 /* MenuBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarViewController.swift; sourceTree = "<group>"; };
 		C7E0A2522A59A90E00003473 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		C7E0A2542A59B23700003473 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
@@ -144,8 +142,6 @@
 				C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */,
 				C7DDC5022A7AB034007E3564 /* UserInforFormViewController.swift */,
 				C7DDC5062A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift */,
-				C7E0506A2A5409030026971C /* RegisterEmployeeViewController.swift */,
-				C7E0506E2A5428DE0026971C /* RegisterEmployerViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -156,8 +152,8 @@
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
 				C7DDC4F22A790082007E3564 /* Positions */,
 				C7DDC4FB2A7A48DF007E3564 /* Users */,
+				C7DDC5082A7BF0DA007E3564 /* Workspaces */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
-				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
 				FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */,
 			);
 			path = More;
@@ -269,6 +265,15 @@
 				C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */,
 			);
 			path = Users;
+			sourceTree = "<group>";
+		};
+		C7DDC5082A7BF0DA007E3564 /* Workspaces */ = {
+			isa = PBXGroup;
+			children = (
+				C7E0506E2A5428DE0026971C /* CreateNewWorkspaceViewController.swift */,
+				C70AB40A2A69870A009736B8 /* SelectWorkPlaceViewController.swift */,
+			);
+			path = Workspaces;
 			sourceTree = "<group>";
 		};
 		C7ECD8482A625C3900D494EB /* Data */ = {
@@ -405,8 +410,7 @@
 				C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */,
 				C7DDC5072A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift in Sources */,
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,
-				C7E0506F2A5428DE0026971C /* RegisterEmployerViewController.swift in Sources */,
-				C7E0506B2A5409030026971C /* RegisterEmployeeViewController.swift in Sources */,
+				C7E0506F2A5428DE0026971C /* CreateNewWorkspaceViewController.swift in Sources */,
 				C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */,
 				C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,

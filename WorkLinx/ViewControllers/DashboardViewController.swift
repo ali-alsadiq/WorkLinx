@@ -22,10 +22,15 @@ class DashboardViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Workspace.updateInvitingWorkspaces() {
+            if !Utils.invitingWorkspaces.isEmpty && !ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater {
+                Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+            }
+        }
+        
         view.backgroundColor = .white
         
         tableView = UITableView()
-        
         
         // Add nav bar
         let navigationBar = CustomNavigationBar(title: Utils.workspace.name)
@@ -39,11 +44,11 @@ class DashboardViewController: MenuBarViewController {
             navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        view.addSubview(tableView)
-
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

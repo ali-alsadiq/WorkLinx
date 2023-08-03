@@ -16,11 +16,22 @@ class RegisterViewController: UIViewController {
 
     
     @IBAction func employeeBttnTapped() {
-        Utils.navigate(RegisterEmployeeViewController(), self)
+        Utils.isAdmin = false
+        isInvited { invited in
+            guard invited else {
+                // Employee doesn't have any invitations
+                self.showNoWorkInvitationAlert()
+                return
+            }
+            
+            // Employee has invitations
+            Utils.navigate(UserInfoFormViewController(), self)
+        }
     }
     
     @IBAction func employerBttnTapped() {
-        Utils.navigate("RegisterEmployerView", self)
+        Utils.isAdmin = true
+        Utils.navigate(UserInfoFormViewController(), self)
     }
     
     override func viewDidLoad() {
@@ -62,15 +73,33 @@ class RegisterViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    static func registerUser(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
-            if let error = error {
-                // Error occurred while creating the user
-                completion(.failure(error))
-            } else if let authResult = authResult {
-                // User successfully created
-                completion(.success(authResult))
+    func isInvited(completion: @escaping (Bool) -> Void) {
+        Workspace.updateInvitingWorkspaces() {
+            if !Utils.invitingWorkspaces.isEmpty {
+                // User is invited to at least one workspace
+                completion(true)
+            } else {
+                // User is not invited to any workspace
+                completion(false)
             }
         }
+    }
+    
+    func showNoWorkInvitationAlert() {
+        let title = "No Work Invitation"
+        let message = "You don't have any work invitations. Please contact your workspace admin to receive an invitation, or create a workspace to continue."
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let createWorkspaceAction = UIAlertAction(title: "Create Workspace", style: .default) { (_) in
+            self.employerBttnTapped()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in}
+        
+        alertController.addAction(createWorkspaceAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

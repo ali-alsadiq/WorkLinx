@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="2698.4732824427479" y="14.788732394366198"/>
         </scene>
-        <!--Register Employer View Controller-->
+        <!--Create New Workspace View Controller-->
         <scene sceneID="1qp-Sm-34n">
             <objects>
-                <viewController storyboardIdentifier="RegisterEmployerView" id="v5g-G4-4mW" customClass="RegisterEmployerViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterEmployerView" id="v5g-G4-4mW" customClass="CreateNewWorkspaceViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bzf-ez-PbU">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -17,14 +17,17 @@ class UserInfoFormViewController: UIViewController {
     private var firstNameTextField: CustomTextField!
     private var lastNameTextField: CustomTextField!
     private var addressTextField: CustomTextField!
+    private var texboxComopanyName: CustomTextField!
+    private var textBoxCompanyAddress: CustomTextField!
+    
     private var completeButton: CustomButton!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-
+        
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "User Information")
         backButton = BackButton(text: nil, target: self, action: #selector(goBack))
@@ -39,7 +42,7 @@ class UserInfoFormViewController: UIViewController {
             navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-                
+        
         // Set up the scroll view
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +82,30 @@ class UserInfoFormViewController: UIViewController {
             addressTextField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
         ])
         
+        if Utils.isAdmin {
+            // Workspace Text fields
+            texboxComopanyName = CustomTextField(placeholder: "Workspace Name", textContentType: .organizationName)
+            textBoxCompanyAddress = CustomTextField(placeholder: "Workspace Address", textContentType: .fullStreetAddress)
+            
+            // Add textfields to the scroll view
+            scrollView.addSubview(texboxComopanyName)
+            scrollView.addSubview(textBoxCompanyAddress)
+            
+            texboxComopanyName.translatesAutoresizingMaskIntoConstraints = false
+            textBoxCompanyAddress.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                texboxComopanyName.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 20),
+                texboxComopanyName.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+                texboxComopanyName.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
+                
+                textBoxCompanyAddress.topAnchor.constraint(equalTo: texboxComopanyName.bottomAnchor, constant: 20),
+                textBoxCompanyAddress.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+                textBoxCompanyAddress.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20),
+            ])
+        }
+        
+        
         let completeButton = CustomButton(label: "Complete")
         completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         completeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -111,16 +138,140 @@ class UserInfoFormViewController: UIViewController {
         Utils.user.lastName = lastName
         Utils.user.address = addressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        let confirmInvitingWorkspacesVC = ConfirmInvitingWorkspacesViewController()
-        confirmInvitingWorkspacesVC.modalPresentationStyle = .fullScreen
-
-        present(confirmInvitingWorkspacesVC, animated: true, completion: nil)
+        if Utils.isAdmin {
+            guard let companyName = texboxComopanyName.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyName.isEmpty,
+                  let companyAddress = textBoxCompanyAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyAddress.isEmpty else {
+                // Display an alert indicating that first name and last name are required
+                showAlert(title: "Incomplete Information", message: "Please enter your workspace name and address.")
+                return
+            }
+            
+            Utils.workspace.name = companyName
+            Utils.workspace.address = companyAddress
+            createUserAndWorkSpace()
+        }
+        
+        if Utils.isAdmin {
+            Utils.navigate(DashboardViewController(), self)
+        }
+        else {
+            Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+        }
     }
-
+    
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    func createUserAndWorkSpace() {
+        
+        // Create the workspace
+        let companyName = texboxComopanyName.text!
+        let companyAddress = textBoxCompanyAddress.text!
+        
+        // Create a serial DispatchQueue to execute tasks sequentially on the same thread
+        let serialQueue = DispatchQueue(label: "SignUp Employer")
+        
+        // Execute the functions sequentially
+        serialQueue.async {
+            var workspaceId: String?
+            var userDataError: Error?
+            
+            
+            // Execute createUser function
+            let createUserGroup = DispatchGroup()
+            createUserGroup.enter()
+            Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { result in
+                switch result {
+                case .success(let authResult):
+                    // User successfully created
+                    Utils.user.id = authResult.user.uid // Update the user ID with the ID from Firebase Authentication
+                case .failure(let error):
+                    // Error occurred while creating the user
+                    print("Error creating user: \(error.localizedDescription)")
+                    return
+                }
+                createUserGroup.leave()
+            }
+            createUserGroup.wait() // Wait for the completion of createUser function
+            
+            // User successfully created, now create the workspace
+            let createWorkspaceGroup = DispatchGroup()
+            createWorkspaceGroup.enter()
+            Workspace.createWorkspace(name: companyName, address: companyAddress) { result in
+                switch result {
+                case .success(let id):
+                    workspaceId = id
+                case .failure(let error):
+                    // Error occurred while creating the workspace
+                    print("Error creating workspace: \(error.localizedDescription)")
+                }
+                createWorkspaceGroup.leave()
+            }
+            createWorkspaceGroup.wait() // Wait for the completion of createWorkspace function
+            
+            
+            // Check if workspace creation was successful
+            if let workspaceId = workspaceId {
+                
+                // Workspace successfully created, now create user data
+                let createUserDataGroup = DispatchGroup()
+                createUserDataGroup.enter()
+                
+                Utils.user.defaultWorkspaceId = workspaceId
+                Utils.user.workSpaces.append(workspaceId)
+                
+                Utils.user.setUserData() { userDataResult in
+                    switch userDataResult {
+                    case .success:
+                        createUserDataGroup.leave()
+                    case .failure(let error):
+                        // Error occurred while saving user data
+                        print("Error saving user data: \(error.localizedDescription)")
+                        userDataError = error
+                        createUserDataGroup.leave()
+                    }
+                }
+                createUserDataGroup.wait() // Wait for the completion of createUserData function
+                
+                // Check if there was an error while creating user data
+                if userDataError != nil {
+                    // Handle the user data creation failure
+                    // Show an alert or perform any other necessary action
+                    print("User data creation failed.")
+                    return
+                }
+                
+                // Add the initial admin
+                let addInitialAdminGroup = DispatchGroup()
+                addInitialAdminGroup.enter()
+                Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [])
+                Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
+                    switch adminResult {
+                        
+                    case .success:
+                        print("Initial admin and employee added successfully.")
+                        
+                        // All tasks completed, navigate to the dashboard view
+                        // isAdmin is initially true in MenuBarViewController
+                        Utils.navigate(DashboardViewController(), self)
+                        
+                    case .failure(let error):
+                        print("Error adding initial admin: \(error.localizedDescription)")
+                        // Handle the error appropriately.
+                    }
+                }
+                
+                addInitialAdminGroup.wait() // Wait for the completion of addInitialAdmin function
+            } else {
+                // Handle the workspace creation failure
+                // Show an alert or perform any other necessary action
+                print("Workspace creation failed.")
+            }
+        }
+    }
 }
+

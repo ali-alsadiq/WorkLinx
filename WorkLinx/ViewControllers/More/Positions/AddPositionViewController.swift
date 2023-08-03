@@ -30,8 +30,7 @@ class AddPositionViewController: UIViewController {
         
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "Add Position")
-        cancelButton = UIBarButtonItem()
-        cancelButton.title = "Cancel"
+        cancelButton = BackButton()
         cancelButton.action = #selector(goBack)
         
         saveButton = UIBarButtonItem()

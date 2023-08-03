@@ -7,27 +7,40 @@
 
 import SwiftUI
 
+class WorkspaceManager: ObservableObject {
+    @Published var invitingWorkspaces: [Workspace] = Utils.invitingWorkspaces
+
+    func removeWorkspace(_ workspace: Workspace) {
+        invitingWorkspaces.removeAll { $0.workspaceId == workspace.workspaceId }
+        Utils.invitingWorkspaces.removeAll { $0.workspaceId == workspace.workspaceId }
+    }
+}
+
 struct InvitingWorkspacesList: View {
-    let workspaces: [Workspace]
+    @ObservedObject var workspaceManager: WorkspaceManager
     let onAccept: (Workspace) -> Void
     let onReject: (Workspace) -> Void
     
     var body: some View {
-        List(workspaces, id: \.workspaceId) { workspace in
-            HStack {
+        List(workspaceManager.invitingWorkspaces, id: \.workspaceId) { workspace in
+            HStack(spacing: 20) { // Add spacing between elements
                 Text(workspace.name)
                 Spacer()
-                Button(action: {
-                    onAccept(workspace)
-                }) {
+                Button(action: {}) { // Use an empty action for the Text to prevent tapping outside the image
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green) // Change color here
+                        .imageScale(.large)
+                        .foregroundColor(.green)
+                        .onTapGesture {
+                            onAccept(workspace)
+                        }
                 }
-                Button(action: {
-                    onReject(workspace)
-                }) {
+                Button(action: {}) {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.red) // Change color here
+                        .imageScale(.large)
+                        .foregroundColor(.red)
+                        .onTapGesture {
+                            onReject(workspace)
+                        }
                 }
             }
         }

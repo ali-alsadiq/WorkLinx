@@ -60,6 +60,9 @@ class MoreViewController : MenuBarViewController {
             // Perform the logout action here
             print("Logged out successfully!")
             Utils.user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
+            Utils.invitingWorkspaces = []
+            Utils.workspace = Workspace(workspaceId: "", name: "", address: "", admins: [])
+            ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater = false
             
             // Go back to splash screen
             Utils.navigate("SplashView", self, transitionTime: 0.4)
@@ -104,7 +107,6 @@ extension MoreViewController: UITableViewDelegate{
             case "Calendar Sync":
                 print(cellData.text)
             case "Availabilty":
-                
                 print(cellData.text)
             case "My Hours":
                 print(cellData.text)
