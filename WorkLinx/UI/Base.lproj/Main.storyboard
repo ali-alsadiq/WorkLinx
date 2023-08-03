@@ -361,50 +361,6 @@
             </objects>
             <point key="canvasLocation" x="956.48854961832058" y="14.788732394366198"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="b22-H7-zNZ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="90h-Vf-j5a" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qth-Rd-VHE">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="eVL-dA-Itj" kind="relationship" relationship="rootViewController" id="VhO-v3-qvY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="adN-Ox-Gko" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3432.8244274809158" y="-896.47887323943667"/>
-        </scene>
-        <!--Chat-->
-        <scene sceneID="RC9-73-ZRY">
-            <objects>
-                <viewController storyboardIdentifier="MessageViewController" id="eVL-dA-Itj" customClass="MessageViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aLT-Hq-rGc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ClM-ec-Ndr">
-                                <rect key="frame" x="16" y="174" width="361" height="660"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="kBS-jn-Exu"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Chat" id="j9b-7v-tXQ"/>
-                    <connections>
-                        <outlet property="myTable" destination="ClM-ec-Ndr" id="mkH-Zm-Htr"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wm0-Im-fqs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4359.5419847328239" y="-896.47887323943667"/>
-        </scene>
     </scenes>
     <resources>
         <image name="LogoBlack" width="152" height="171"/>
