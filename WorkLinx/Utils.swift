@@ -68,87 +68,32 @@ class Utils{
         }
     }
     
-    static func getDashboardTableData(completion: @escaping ([(String, [CellDashboard])]) -> Void) {
+    static func getDashboardTableData() -> [(String, [CellDashboard])] {
         
-        // Fetch data related to the defaultWorkspace from Firestore
-        let db = Firestore.firestore()
+        // Create dashboard data
+        var callDataArray: [(String, [CellDashboard])] = []
         
-        // Create a main thread that runs multipe child threads
-        // escape when main thread terminates
+        // Requests section
+        var requestsSection: [CellDashboard] = []
+        requestsSection.append(CellDashboard(number: Utils.workspace.shiftIds.count, text: "All Requests"))
+        requestsSection.append(CellDashboard(number: Utils.workspace.timeOffRequestIds.count, text: "Time Off"))
+        requestsSection.append(CellDashboard(number: Utils.workspace.reimbursementRequestIds.count, text: "Reimbursement"))
         
-        // Create collection for timeOffRequests in Firebase
-        // userId, workspaceId, startTime, endTime, isApproved
-        // Count time off requests
-        
-        // count in thread 1
-        let timeOffRequestsRef = db.collection("timeOffRequests").whereField("workspaceId", isEqualTo: workspace.workspaceId)
-        timeOffRequestsRef.getDocuments { (snapshot, error) in
-            if let error = error {
-                // Handle the error if needed
-                print("Error fetching time off requests: \(error)")
-                return
-            }
-            
-            let timeOffRequestsCount = snapshot?.documents.count ?? 0
-            
-            // count in thread 2
-            // Count shift requests
-            let shiftRequestsRef = db.collection("availabilities").whereField("workspaceId", isEqualTo: workspace.workspaceId)
-            shiftRequestsRef.getDocuments { (snapshot, error) in
-                if let error = error {
-                    // Handle the error if needed
-                    print("Error fetching shift requests: \(error)")
-                    return
-                }
-                
-                let shiftRequestsCount = snapshot?.documents.count ?? 0
-                
-                // Need to be fixed
-                
-                // Fetch user-specific data for the dashboard
-                //                let userShiftsCount = user.shiftIds.filter { shiftId in
-                //                    let shiftRef = db.collection("shifts").document(shiftId)
-                //                    return workspace.shiftIds.contains(shiftRef.documentID)
-                //                }.count
-                //
-                //                let userTimeOffRequestsCount = user.timeOffRequestIds.filter { requestId in
-                //                    let requestRef = db.collection("timeOffRequests").document(requestId)
-                //                    return workspace.timeOffRequestIds.contains(requestRef.documentID)
-                //                }.count
-                //
-                //                let userOpenShiftsCount = user.availabilityIds.filter { availabilityId in
-                //                    let availabilityRef = db.collection("availabilities").document(availabilityId)
-                //                    return workspace.availabilityIds.contains(availabilityRef.documentID)
-                //                }.count
-                //
-                // Create dashboard data
-                var callDataArray: [(String, [CellDashboard])] = []
-                
-                // Requests section
-                var requestsSection: [CellDashboard] = []
-                requestsSection.append(CellDashboard(number: timeOffRequestsCount, text: "Time Off Requests"))
-                requestsSection.append(CellDashboard(number: shiftRequestsCount, text: "Shift Requests"))
-                if isAdmin {
-                    callDataArray.append(("Requests Needing Approval", requestsSection))
-                }
-                
-                // Schedule section
-                //                var scheduleSection: [CellDashboard] = []
-                //                scheduleSection.append(CellDashboard(number: userShiftsCount, text: "My Shifts"))
-                //                if !isAdmin {
-                //                    scheduleSection.append(CellDashboard(number: userTimeOffRequestsCount, text: "Time Off Requests"))
-                //                    scheduleSection.append(CellDashboard(number: userOpenShiftsCount, text: "Shift Requests"))
-                //                }
-                //                let workSpaceOpenShifts = workspace.openShifts.count
-                //                scheduleSection.append(CellDashboard(number: workSpaceOpenShifts, text: "OpenShift Available"))
-                //
-                //                callDataArray.append(("My Schedule", scheduleSection))
-                
-                // Call the completion handler with the data
-                completion(callDataArray)
-            }
+        if isAdmin {
+            callDataArray.append(("Requests Needing Approval", requestsSection))
         }
+        
+        // Schedule section
+        var scheduleSection: [CellDashboard] = []
+        scheduleSection.append(CellDashboard(number: Utils.user.shiftIds.count, text: "My Shifts"))
+        scheduleSection.append(CellDashboard(number: Utils.workspace.openShiftsIds.count, text: "Open Shifts"))
+        scheduleSection.append(CellDashboard(number: Utils.user.timeOffRequestIds.count, text: "My Time Off"))
+        
+        callDataArray.append(("My Schedule", scheduleSection))
+        
+        return callDataArray
     }
+    
     
     
     
@@ -323,11 +268,11 @@ class Utils{
             transition.subtype = .fromBottom
             sender.view.window?.layer.add(transition, forKey: kCATransition)
             
-           
+            
             sender.present(vc, animated: false, completion: nil)
         }
     }
-
+    
     
     static func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "^[A-Z0-9a-z._%+-]{2,}@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
@@ -342,18 +287,33 @@ class Utils{
         viewController.present(alertController, animated: true, completion: nil)
     }
     
-//    static func replaceRootViewControllerWith(viewController: UIViewController) {
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//           let window = windowScene.windows.first {
-//            
-//            // Remove all existing view controllers from the window
-//            window.rootViewController = nil
-//            
-//            // Set the specified view controller as the new root
-//            window.rootViewController = viewController
-//            
-//            // Make the window visible
-//            window.makeKeyAndVisible()
-//        }
-//    }
+    static func createButton(withTitle title: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 8
+        
+        // Set background color for normal state
+        button.backgroundColor = .lightGray
+        
+        // Set custom background image for selected state
+        let selectedColor = UIColor(red: 0.2, green: 0.5, blue: 0.8, alpha: 1.0)
+        let selectedImage = image(withColor: selectedColor, cornerRadius: 5)
+        button.setBackgroundImage(selectedImage, for: .selected)
+        
+        return button
+    }
+    
+    static func image(withColor color: UIColor, cornerRadius: CGFloat) -> UIImage {
+        let size = CGSize(width: cornerRadius * 2 + 1, height: cornerRadius * 2 + 1)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let image = renderer.image { context in
+            color.setFill()
+            let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: cornerRadius)
+            path.fill()
+        }
+        return image.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
+    }
 }

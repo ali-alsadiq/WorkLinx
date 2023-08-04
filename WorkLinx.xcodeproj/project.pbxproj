@@ -61,6 +61,7 @@
 		C7ECD8432A6258B700D494EB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8422A6258B700D494EB /* User.swift */; };
 		C7ECD8452A625A4700D494EB /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8442A625A4700D494EB /* Shift.swift */; };
 		C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8462A625BA400D494EB /* TimeOff.swift */; };
+		C7F2BB4C2A7CCB3C0071D0B2 /* CalendarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */; };
 		FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 		C7ECD8422A6258B700D494EB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C7ECD8442A625A4700D494EB /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
 		C7ECD8462A625BA400D494EB /* TimeOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOff.swift; sourceTree = "<group>"; };
+		C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListView.swift; sourceTree = "<group>"; };
 		FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailabilityViewController.swift; path = WorkLinx/ViewControllers/More/AvailabilityViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -209,8 +211,8 @@
 				C70514492A6A5838003A69EA /* Auth */,
 				C73392C92A6D56FB004A7E60 /* More */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
-				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
+				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 			);
 			path = ViewControllers;
@@ -223,6 +225,7 @@
 				C7DDC5002A7A64BF007E3564 /* EmailListView.swift */,
 				C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */,
 				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
+				C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */,
 				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
 				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
 				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
@@ -391,6 +394,7 @@
 				C7E0506D2A5410030026971C /* Utils.swift in Sources */,
 				C7E0A2592A59B25800003473 /* RequestViewController.swift in Sources */,
 				C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */,
+				C7F2BB4C2A7CCB3C0071D0B2 /* CalendarListView.swift in Sources */,
 				C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */,
 				C7ECD8412A6258AC00D494EB /* Workspace.swift in Sources */,
 				C70AB40F2A69BFA2009736B8 /* CreateWorkspaceCell.swift in Sources */,

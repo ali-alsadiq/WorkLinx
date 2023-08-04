@@ -110,9 +110,7 @@ class MenuBarViewController: UIViewController {
         }
     }
     
-    @objc private func dashboardButtonTapped() {
-//        Utils.replaceViewStackWith(viewController: DashboardViewController())
-      
+    @objc private func dashboardButtonTapped() {      
         Utils.navigate(DashboardViewController(), self)
     }
     

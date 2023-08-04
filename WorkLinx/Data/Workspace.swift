@@ -17,7 +17,10 @@ class Workspace: Codable {
     var address: String
     var admins: [String] = []
     var employees: [Employee] = []
+    var shiftIds: [String] = []
     var openShiftsIds: [String] = []
+    var timeOffRequestIds: [String] = []
+    var reimbursementRequestIds: [String] = []
     var positions: Positions = Positions(admins: [], employees: [])
     var invitedUsers: [String] = []
     
@@ -38,7 +41,10 @@ class Workspace: Codable {
         case address
         case admins
         case employees
+        case shiftIds
         case openShiftsIds
+        case timeOffRequestIds
+        case reimbursementRequestIds
         case positions
         case invitedUsers
     }

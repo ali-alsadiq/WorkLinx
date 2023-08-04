@@ -10,13 +10,22 @@ import UIKit
 
 class ButtonGroup {
     private var buttons: [UIButton]
-    private weak var targetViewController: RequestViewController? // Keep a weak reference to the target view controller
+    private weak var targetRequestViewController: RequestViewController?
+    private weak var targetScheduleViewController: ScheduleViewController?
     
     init(buttons: [UIButton], targetViewController: RequestViewController) {
         self.buttons = buttons
-        self.targetViewController = targetViewController // Assign the target view controller
-        
-        // Add target to each button to handle tap events
+        self.targetRequestViewController = targetViewController
+        setupButtons()
+    }
+    
+    init(buttons: [UIButton], targetViewController: ScheduleViewController) {
+        self.buttons = buttons
+        self.targetScheduleViewController = targetViewController
+        setupButtons()
+    }
+    
+    private func setupButtons() {
         for button in buttons {
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         }
@@ -25,7 +34,6 @@ class ButtonGroup {
     @objc private func buttonTapped(_ sender: UIButton) {
         selectButton(sender)
         
-        // Run the function associated with the selected button (if any)
         if let index = buttons.firstIndex(of: sender) {
             runFunctionForButton(at: index)
         }
@@ -40,17 +48,16 @@ class ButtonGroup {
     }
     
     private func runFunctionForButton(at index: Int) {
-        // Implement your custom function for each button index here
         switch index {
         case 0:
-            // Handle button at index 0
-            targetViewController?.timeOffButtonTapped() // Call the corresponding function in the target view controller
+            targetRequestViewController?.allRequestsButtonTapped()
+            targetScheduleViewController?.allShiftsButtonTapped()
         case 1:
-            // Handle button at index 1
-            targetViewController?.shiftsButtonTapped() // Call the corresponding function in the target view controller
+            targetRequestViewController?.timeOffButtonTapped()
+            targetScheduleViewController?.shiftsButtonTapped()
         case 2:
-            // Handle button at index 2
-            targetViewController?.openShiftsButtonTapped() // Call the corresponding function in the target view controller
+            targetRequestViewController?.reimbursementButtonTapped()
+            targetScheduleViewController?.openShiftsButtonTapped()
         default:
             break
         }

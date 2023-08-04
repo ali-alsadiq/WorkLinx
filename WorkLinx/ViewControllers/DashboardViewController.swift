@@ -8,16 +8,9 @@
 import UIKit
 
 class DashboardViewController: MenuBarViewController {
-    
-//    @IBOutlet weak var tableView: UITableView!
-    
+        
     var tableView: UITableView!
-    var data: [(String, [CellDashboard])] = [] // Initialize the data property with an empty array
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.navigationItem.title = "WorkLinx"
-    }
+    var data: [(String, [CellDashboard])] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,18 +54,9 @@ class DashboardViewController: MenuBarViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        // Fetch data for the dashboard
-        fetchDataForDashboard()
-    }
-    
-    func fetchDataForDashboard() {
-        // Fetch dashboard data using Utils.getDashboardTableData with completion handler
-        Utils.getDashboardTableData() { dashboardData in
-            DispatchQueue.main.async {
-                self.data = dashboardData
-                self.tableView.reloadData()
-            }
-        }
+        self.data = Utils.getDashboardTableData()
+        self.tableView.reloadData()
+
     }
 }
 
@@ -83,10 +67,12 @@ extension DashboardViewController: UITableViewDelegate{
         let cellData = sectionData.1[indexPath.row]
         switch cellData.text
         {
-        case "Time Off Requests", "Shift Requests", "OpenShift Available"
-            : navigateToRequestView(tab: cellData.text)
-        case "My Shifts"
-            : Utils.navigate("ScheduleView", self)
+        case "All Requests", "Time Off", "Reimbursemnt" :
+             navigateToRequestView(tab: cellData.text)
+        case "My Shifts" :
+            let scheduleVC = ScheduleViewController()
+            scheduleVC.isGoingBack = true
+            Utils.navigate(scheduleVC, self)
         default
             : break
         }
