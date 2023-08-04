@@ -119,7 +119,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Documents":
                 print(cellData.text)
             case "Send Message":
-                print(cellData.text)
+                navigateToMessageViewController()
             case "Users":
                 navigateToUsersViewController()
             case "Positions":
@@ -165,8 +165,16 @@ extension MoreViewController: UITableViewDelegate{
 
         present(positionsVC, animated: true, completion: nil)
     }
+    
+    func navigateToMessageViewController(){
+        let messageVC = MessageViewController()
+        messageVC.modalPresentationStyle = .fullScreen
+        present(messageVC, animated: true, completion: nil)
+        
+    }
 }
 
+    
 
 extension MoreViewController: UITableViewDataSource{
     
