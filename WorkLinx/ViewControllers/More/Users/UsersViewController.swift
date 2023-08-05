@@ -22,10 +22,11 @@ class UsersViewController: UIViewController {
         navigationBar = CustomNavigationBar(title: "Users")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
         
-        if let addButtonImage = UIImage(systemName: "plus") {
+        if Utils.isAdmin {
+            let addButtonImage = UIImage(systemName: "plus")
             // Resize and recolor the addButton image
             let symbolConfiguration = UIImage.SymbolConfiguration(weight: .heavy)
-            let resizedImage = addButtonImage.withConfiguration(symbolConfiguration).withTintColor(.black, renderingMode: .alwaysOriginal)
+            let resizedImage = addButtonImage!.withConfiguration(symbolConfiguration).withTintColor(.black, renderingMode: .alwaysOriginal)
             let addButton = UIBarButtonItem(image: resizedImage, style: .plain, target: self, action: #selector(addButtonTapped))
             
             navigationBar.items?.first?.rightBarButtonItem = addButton

@@ -47,6 +47,10 @@ class Utils{
     static var password = ""
     static var isAdmin = true
     static var invitingWorkspaces: [Workspace] = []
+    static var workSpaceUsers: [User] = []
+    static var workspaceOpenShifts: [Shift] = []
+    static var workspaceAssignedShifts: [Shift] = []
+
     
     static let db = Firestore.firestore()
     
@@ -75,7 +79,8 @@ class Utils{
         
         // Requests section
         var requestsSection: [CellDashboard] = []
-        requestsSection.append(CellDashboard(number: Utils.workspace.shiftIds.count, text: "All Requests"))
+        let requestsCount = Utils.workspace.timeOffRequestIds.count + Utils.workspace.reimbursementRequestIds.count
+        requestsSection.append(CellDashboard(number: requestsCount, text: "All Requests"))
         requestsSection.append(CellDashboard(number: Utils.workspace.timeOffRequestIds.count, text: "Time Off"))
         requestsSection.append(CellDashboard(number: Utils.workspace.reimbursementRequestIds.count, text: "Reimbursement"))
         
@@ -134,6 +139,14 @@ class Utils{
             completion(CellDataArray) // Call the completion handler with the fetched data
         }
     }
+    
+    
+    static func getTimeOffData() -> [(String, [String])]
+    {
+        var CallDataArray: [(String, [String])] = []
+        return CallDataArray
+    }
+    
     
     static func getPositionsData() -> [(String, [String])]
     {

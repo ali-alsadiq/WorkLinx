@@ -115,15 +115,15 @@ class MenuBarViewController: UIViewController {
     }
     
     @objc private func scheduleButtonTapped() {
-        Utils.navigate("ScheduleView", self)
+        Utils.navigate(ScheduleViewController(), self)
     }
     
     @objc private func requestButtonTapped() {
-        Utils.navigate("RequestView", self)
+        Utils.navigate(RequestViewController(), self)
     }
     
     @objc private func moreButtonTapped() {
-        Utils.navigate("MoreView", self)
+        Utils.navigate(MoreViewController(), self)
     }
     
     @objc private func attendanceButtonTapped() {

@@ -67,25 +67,31 @@ extension DashboardViewController: UITableViewDelegate{
         let cellData = sectionData.1[indexPath.row]
         switch cellData.text
         {
-        case "All Requests", "Time Off", "Reimbursemnt" :
-             navigateToRequestView(tab: cellData.text)
-        case "My Shifts" :
-            let scheduleVC = ScheduleViewController()
-            scheduleVC.isGoingBack = true
-            Utils.navigate(scheduleVC, self)
+        case "All Requests", "Time Off", "Reimbursement" :
+            let scheduleVC = RequestViewController() as UIViewController
+            navigateToView(tab: cellData.text, view: scheduleVC)
+        case "My Shifts", "Open Shifts":
+            let scheduleVC = ScheduleViewController() as UIViewController
+            navigateToView(tab: cellData.text, view: scheduleVC)
+        case "My Time Off" :
+            Utils.navigate(TimeOffViewController(), self)
         default
             : break
         }
     }
+
     
-    func navigateToRequestView(tab: String)
+    func navigateToView(tab: String, view: UIViewController)
     {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "RequestView") as! RequestViewController
-        vc.isGoingBack = true
-        vc.tab = tab
-        
-        Utils.navigate(vc, self)
+        if let requestVC = view as? RequestViewController {
+            requestVC.isGoingBack = true
+            requestVC.tab = tab
+            Utils.navigate(requestVC, self)
+        } else if let scheduleVC = view as? ScheduleViewController {
+            scheduleVC.isGoingBack = true
+            scheduleVC.tab = tab
+            Utils.navigate(scheduleVC, self)
+        }
     }
 }
 

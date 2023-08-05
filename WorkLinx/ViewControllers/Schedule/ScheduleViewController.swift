@@ -14,6 +14,8 @@ class ScheduleViewController: MenuBarViewController {
     var isGoingBack = false
     var tab = ""
     
+    var selectedDateManager = SelectedDateManager()
+    
     var events: [Event] = []
 
     override func viewDidLoad() {
@@ -50,7 +52,7 @@ class ScheduleViewController: MenuBarViewController {
         // Set the initial state
         switch tab
         {
-        case "Shifts":
+        case "My Shifts":
             shiftsButtonTapped()
             button2.isSelected = true
         case "Open Shifts":
@@ -82,8 +84,7 @@ class ScheduleViewController: MenuBarViewController {
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
 
         
-        let hostingController = UIHostingController(rootView: CalendarListView(events: events))
-        
+        let hostingController = UIHostingController(rootView: CalendarListView(selectedDateManager: selectedDateManager, events: events))
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingController.view)
         
@@ -101,7 +102,7 @@ class ScheduleViewController: MenuBarViewController {
     }
     
     @objc func addButtonTapped() {
-        print("addButtonTapped")
+        Utils.navigate(AddShiftViewController(selectedDate: selectedDateManager.selectedDate), self)
     }
     
     @objc func allShiftsButtonTapped() {

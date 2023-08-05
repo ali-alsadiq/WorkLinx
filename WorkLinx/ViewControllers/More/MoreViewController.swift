@@ -10,8 +10,7 @@ import UIKit
 
 class MoreViewController : MenuBarViewController {
     
-    @IBOutlet weak var tableView: UITableView!
-    
+    let tableView = UITableView()
     var data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
     
     override func viewDidAppear(_ animated: Bool) {
@@ -21,6 +20,8 @@ class MoreViewController : MenuBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         
         data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
         // Add nav bar
@@ -37,6 +38,9 @@ class MoreViewController : MenuBarViewController {
         
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

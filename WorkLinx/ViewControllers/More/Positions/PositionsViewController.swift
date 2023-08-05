@@ -93,52 +93,14 @@ class PositionsViewController: UIViewController {
         if  data.isEmpty {
             if infoMessageView == nil {
                 // Create the info message view
-                let infoMessageView = UIView()
-                infoMessageView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
-                infoMessageView.layer.cornerRadius = 8.0
-                infoMessageView.translatesAutoresizingMaskIntoConstraints = false // Add this line to disable autoresizing mask constraints
-                
-                // Create and configure the message label
-                let messageLabel = UILabel()
-                messageLabel.text = "No positions added.\nTap + to add."
-                messageLabel.textAlignment = .center
-                messageLabel.numberOfLines = 0
-                messageLabel.textColor = .gray
-                messageLabel.translatesAutoresizingMaskIntoConstraints = false
-                infoMessageView.addSubview(messageLabel)
-                
-                // Add constraints to the message label
-                NSLayoutConstraint.activate([
-                    messageLabel.topAnchor.constraint(equalTo: infoMessageView.topAnchor, constant: 8),
-                    messageLabel.leadingAnchor.constraint(equalTo: infoMessageView.leadingAnchor, constant: 8),
-                    messageLabel.trailingAnchor.constraint(equalTo: infoMessageView.trailingAnchor, constant: -8),
-                    messageLabel.bottomAnchor.constraint(equalTo: infoMessageView.bottomAnchor, constant: -8)
-                ])
-                
-                // Create and add the arrow image view
-                let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.turn.right.up"))
-                arrowImageView.tintColor = .darkGray
-                arrowImageView.contentMode = .scaleAspectFit
-                arrowImageView.translatesAutoresizingMaskIntoConstraints = false
-                infoMessageView.addSubview(arrowImageView)
-                
-                // Add constraints to the arrow image view
-                NSLayoutConstraint.activate([
-                    arrowImageView.bottomAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -8),
-                    arrowImageView.trailingAnchor.constraint(equalTo: infoMessageView.trailingAnchor, constant: 10),
-                    arrowImageView.widthAnchor.constraint(equalToConstant: 50),
-                    arrowImageView.heightAnchor.constraint(equalToConstant: 100)
-                ])
-                
-                // Add the info message view to the main view
+                let infoMessageView = EmptyListMessageView(message: "No positions added.\nTap + to add.")
                 view.addSubview(infoMessageView)
-                
-                // Add constraints for the info message view
+
                 NSLayoutConstraint.activate([
                     infoMessageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 140),
                     infoMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                     infoMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                    infoMessageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100) // Adjust height constraint as needed
+                    infoMessageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
                 ])
             }
             positionsTableView.separatorStyle = .none

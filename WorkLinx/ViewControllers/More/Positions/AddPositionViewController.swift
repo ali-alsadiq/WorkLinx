@@ -71,7 +71,7 @@ class AddPositionViewController: UIViewController {
         adminButton.translatesAutoresizingMaskIntoConstraints = false
         adminButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
-        view.addSubview(adminButton)
+        
         
         userButton = UIButton(type: .system)
         userButton.setTitle("User", for: .normal)
@@ -84,7 +84,7 @@ class AddPositionViewController: UIViewController {
         userButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
         userButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(userButton)
+        
         
         // Add form elements to a stack
         let buttonsStack = UIStackView(arrangedSubviews: [adminButton, userButton])
@@ -145,7 +145,6 @@ class AddPositionViewController: UIViewController {
     @objc func assignButtonTapped(){
         let assignVC = AssignUsersViewController()
         assignVC.modalPresentationStyle = .formSheet
-        
         present(assignVC, animated: true, completion: nil)
     }
     

@@ -32,7 +32,6 @@
 		C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */; };
 		C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */; };
 		C79C22B72A6B8FED001F2253 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C79C22B62A6B8FED001F2253 /* GoogleService-Info.plist */; };
-		C7B0C15E2A626193007DCCEC /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0C15D2A626193007DCCEC /* DataProvider.swift */; };
 		C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */; };
 		C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */; };
 		C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */; };
@@ -62,6 +61,12 @@
 		C7ECD8452A625A4700D494EB /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8442A625A4700D494EB /* Shift.swift */; };
 		C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ECD8462A625BA400D494EB /* TimeOff.swift */; };
 		C7F2BB4C2A7CCB3C0071D0B2 /* CalendarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */; };
+		C7F2BB4E2A7D58030071D0B2 /* AddShiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB4D2A7D58030071D0B2 /* AddShiftViewController.swift */; };
+		C7F2BB522A7D98730071D0B2 /* AssignedUsersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */; };
+		C7F2BB572A7E1B020071D0B2 /* CompactDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */; };
+		C7F2BB592A7E1B380071D0B2 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */; };
+		C7F2BB5B2A7E40210071D0B2 /* TimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */; };
+		C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */; };
 		CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */; };
 		FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */; };
 		FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */; };
@@ -92,7 +97,6 @@
 		C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C77BE01C2A4B2744007A8D06 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		C79C22B62A6B8FED001F2253 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C7B0C15D2A626193007DCCEC /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCell.swift; sourceTree = "<group>"; };
@@ -122,6 +126,12 @@
 		C7ECD8442A625A4700D494EB /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
 		C7ECD8462A625BA400D494EB /* TimeOff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOff.swift; sourceTree = "<group>"; };
 		C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListView.swift; sourceTree = "<group>"; };
+		C7F2BB4D2A7D58030071D0B2 /* AddShiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShiftViewController.swift; sourceTree = "<group>"; };
+		C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedUsersList.swift; sourceTree = "<group>"; };
+		C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactDatePickerView.swift; sourceTree = "<group>"; };
+		C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffViewController.swift; sourceTree = "<group>"; };
+		C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListMessageView.swift; sourceTree = "<group>"; };
 		EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailabilityViewController.swift; path = WorkLinx/ViewControllers/More/AvailabilityViewController.swift; sourceTree = SOURCE_ROOT; };
 		FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +162,6 @@
 				76512D1F54961F633F770510 /* Pods-WorkLinx.debug.xcconfig */,
 				1ECB8F5ABA235C7A2B2F7C02 /* Pods-WorkLinx.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -178,8 +187,8 @@
 		C73392C92A6D56FB004A7E60 /* More */ = {
 			isa = PBXGroup;
 			children = (
-				FACABB2C2A7D0A90006A4D6A /* Message */,
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
+				FACABB2C2A7D0A90006A4D6A /* Message */,
 				C7DDC4F22A790082007E3564 /* Positions */,
 				C7DDC4FB2A7A48DF007E3564 /* Users */,
 				C7DDC5082A7BF0DA007E3564 /* Workspaces */,
@@ -238,11 +247,13 @@
 			isa = PBXGroup;
 			children = (
 				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
-				C70514492A6A5838003A69EA /* Auth */,
-				C73392C92A6D56FB004A7E60 /* More */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
+				C70514492A6A5838003A69EA /* Auth */,
+				C7F2BB532A7D9A850071D0B2 /* Schedule */,
+				C73392C92A6D56FB004A7E60 /* More */,
+				C7F2BB542A7D9AE70071D0B2 /* Shared */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
-				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
+				C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */,
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 			);
 			path = ViewControllers;
@@ -251,17 +262,8 @@
 		C77BE0132A4AB222007A8D06 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
-				C7DDC5002A7A64BF007E3564 /* EmailListView.swift */,
-				C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */,
-				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
-				C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */,
-				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
-				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
-				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
-				C7E050682A53F4120026971C /* BackButton.swift */,
-				C705144A2A6A79C2003A69EA /* ButtonGroup.swift */,
-				C7E0A2502A58824C00003473 /* MenuBarViewController.swift */,
+				C7F2BB502A7D98430071D0B2 /* SwiftUI */,
+				C7F2BB552A7D9B060071D0B2 /* UIKit */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -286,7 +288,6 @@
 				C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */,
 				C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */,
 				C7DDC4F72A795FD3007E3564 /* EditPositionViewController.swift */,
-				C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */,
 			);
 			path = Positions;
 			sourceTree = "<group>";
@@ -314,11 +315,56 @@
 			children = (
 				C7ECD8402A6258AC00D494EB /* Workspace.swift */,
 				C7ECD8422A6258B700D494EB /* User.swift */,
-				C7B0C15D2A626193007DCCEC /* DataProvider.swift */,
 				C7ECD8442A625A4700D494EB /* Shift.swift */,
 				C7ECD8462A625BA400D494EB /* TimeOff.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		C7F2BB502A7D98430071D0B2 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				C7DDC5002A7A64BF007E3564 /* EmailListView.swift */,
+				C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */,
+				C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */,
+				C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */,
+				C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */,
+				C7F2BB4B2A7CCB3C0071D0B2 /* CalendarListView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		C7F2BB532A7D9A850071D0B2 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				C7E0A2542A59B23700003473 /* ScheduleViewController.swift */,
+				C7F2BB4D2A7D58030071D0B2 /* AddShiftViewController.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		C7F2BB542A7D9AE70071D0B2 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */,
+				C7E0A2502A58824C00003473 /* MenuBarViewController.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		C7F2BB552A7D9B060071D0B2 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				C77BE0112A4AB216007A8D06 /* CustomTextField.swift */,
+				C77BE0162A4ACFCD007A8D06 /* SignInForm.swift */,
+				C77BE0182A4ACFEF007A8D06 /* SignUpForm.swift */,
+				C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */,
+				C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */,
+				C77BE01A2A4AD48C007A8D06 /* CustomButton.swift */,
+				C7E050682A53F4120026971C /* BackButton.swift */,
+				C705144A2A6A79C2003A69EA /* ButtonGroup.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		FACABB2C2A7D0A90006A4D6A /* Message */ = {
@@ -459,13 +505,13 @@
 			files = (
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
+				C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */,
 				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
 				C7E0A2552A59B23700003473 /* ScheduleViewController.swift in Sources */,
 				C7E050692A53F4120026971C /* BackButton.swift in Sources */,
 				C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */,
 				C7E0A25B2A59B26000003473 /* MoreViewController.swift in Sources */,
 				C7DDC4F82A795FD3007E3564 /* EditPositionViewController.swift in Sources */,
-				C7B0C15E2A626193007DCCEC /* DataProvider.swift in Sources */,
 				C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */,
 				C7E0A2572A59B24700003473 /* AttendanceViewController.swift in Sources */,
 				FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */,
@@ -489,6 +535,8 @@
 				C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */,
 				C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */,
 				C7DDC4F42A7900A2007E3564 /* AssignUsersViewController.swift in Sources */,
+				C7F2BB522A7D98730071D0B2 /* AssignedUsersList.swift in Sources */,
+				C7F2BB4E2A7D58030071D0B2 /* AddShiftViewController.swift in Sources */,
 				C73392C62A6D4B40004A7E60 /* UserProfileTableViewController.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
@@ -502,9 +550,12 @@
 				C7E0506F2A5428DE0026971C /* CreateNewWorkspaceViewController.swift in Sources */,
 				C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */,
 				C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */,
+				C7F2BB592A7E1B380071D0B2 /* TimePickerView.swift in Sources */,
+				C7F2BB572A7E1B020071D0B2 /* CompactDatePickerView.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,
 				C7DDC5052A7ADF89007E3564 /* InvitingWorkspacesList.swift in Sources */,
 				C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */,
+				C7F2BB5B2A7E40210071D0B2 /* TimeOffViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,8 @@ import UIKit
 
 class AssignUsersViewController: UIViewController {
     public var editView: EditPositionViewController?
+    public var addShiftsView: AddShiftViewController?
+    
     public var previouslyAssignedUsers: [User]?
     
     private var navigationBar: CustomNavigationBar!
@@ -29,7 +31,7 @@ class AssignUsersViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         // Add nav bar
-        navigationBar = CustomNavigationBar(title: "Add Position")
+        navigationBar = CustomNavigationBar(title: "Add Users")
         cancelButton = UIBarButtonItem()
         cancelButton.title = "Cancel"
         cancelButton.action = #selector(goBack)
@@ -116,7 +118,6 @@ class AssignUsersViewController: UIViewController {
             editView!.saveButton.isEnabled = true
         }
         
-        
         // Pop the current view controller from the navigation stack
         dismiss(animated: true, completion: nil)
     }
@@ -144,7 +145,11 @@ extension AssignUsersViewController: UITableViewDataSource, UITableViewDelegate 
             cell.firstNameLabel.text = user.firstName
             cell.lastNameLabel.text = user.lastName
             // Add check mark if the user is already selected in AddPositionViewController.assignedUsers
-            cell.accessoryType = AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) ? .checkmark : .none
+            if addShiftsView == nil {
+                cell.accessoryType = AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) ? .checkmark : .none
+            } else {
+                cell.accessoryType = AddShiftViewController.assignedUsers.contains(where: { $0.id == user.id }) ? .checkmark : .none
+            }
         }
         return cell
     }
@@ -161,13 +166,26 @@ extension AssignUsersViewController: UITableViewDataSource, UITableViewDelegate 
         let sortedKeys = firstLetters.keys.sorted()
         let key = sortedKeys[indexPath.section]
         if let user = firstLetters[key]?[indexPath.row] {
-            if AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) {
-                AddPositionViewController.assignedUsers.removeAll(where: { $0.id == user.id })
-            } else {
-                AddPositionViewController.assignedUsers.append(user)
+            if addShiftsView == nil {
+                if AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) {
+                    AddPositionViewController.assignedUsers.removeAll(where: { $0.id == user.id })
+                } else {
+                    AddPositionViewController.assignedUsers.append(user)
+                }
+                tableView.reloadRows(at: [indexPath], with: .none)
+                doneButton.isEnabled = (!isEditMode && !AddPositionViewController.assignedUsers.isEmpty) || (isEditMode && previouslyAssignedUsers != AddPositionViewController.assignedUsers)
             }
-            tableView.reloadRows(at: [indexPath], with: .none)
-            doneButton.isEnabled = (!isEditMode && !AddPositionViewController.assignedUsers.isEmpty) || (isEditMode && previouslyAssignedUsers != AddPositionViewController.assignedUsers)
+            else {
+                if AddShiftViewController.assignedUsers.contains(where: { $0.id == user.id }) {
+                    AddShiftViewController.assignedUsers.removeAll(where: { $0.id == user.id })
+                    addShiftsView!.userManger.removeUser(user)
+                } else {
+                    AddShiftViewController.assignedUsers.append(user)
+                    addShiftsView!.userManger.addUSer(user)
+                }
+                tableView.reloadRows(at: [indexPath], with: .none)
+                doneButton.isEnabled = !AddShiftViewController.assignedUsers.isEmpty || previouslyAssignedUsers != AddShiftViewController.assignedUsers
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

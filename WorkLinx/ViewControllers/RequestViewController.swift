@@ -17,6 +17,8 @@ class RequestViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         let navigationBar = CustomNavigationBar(title: "Requests")
         
         if isGoingBack {

@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct CalendarListView: View {
-    @State private var selectedDate = Date()
+    @ObservedObject var selectedDateManager: SelectedDateManager
     @State private var notes: [Date: String] = [:]
+    
     
     var events: [Event]
     
     var body: some View {
         VStack{
             
-            DatePicker("Select a date", selection: $selectedDate, displayedComponents: .date)
+            DatePicker("Select a date", selection: $selectedDateManager.selectedDate, displayedComponents: .date)
                 .datePickerStyle(.graphical)
                 .padding(.horizontal, 20)
             
             List {
-                ForEach(currentWeekDates(for: selectedDate), id: \.self) { date in
+                ForEach(currentWeekDates(for: selectedDateManager.selectedDate), id: \.self) { date in
                     VStack {
                         HStack {
                             Text(formattedDate(date))
@@ -47,7 +48,6 @@ struct CalendarListView: View {
             }
             .listStyle(PlainListStyle())
         }
-       
     }
     
     private func currentWeekDates(for date: Date) -> [Date] {
@@ -88,4 +88,8 @@ struct CalendarListView: View {
 struct Event {
     let date: Date
     let notes: String
+}
+
+class SelectedDateManager: ObservableObject {
+    @Published var selectedDate = Date()
 }
