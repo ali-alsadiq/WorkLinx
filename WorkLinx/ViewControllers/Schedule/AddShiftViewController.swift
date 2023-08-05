@@ -227,7 +227,7 @@ class AddShiftViewController: UIViewController {
                              startTime: selectedStartTime,
                              endTime: selectedEndTime)
         
-        Shift.createShift(shift: newShift) {result in
+        Shift.createShift(shift: newShift) { [weak self] result in
             switch result {
             case .success(let id):
                 print("created shift with id: \(id)")
@@ -250,6 +250,8 @@ class AddShiftViewController: UIViewController {
                 Workspace.updateWorkspace(workspace: Utils.workspace) {_ in
                     print("Shift added to user successfully")
                 }
+                self!.userManger.assignedUsers = []
+                AddShiftViewController.assignedUsers = []
             case .failure(let error):
                 // Error occurred while creating the workspace
                 print("Error creating workspace: \(error.localizedDescription)")

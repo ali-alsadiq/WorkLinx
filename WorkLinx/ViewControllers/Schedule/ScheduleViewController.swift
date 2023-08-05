@@ -15,8 +15,10 @@ class ScheduleViewController: MenuBarViewController {
     var tab = ""
     
     var selectedDateManager = SelectedDateManager()
+    var shiftsListManger = ShiftsListManager()
     
-    var events: [Event] = []
+     var shifts: [Shift] = []
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +33,12 @@ class ScheduleViewController: MenuBarViewController {
             menuBarStack.removeFromSuperview()
         }
         
-        let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        plusButton.setTitleTextAttributes([.font: UIFont.boldSystemFont(ofSize: 22)], for: .normal)
-        navigationBar.items?.first?.rightBarButtonItem = plusButton
-        
-        
+        if Utils.isAdmin {
+            let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+            plusButton.setTitleTextAttributes([.font: UIFont.boldSystemFont(ofSize: 22)], for: .normal)
+            navigationBar.items?.first?.rightBarButtonItem = plusButton
+        }
+      
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(navigationBar)
         
@@ -84,7 +87,7 @@ class ScheduleViewController: MenuBarViewController {
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
 
         
-        let hostingController = UIHostingController(rootView: CalendarListView(selectedDateManager: selectedDateManager, events: events))
+        let hostingController = UIHostingController(rootView: CalendarListView(selectedDateManager: selectedDateManager, shiftsListManger: shiftsListManger))
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingController.view)
         
@@ -106,18 +109,23 @@ class ScheduleViewController: MenuBarViewController {
     }
     
     @objc func allShiftsButtonTapped() {
-        print("All shifts button was tapped.")
-        // Implement your custom action for the Time Off button here
+        if Utils.isAdmin {
+            shiftsListManger.shifts = Utils.workspaceOpenShifts + Utils.workspaceAssignedShifts
+        } else {
+            shiftsListManger.shifts = Utils.workspaceOpenShifts + Utils.currentUserShifts
+        }
     }
     
     @objc func shiftsButtonTapped() {
-        print("Shifts button was tapped.")
-        // Implement your custom action for the Shifts button here
+        if Utils.isAdmin {
+            shiftsListManger.shifts = Utils.workspaceAssignedShifts
+        } else {
+            shiftsListManger.shifts = Utils.currentUserShifts
+        }
     }
     
     @objc func openShiftsButtonTapped() {
-        print("OpenShifts button was tapped.")
-        // Implement your custom action for the OpenShifts button here
+        shiftsListManger.shifts = Utils.workspaceOpenShifts
     }
 }
 

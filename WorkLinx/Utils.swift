@@ -50,7 +50,7 @@ class Utils{
     static var workSpaceUsers: [User] = []
     static var workspaceOpenShifts: [Shift] = []
     static var workspaceAssignedShifts: [Shift] = []
-
+    static var currentUserShifts: [Shift] = []
     
     static let db = Firestore.firestore()
     
@@ -90,7 +90,7 @@ class Utils{
         
         // Schedule section
         var scheduleSection: [CellDashboard] = []
-        scheduleSection.append(CellDashboard(number: Utils.user.shiftIds.count, text: "My Shifts"))
+        scheduleSection.append(CellDashboard(number: Utils.currentUserShifts.count, text: "My Shifts"))
         scheduleSection.append(CellDashboard(number: Utils.workspace.openShiftsIds.count, text: "Open Shifts"))
         scheduleSection.append(CellDashboard(number: Utils.user.timeOffRequestIds.count, text: "My Time Off"))
         

@@ -72,6 +72,9 @@ extension SelectWorkPlaceViewController: UITableViewDelegate{
         
         if let cellWorkspace = cellData as? CellWorkspace {
             Utils.user.defaultWorkspaceId = cellWorkspace.workspace.workspaceId
+            Utils.workspace = cellWorkspace.workspace
+            Utils.isAdmin = cellWorkspace.workspace.admins.contains(Utils.user.id)
+            Utils.user.setUserData(){ _ in }
             Utils.navigate(DashboardViewController(), self)
         } else if let createWorkspaceCell = cellData as? CellCreateWorkspace {
             if createWorkspaceCell.cellText.lowercased().contains("create".lowercased()){

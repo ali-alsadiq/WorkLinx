@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 
-struct User : Codable, Equatable {
+struct User : Codable, Equatable, Hashable {
     var id: String // Add a property to store the user ID from Firestore
     var emailAddress: String
     var firstName = ""

@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct Shift: Codable {
+struct Shift: Codable, Hashable {
     var employeeIds: [String]
     var workspaceId: String
     var date: Date
@@ -54,5 +54,46 @@ struct Shift: Codable {
             completion(.failure(error))
         }
     }
+
+    
+    // Function to fetch an array of users by IDs from Firestore
+    static func fetchShiftsByIDs(shiftIDs: [String], completion: @escaping ([Shift]) -> Void) {
+        let query = Utils.db.collection("shifts").whereField(FieldPath.documentID(), in: shiftIDs)
+
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching shifts: \(error.localizedDescription)")
+                completion([])
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion([])
+                return
+            }
+            
+            var shifts: [Shift] = []
+            
+            for document in documents {
+                let data = document.data()
+                
+                do {
+                    // Use JSONSerialization to convert the Firestore document data to JSON data
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                    
+                    // Use JSONDecoder to decode the JSON data into a User object
+                    let decoder = JSONDecoder()
+                    let shift = try decoder.decode(Shift.self, from: jsonData)
+                    
+                    shifts.append(shift)
+                } catch {
+                    print("Error decoding user: \(error.localizedDescription)")
+                }
+            }
+            
+            completion(shifts)
+        }
+    }
+    
 }
 
