@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class EmptyListMessageView: UIView {
+    var arrowImageView: UIImageView!
+    
     init(message: String) {
         super.init(frame: .zero)
         
@@ -31,7 +33,7 @@ class EmptyListMessageView: UIView {
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
         
-        let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.turn.right.up"))
+        arrowImageView = UIImageView(image: UIImage(systemName: "arrow.turn.right.up"))
         arrowImageView.tintColor = .darkGray
         arrowImageView.contentMode = .scaleAspectFit
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false

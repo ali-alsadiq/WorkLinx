@@ -13,12 +13,19 @@ class RequestViewController: MenuBarViewController {
     var buttonGroup: ButtonGroup!
     var isGoingBack = false
     var tab = ""
+    
+    private var requestTable: UITableView!
+    private var infoMessageView: UIView? // Info message view
+    private var requestsData = Utils.getTimeOffData()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
+        // Add nav bar
+        requestTable = UITableView()
+                
         let navigationBar = CustomNavigationBar(title: "Requests")
         
         if isGoingBack {
@@ -66,7 +73,7 @@ class RequestViewController: MenuBarViewController {
         view.addSubview(buttonsStack)
         
         NSLayoutConstraint.activate([
-            buttonsStack.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+            buttonsStack.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 20),
             buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             button1.widthAnchor.constraint(equalTo: button2.widthAnchor),
@@ -78,29 +85,66 @@ class RequestViewController: MenuBarViewController {
         
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
         
+        
+        if requestsData.isEmpty {
+            // Setup the info message view initially
+            setupInfoMessageView()
+        } else {
+            view.addSubview(requestTable)
+            NSLayoutConstraint.activate([
+                requestTable.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 100),
+                requestTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                requestTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                requestTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
     }
     
     @objc func goBack() {
-        // Pop the current view controller from the navigation stack
         dismiss(animated: true, completion: nil)
     }
     
     @objc func addButtonTapped() {
-        // ... Your addButtonTapped code ...
+        Utils.navigate(AddRequestViewController(tab: tab), self)
     }
     
     @objc func allRequestsButtonTapped() {
-        print("All Request button was tapped.")
-        // Implement your custom action for the Time Off button here
+        tab = "All Requests"
+        setupInfoMessageView()
     }
     
     @objc func timeOffButtonTapped() {
-        print("Time off button was tapped.")
-        // Implement your custom action for the Shifts button here
+        tab = "Time Off"
+        setupInfoMessageView()
     }
     
     @objc func reimbursementButtonTapped() {
-        print("Reimbursement button was tapped.")
-        // Implement your custom action for the OpenShifts button here
+        tab = "Reimbursement"
+        setupInfoMessageView()
+    }
+    
+    // Function to update the info message view based on data availability
+    func setupInfoMessageView() {
+        if  requestsData.isEmpty {
+            if infoMessageView == nil {
+                // Create the info message view
+                let infoMessageView = EmptyListMessageView(message: "No \(tab == "Reimbursement" ? "Reimbursement" : (tab == "Time Off" ? "Time Off" : "")) requests added.\nTap + to add a request.")
+                
+                infoMessageView.arrowImageView.removeFromSuperview()
+                view.addSubview(infoMessageView)
+
+                NSLayoutConstraint.activate([
+                    infoMessageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 140),
+                    infoMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    infoMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    infoMessageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+                ])
+            }
+            requestTable.separatorStyle = .none
+        } else {
+            infoMessageView?.removeFromSuperview()
+            infoMessageView = nil
+            requestTable.separatorStyle = .singleLine
+        }
     }
 }

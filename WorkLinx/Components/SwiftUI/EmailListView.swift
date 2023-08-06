@@ -29,22 +29,53 @@ struct EmailListView: View {
     @State private var emailToRemove: String?
     @State private var showAlert = false
     
+    private var emailListBinding: Binding<[String]> {
+        Binding<[String]>(
+            get: { self.emailListManager.emails },
+            set: { self.emailListManager.emails = $0 }
+        )
+    }
+    
     var body: some View {
         List {
-            ForEach(emailListManager.emails, id: \.self) { email in
+            // Xcode suddenly broke
+            // Error: Cannot convert value of type '[String]' to expected argument type 'Binding<C>'
+            // Test later
+            
+//            ForEach(emailListManager.emails, id: \.self) { email in
+//                HStack {
+//                    Text(email)
+//                    Spacer()
+//                    Button(action: {
+//                        emailToRemove = email
+//                        showAlert = true
+//                    }) {
+//                        Image(systemName: "xmark.circle.fill")
+//                            .foregroundColor(.red)
+//                    }
+//                }
+//                .contentShape(Rectangle())
+//            }
+            
+            // Quick fix
+            ForEach(emailListBinding, id:\.self) {email in
                 HStack {
-                    Text(email)
+                    Text(email.wrappedValue)
                     Spacer()
                     Button(action: {
-                        emailToRemove = email
+                        emailToRemove = email.wrappedValue
                         showAlert = true
                     }) {
-                        Image(systemName: "xmark.circle.fill")
+//                        Image(systemName: "xmark.circle.fill")
+//                            .foregroundColor(.red)
+                        Text("X")
+                            .font(.largeTitle)
                             .foregroundColor(.red)
                     }
                 }
                 .contentShape(Rectangle())
             }
+            
         }
         .edgesIgnoringSafeArea(.all)
         .alert(isPresented: $showAlert) {

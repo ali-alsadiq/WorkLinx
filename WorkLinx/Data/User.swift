@@ -22,6 +22,7 @@ struct User : Codable, Equatable, Hashable {
     var availabilityIds: [String] = []
     var timeOffRequestIds: [String] = []
     var shiftIds: [String] = []
+    var reimbursementRequestIds: [String] = []
     
     // CodingKeys to specify custom mappings for Codable properties
     enum CodingKeys: String, CodingKey {

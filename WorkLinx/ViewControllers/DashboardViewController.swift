@@ -14,7 +14,13 @@ class DashboardViewController: MenuBarViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let timestamp = 713188440
+                        
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: date)
+        print(formattedDate)
         Workspace.updateInvitingWorkspaces() {
             if !Utils.invitingWorkspaces.isEmpty && !ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater {
                 Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
@@ -67,10 +73,11 @@ class DashboardViewController: MenuBarViewController {
     private func fetchWorkspaceUsers(completion: @escaping () -> Void) {
         let allEmployeeIds = Utils.workspace.employees.map { $0.employeeId }
         
-        User.fetchUsersByIDs(userIDs: allEmployeeIds) { fetchedUsers in
-            Utils.workSpaceUsers = fetchedUsers
-            completion()
-            
+        if allEmployeeIds.count > 0 {
+            User.fetchUsersByIDs(userIDs: allEmployeeIds) { fetchedUsers in
+                Utils.workSpaceUsers = fetchedUsers
+                completion()
+            }
         }
     }
     
@@ -115,14 +122,12 @@ extension DashboardViewController: UITableViewDelegate{
         let cellData = sectionData.1[indexPath.row]
         switch cellData.text
         {
-        case "All Requests", "Time Off", "Reimbursement" :
-            let scheduleVC = RequestViewController() as UIViewController
-            navigateToView(tab: cellData.text, view: scheduleVC)
+        case "All Requests", "Time Off", "Reimbursement", "My Time Off":
+            let requestVC = RequestViewController() as UIViewController
+            navigateToView(tab: cellData.text, view: requestVC)
         case "My Shifts", "Open Shifts":
             let scheduleVC = ScheduleViewController() as UIViewController
             navigateToView(tab: cellData.text, view: scheduleVC)
-        case "My Time Off" :
-            Utils.navigate(TimeOffViewController(), self)
         default
             : break
         }

@@ -17,13 +17,15 @@ struct AssignedUserList: View {
                 Text(user.firstName + " " + user.lastName)
                 Spacer()
                 
-                Button(action: {}) {
-                    Image(systemName: "xmark.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(.red)
-                        .onTapGesture {
-                            onRemove(user)
-                        }
+                // Xcode suddenly broke here
+                Button(action: { onRemove(user) }) {
+//                    Image(systemName: "xmark.circle.fill")
+//                        .imageScale(.large)
+//                        .foregroundColor(.red)
+//                        .onTapGesture {
+//                            onRemove(user)
+//                        }
+                    Text("Remove")
                 }
             }
         }.frame(height: 350)

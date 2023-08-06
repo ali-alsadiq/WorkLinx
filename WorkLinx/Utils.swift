@@ -51,6 +51,8 @@ class Utils{
     static var workspaceOpenShifts: [Shift] = []
     static var workspaceAssignedShifts: [Shift] = []
     static var currentUserShifts: [Shift] = []
+    static var workSpceTimeOffs: [TimeOff] = []
+    static var workspaceReimbursements: [Reimbursement] = []
     
     static let db = Firestore.firestore()
     

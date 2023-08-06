@@ -26,21 +26,26 @@ struct InvitingWorkspacesList: View {
             HStack(spacing: 20) { // Add spacing between elements
                 Text(workspace.name)
                 Spacer()
-                Button(action: {}) { // Use an empty action for the Text to prevent tapping outside the image
-                    Image(systemName: "checkmark.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(.green)
-                        .onTapGesture {
-                            onAccept(workspace)
-                        }
+                
+                // Xcode suddenly broke on image
+                
+                Button(action: {onAccept(workspace)} ) { // Use an empty action for the Text to prevent tapping outside the image
+                    Text("Accept")
+//                    Image(systemName: "checkmark.circle.fill")
+//                        .imageScale(.large)
+//                        .foregroundColor(.green)
+//                        .onTapGesture {
+//                            onAccept(workspace)
+//                        }
                 }
-                Button(action: {}) {
-                    Image(systemName: "xmark.circle.fill")
-                        .imageScale(.large)
-                        .foregroundColor(.red)
-                        .onTapGesture {
-                            onReject(workspace)
-                        }
+                Button(action: { onReject(workspace) }) {
+                    Text("Reject")
+//                    Image(systemName: "xmark.circle.fill")
+//                        .imageScale(.large)
+//                        .foregroundColor(.red)
+//                        .onTapGesture {
+//                            onReject(workspace)
+//                        }
                 }
             }
         }

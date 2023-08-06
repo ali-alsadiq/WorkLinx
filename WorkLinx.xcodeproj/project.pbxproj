@@ -67,6 +67,11 @@
 		C7F2BB592A7E1B380071D0B2 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */; };
 		C7F2BB5B2A7E40210071D0B2 /* TimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */; };
 		C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */; };
+		C7F2BB5F2A7F859B0071D0B2 /* AddRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */; };
+		C7F2BB622A7FC9300071D0B2 /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */; };
+		C7F2BB642A7FF3CD0071D0B2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C7F2BB632A7FF3CD0071D0B2 /* FirebaseStorage */; };
+		C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */; };
+		C7F2BB682A8021940071D0B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB672A8021940071D0B2 /* Image.swift */; };
 		CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */; };
 		FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */; };
 		FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */; };
@@ -132,6 +137,10 @@
 		C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffViewController.swift; sourceTree = "<group>"; };
 		C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListMessageView.swift; sourceTree = "<group>"; };
+		C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestViewController.swift; sourceTree = "<group>"; };
+		C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
+		C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reimbursement.swift; sourceTree = "<group>"; };
+		C7F2BB672A8021940071D0B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailabilityViewController.swift; path = WorkLinx/ViewControllers/More/AvailabilityViewController.swift; sourceTree = SOURCE_ROOT; };
 		FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +157,7 @@
 				C70CCEB32A6B7D4A000677F1 /* FirebaseAuth in Frameworks */,
 				C70CCEB52A6B7D4A000677F1 /* FirebaseDatabase in Frameworks */,
 				C70CCEB72A6B7D4A000677F1 /* FirebaseFirestore in Frameworks */,
+				C7F2BB642A7FF3CD0071D0B2 /* FirebaseStorage in Frameworks */,
 				C70CCEB12A6B7D4A000677F1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */,
 			);
@@ -250,11 +260,11 @@
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
 				C70514492A6A5838003A69EA /* Auth */,
 				C7F2BB532A7D9A850071D0B2 /* Schedule */,
+				C7F2BB602A7F922D0071D0B2 /* Requests */,
 				C73392C92A6D56FB004A7E60 /* More */,
 				C7F2BB542A7D9AE70071D0B2 /* Shared */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
 				C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */,
-				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -317,6 +327,8 @@
 				C7ECD8422A6258B700D494EB /* User.swift */,
 				C7ECD8442A625A4700D494EB /* Shift.swift */,
 				C7ECD8462A625BA400D494EB /* TimeOff.swift */,
+				C7F2BB672A8021940071D0B2 /* Image.swift */,
+				C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -367,6 +379,16 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
+		C7F2BB602A7F922D0071D0B2 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
+				C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */,
+				C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 		FACABB2C2A7D0A90006A4D6A /* Message */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +423,7 @@
 				C70CCEB42A6B7D4A000677F1 /* FirebaseDatabase */,
 				C70CCEB62A6B7D4A000677F1 /* FirebaseFirestore */,
 				C70CCEB82A6B7D4A000677F1 /* FirebaseMessaging */,
+				C7F2BB632A7FF3CD0071D0B2 /* FirebaseStorage */,
 			);
 			productName = WorkLinx;
 			productReference = C77BDFF82A4AA1F0007A8D06 /* WorkLinx.app */;
@@ -503,6 +526,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */,
+				C7F2BB622A7FC9300071D0B2 /* ImageSelectionViewController.swift in Sources */,
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
 				C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */,
@@ -514,6 +539,7 @@
 				C7DDC4F82A795FD3007E3564 /* EditPositionViewController.swift in Sources */,
 				C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */,
 				C7E0A2572A59B24700003473 /* AttendanceViewController.swift in Sources */,
+				C7F2BB682A8021940071D0B2 /* Image.swift in Sources */,
 				FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */,
 				FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */,
 				C7DDC5032A7AB034007E3564 /* UserInforFormViewController.swift in Sources */,
@@ -521,6 +547,7 @@
 				C7ECD8452A625A4700D494EB /* Shift.swift in Sources */,
 				C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */,
 				FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */,
+				C7F2BB5F2A7F859B0071D0B2 /* AddRequestViewController.swift in Sources */,
 				C7DDC4F62A790B56007E3564 /* AssignPositionCell.swift in Sources */,
 				C7E0506D2A5410030026971C /* Utils.swift in Sources */,
 				C7E0A2592A59B25800003473 /* RequestViewController.swift in Sources */,
@@ -706,11 +733,12 @@
 				DEVELOPMENT_TEAM = SJ6YJVGU28;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkLinx/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -735,11 +763,12 @@
 				DEVELOPMENT_TEAM = SJ6YJVGU28;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WorkLinx/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -817,6 +846,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C70CCEAD2A6B7D4A000677F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		C7F2BB632A7FF3CD0071D0B2 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C70CCEAD2A6B7D4A000677F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

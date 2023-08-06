@@ -20,5 +20,6 @@ struct CompactDatePickerView: View {
         )
         .datePickerStyle(.compact)
         .padding(.horizontal, 25)
+        .environment(\.locale, Locale(identifier: "en_CA"))
     }
 }
