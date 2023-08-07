@@ -86,6 +86,7 @@ struct User : Codable, Equatable, Hashable {
                     completion(.failure(error)) // Call the completion handler with the error
                 } else {
                     print("User data updated successfully.")
+                    Utils.workSpaceUsers.append(self)
                     completion(.success(())) // Call the completion handler with success (empty tuple)
                 }
             }

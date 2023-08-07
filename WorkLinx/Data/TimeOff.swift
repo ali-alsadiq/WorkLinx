@@ -9,7 +9,8 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct TimeOff: Codable {
+struct TimeOff: Codable, Identifiable {
+    var id = ""
     var workSpaceId: String
     var userId: String
     var startTime: Date
@@ -17,6 +18,7 @@ struct TimeOff: Codable {
     var isApproved: Bool
     
     enum CodingKeys: String, CodingKey {
+        case id
         case workSpaceId
         case userId
         case startTime
@@ -36,9 +38,20 @@ struct TimeOff: Codable {
                     // Error occurred while adding the time off
                     completion(.failure(error))
                 } else {
-                    // Time Off added successfully, get the ID and return it
+                    // Time Off added successfully, get the ID and update the document
                     if let documentID = newDocumentRef?.documentID {
-                        completion(.success(documentID))
+                        var updatedData = timeOffDocumentData ?? [:] // Make sure to replace this with your actual data
+                        
+                        // Set the id field to the document ID
+                        updatedData["id"] = documentID
+                        
+                        newDocumentRef?.updateData(updatedData) { updateError in
+                            if let updateError = updateError {
+                                completion(.failure(updateError))
+                            } else {
+                                completion(.success(documentID))
+                            }
+                        }
                     } else {
                         completion(.failure(NSError(domain: "TimeOffCreationError", code: 0, userInfo: nil)))
                     }
@@ -50,4 +63,42 @@ struct TimeOff: Codable {
         }
     }
     
+    // Function to fetch an array of TimeOff by IDs from Firestore
+    static func fetchtimeOffsByIDs(timeOffIDs: [String], completion: @escaping ([TimeOff]) -> Void) {
+        let query = Utils.db.collection("timeOff").whereField(FieldPath.documentID(), in: timeOffIDs)
+
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching Time Off: \(error.localizedDescription)")
+                completion([])
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion([])
+                return
+            }
+            
+            var timeOffs: [TimeOff] = []
+            
+            for document in documents {
+                let data = document.data()
+                
+                do {
+                    // Use JSONSerialization to convert the Firestore document data to JSON data
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                    
+                    // Use JSONDecoder to decode the JSON data into a User object
+                    let decoder = JSONDecoder()
+                    let timeOff = try decoder.decode(TimeOff.self, from: jsonData)
+                    
+                    timeOffs.append(timeOff)
+                } catch {
+                    print("Error decoding Time Off: \(error.localizedDescription)")
+                }
+            }
+            
+            completion(timeOffs)
+        }
+    }
 }

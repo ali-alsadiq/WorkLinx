@@ -42,7 +42,7 @@ struct CellCreateWorkspace{
 }
 
 class Utils{
-    static var workspace = Workspace(workspaceId: "", name: "", address: "", admins: [])
+    static var workspace = Workspace(workspaceId: "", name: "", address: "", admins: [], employees: [])
     static var user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
     static var password = ""
     static var isAdmin = true
@@ -50,7 +50,8 @@ class Utils{
     static var workSpaceUsers: [User] = []
     static var workspaceOpenShifts: [Shift] = []
     static var workspaceAssignedShifts: [Shift] = []
-    static var currentUserShifts: [Shift] = []
+    static var currentUserShifts: [Shift] = [] // shuold be observer
+    
     static var workSpceTimeOffs: [TimeOff] = []
     static var workspaceReimbursements: [Reimbursement] = []
     
@@ -141,14 +142,6 @@ class Utils{
             completion(CellDataArray) // Call the completion handler with the fetched data
         }
     }
-    
-    
-    static func getTimeOffData() -> [(String, [String])]
-    {
-        var CallDataArray: [(String, [String])] = []
-        return CallDataArray
-    }
-    
     
     static func getPositionsData() -> [(String, [String])]
     {
@@ -330,5 +323,98 @@ class Utils{
             path.fill()
         }
         return image.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
+    }
+    
+    static func formattedDateWithDayName(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE MMM d, yyyy"
+        return formatter.string(from: date)
+    }
+    
+    
+    // fetch workspace data
+    static func fetchWorkspaceUsers(completion: @escaping () -> Void) {
+        let allEmployeeIds = Utils.workspace.employees.map { $0.employeeId }
+        
+        User.fetchUsersByIDs(userIDs: allEmployeeIds) { fetchedUsers in
+            Utils.workSpaceUsers = fetchedUsers
+            completion()
+        }
+    }
+    
+    static func fetchWorkspaceShifts(completion: @escaping () -> Void) {
+        var allShiftIds = Utils.workspace.openShiftsIds
+        allShiftIds.append(contentsOf: Utils.workspace.shiftIds)
+        
+        if allShiftIds.count > 0 {
+            Shift.fetchShiftsByIDs(shiftIDs: allShiftIds) { fetchedShifts in
+                
+                Utils.workspaceOpenShifts = fetchedShifts.filter { $0.employeeIds.isEmpty }
+                Utils.workspaceAssignedShifts = fetchedShifts.filter { !$0.employeeIds.isEmpty }
+                Utils.currentUserShifts = fetchedShifts.filter { $0.employeeIds.contains(Utils.user.id) }
+                completion()
+            }
+        } else {
+            Utils.workspaceOpenShifts = []
+            Utils.workspaceAssignedShifts = []
+            Utils.currentUserShifts = []
+            completion()
+        }
+    }
+    
+    static func fetchTimeOffRequests(completion: @escaping () -> Void) {
+        let timeOffRequestIds = Utils.workspace.timeOffRequestIds
+        
+        if timeOffRequestIds.count > 0 {
+            TimeOff.fetchtimeOffsByIDs(timeOffIDs: Utils.workspace.timeOffRequestIds) { fetchedTimeOffRequests in
+                Utils.workSpceTimeOffs = fetchedTimeOffRequests
+                completion()
+            }
+        } else {
+            Utils.workSpceTimeOffs = []
+            completion()
+        }
+    }
+    
+    static func fetchReimbursementRequests(completion: @escaping () -> Void) {
+        let reimbursementRequestIds = Utils.workspace.reimbursementRequestIds
+        
+        if reimbursementRequestIds.count > 0 {
+            Reimbursement.fetchReimbursementsByIDs(reimbursementOffIDs: reimbursementRequestIds) { fetchedReimbursementRequestIds in
+                Utils.workspaceReimbursements = fetchedReimbursementRequestIds
+                completion()
+            }
+        } else {
+            Utils.workspaceReimbursements = []
+            completion()
+        }
+    }
+    
+    static func fetchData(completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+        
+        group.enter()
+        fetchWorkspaceShifts {
+            group.leave()
+        }
+        
+        group.enter()
+        fetchWorkspaceUsers {
+            group.leave()
+        }
+        
+        group.enter()
+        fetchTimeOffRequests {
+            group.leave()
+        }
+        
+        group.enter()
+        fetchReimbursementRequests {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion()
+        }
     }
 }

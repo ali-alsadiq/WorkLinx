@@ -20,6 +20,10 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
     private var addImagesButton: UIButton!
     static var selectedImages: Set<UIImage> = []
     
+    public var requestVC: RequestViewController
+    
+    @ObservedObject private var requestListManger = RequestListManger()
+
     var selectedStartDate = Date()
     var selectedEndDate = Date()
     
@@ -41,8 +45,10 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
     private var compactEndDatePicker: UIHostingController<CompactDatePickerView>!
     private var dateSelectorStack: UIStackView!
     
-    init(tab: String){
+    init(tab: String, requestListManger: RequestListManger, requestVC: RequestViewController){
         self.tab = tab
+        self.requestListManger =  requestListManger
+        self.requestVC = requestVC
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -55,7 +61,6 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
         
         view.backgroundColor = .white
         
-        print(Date())
         
         let navigationBar = CustomNavigationBar(title: "Add Request")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
@@ -257,6 +262,7 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
                     Utils.user.timeOffRequestIds.append(timeOffId)
                     Utils.workspace.timeOffRequestIds.append(timeOffId)
                     Utils.workSpceTimeOffs.append(newTimeOff)
+                    self?.requestListManger.workspaceTimeOffs.append(newTimeOff)
                     
                     // Update Firebase
                     Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
@@ -264,7 +270,7 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
                     
                     // Go back to previous page
                     // update table in the parent view
-                    
+                    self?.requestVC.setupInfoMessageView()
                     self?.dismiss(animated: true)
                     
                 case .failure(let error):
@@ -324,8 +330,9 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
             isApproved: false)
         
         Utils.workspaceReimbursements.append(newReimbursement)
+        requestListManger.workspaceReimbursements.append(newReimbursement)
         
-        newReimbursement.createReimbursement(){ [weak self] result in
+        newReimbursement.createReimbursement(){ [unowned self] result in
             switch result {
             case .success(let documentID):
                 // Update static data
@@ -337,7 +344,8 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
                 Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
                 
                 // Go back to previous page
-                self?.dismiss(animated: true)
+                requestVC.setupInfoMessageView()
+                self.dismiss(animated: true)
                 
             case .failure(let error):
                 print("Error creating reimbursement: \(error.localizedDescription)")
@@ -380,17 +388,6 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
         
         compactStartDatePicker.view.isHidden = true
         compactEndDatePicker.view.isHidden = true
-    }
-    
-    private func updateView() {
-        switch tab {
-        case "Time Off" :
-            print("Show Time off form")
-        case "Reimbursement":
-            print("Show Reimbursement form")
-        default:
-            break
-        }
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

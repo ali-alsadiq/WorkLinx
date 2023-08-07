@@ -201,7 +201,12 @@ class UserInfoFormViewController: UIViewController {
             // User successfully created, now create the workspace
             let createWorkspaceGroup = DispatchGroup()
             createWorkspaceGroup.enter()
-            Workspace.createWorkspace(name: companyName, address: companyAddress) { result in
+            let newWorkspace =  Workspace(workspaceId: "",
+                                          name: companyName,
+                                          address: companyAddress,
+                                          admins: [Utils.user.id],
+                                          employees: [Workspace.Employee(employeeId: Utils.user.id, payrate: 0, position: "")])
+            Workspace.createWorkspace(workspace: newWorkspace) { result in
                 switch result {
                 case .success(let id):
                     workspaceId = id
@@ -248,7 +253,7 @@ class UserInfoFormViewController: UIViewController {
                 // Add the initial admin
                 let addInitialAdminGroup = DispatchGroup()
                 addInitialAdminGroup.enter()
-                Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [])
+                Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [], employees: [])
                 Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
                     switch adminResult {
                         
@@ -257,6 +262,7 @@ class UserInfoFormViewController: UIViewController {
                         
                         // All tasks completed, navigate to the dashboard view
                         // isAdmin is initially true in MenuBarViewController
+                        Utils.fetchData {}
                         Utils.navigate(DashboardViewController(), self)
                         
                     case .failure(let error):

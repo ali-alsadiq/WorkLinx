@@ -111,7 +111,13 @@ class SignInForm {
                             Utils.workspace = workspace
                             Utils.isAdmin = workspace.admins.contains(Utils.user.id)
                             // Navigate to the DashboardView inside the completion block
-                            Utils.navigate(DashboardViewController(), self.viewController)
+                            let dashboardVC = DashboardViewController()
+                            Utils.fetchData {
+                                dashboardVC.data = Utils.getDashboardTableData()
+                                dashboardVC.tableView.reloadData()
+                                print("Done fetching data and updating Dashboard Table")
+                            }
+                            Utils.navigate(dashboardVC, self.viewController)
                         } else {
                             // Failed to fetch the workspace or some data is missing
                             // Handle the error or show an appropriate alert
@@ -158,6 +164,7 @@ class SignInForm {
             // Handle Sign Up button action
             // Create user
             Utils.user = User(id: "", emailAddress: self.emailTextField.text!.lowercased(), defaultWorkspaceId: "")
+            Utils.password = self.passwordTextField.text!
             Utils.navigate("RegisterView", self.viewController)
         }
         

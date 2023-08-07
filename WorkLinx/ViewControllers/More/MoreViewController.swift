@@ -65,7 +65,7 @@ class MoreViewController : MenuBarViewController {
             print("Logged out successfully!")
             Utils.user = User(id: "", emailAddress: "", defaultWorkspaceId: "")
             Utils.invitingWorkspaces = []
-            Utils.workspace = Workspace(workspaceId: "", name: "", address: "", admins: [])
+            Utils.workspace = Workspace(workspaceId: "", name: "", address: "", admins: [], employees: [])
             ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater = false
             
             // Go back to splash screen

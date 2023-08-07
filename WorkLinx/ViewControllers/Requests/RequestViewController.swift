@@ -12,20 +12,28 @@ class RequestViewController: MenuBarViewController {
     
     var buttonGroup: ButtonGroup!
     var isGoingBack = false
-    var tab = ""
+    var tab = "" {
+        didSet {
+            requestListManger.tab = tab
+        }
+    }
     
-    private var requestTable: UITableView!
-    private var infoMessageView: UIView? // Info message view
-    private var requestsData = Utils.getTimeOffData()
-        
+    private var infoMessageView: EmptyListMessageView?
+    
+    private var requestsHostingController: UIHostingController<RequestsList>!
+    
+    @ObservedObject private var requestListManger = RequestListManger()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        requestsHostingController.view.isHidden = Utils.workspaceReimbursements.isEmpty && Utils.workSpceTimeOffs.isEmpty
+        setupInfoMessageView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
-        // Add nav bar
-        requestTable = UITableView()
-                
         let navigationBar = CustomNavigationBar(title: "Requests")
         
         if isGoingBack {
@@ -51,20 +59,6 @@ class RequestViewController: MenuBarViewController {
         let button2 = Utils.createButton(withTitle: "Time Off")
         let button3 = Utils.createButton(withTitle: "Reimbursement")
         
-        // Set the initial state
-        switch tab
-        {
-        case "Time Off" :
-            timeOffButtonTapped()
-            button2.isSelected = true
-        case "Reimbursement" :
-            reimbursementButtonTapped()
-            button3.isSelected = true
-        default :
-            allRequestsButtonTapped()
-            button1.isSelected = true
-        }
-        
         let buttonsStack = UIStackView(arrangedSubviews: [button1, button2, button3])
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 0
@@ -85,18 +79,31 @@ class RequestViewController: MenuBarViewController {
         
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
         
+        let requestsList = RequestsList(requestListManger: requestListManger)
         
-        if requestsData.isEmpty {
-            // Setup the info message view initially
-            setupInfoMessageView()
-        } else {
-            view.addSubview(requestTable)
-            NSLayoutConstraint.activate([
-                requestTable.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 100),
-                requestTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                requestTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                requestTable.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        requestsHostingController = UIHostingController(rootView: requestsList)
+        requestsHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(requestsHostingController.view)
+        
+        NSLayoutConstraint.activate([
+            requestsHostingController.view.topAnchor.constraint(equalTo: buttonsStack.bottomAnchor, constant: 20),
+            requestsHostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            requestsHostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            requestsHostingController.view.bottomAnchor.constraint(equalTo: isGoingBack ? view.bottomAnchor : menuBarStack.topAnchor)
+        ])
+        
+        // Set the initial state
+        switch tab
+        {
+        case "Time Off" :
+            timeOffButtonTapped()
+            button2.isSelected = true
+        case "Reimbursement" :
+            reimbursementButtonTapped()
+            button3.isSelected = true
+        default :
+            allRequestsButtonTapped()
+            button1.isSelected = true
         }
     }
     
@@ -105,7 +112,8 @@ class RequestViewController: MenuBarViewController {
     }
     
     @objc func addButtonTapped() {
-        Utils.navigate(AddRequestViewController(tab: tab), self)
+        let addRequestVC = AddRequestViewController(tab: tab, requestListManger: requestListManger, requestVC: self)
+        Utils.navigate(addRequestVC, self)
     }
     
     @objc func allRequestsButtonTapped() {
@@ -125,26 +133,46 @@ class RequestViewController: MenuBarViewController {
     
     // Function to update the info message view based on data availability
     func setupInfoMessageView() {
-        if  requestsData.isEmpty {
-            if infoMessageView == nil {
-                // Create the info message view
-                let infoMessageView = EmptyListMessageView(message: "No \(tab == "Reimbursement" ? "Reimbursement" : (tab == "Time Off" ? "Time Off" : "")) requests added.\nTap + to add a request.")
-                
-                infoMessageView.arrowImageView.removeFromSuperview()
-                view.addSubview(infoMessageView)
-
-                NSLayoutConstraint.activate([
-                    infoMessageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 140),
-                    infoMessageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                    infoMessageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                    infoMessageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
-                ])
+        let isReimbursementTab = tab == "Reimbursement"
+        let isTimeOffTab = tab == "Time Off"
+        let isAllRequestsTab = tab == "All Requests"
+        
+        let isEmptyReimbursements = Utils.workspaceReimbursements.isEmpty
+        let isEmptyTimeOffs = Utils.workSpceTimeOffs.isEmpty
+        
+        if (isReimbursementTab && isEmptyReimbursements) ||
+            (isTimeOffTab && isEmptyTimeOffs) ||
+            (isAllRequestsTab && isEmptyReimbursements && isEmptyTimeOffs) {
+            
+            // Create the info message view
+            let message = "No \(isReimbursementTab ? "Reimbursement" : isTimeOffTab ? "Time Off" : "") requests added.\nTap + to add a request."
+            
+            // Remove from view before adding a new one
+            if infoMessageView != nil {
+                infoMessageView!.removeFromSuperview()
             }
-            requestTable.separatorStyle = .none
+          
+            infoMessageView = EmptyListMessageView(message: message)
+            
+            infoMessageView!.arrowImageView.removeFromSuperview()
+            
+            infoMessageView!.isHidden = false
+
+            view.addSubview(infoMessageView!)
+            
+            NSLayoutConstraint.activate([
+                infoMessageView!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 140),
+                infoMessageView!.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                infoMessageView!.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                infoMessageView!.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            ])
+            
         } else {
-            infoMessageView?.removeFromSuperview()
-            infoMessageView = nil
-            requestTable.separatorStyle = .singleLine
+            if infoMessageView != nil {
+                infoMessageView!.removeFromSuperview()
+                infoMessageView = nil
+            }
+            requestsHostingController.view.isHidden = false
         }
     }
 }

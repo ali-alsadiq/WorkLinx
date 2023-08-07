@@ -12,20 +12,13 @@ class DashboardViewController: MenuBarViewController {
     var tableView: UITableView!
     var data: [(String, [CellDashboard])] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.data = Utils.getDashboardTableData()
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let timestamp = 713188440
-                        
-        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let formattedDate = dateFormatter.string(from: date)
-        print(formattedDate)
-        Workspace.updateInvitingWorkspaces() {
-            if !Utils.invitingWorkspaces.isEmpty && !ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater {
-                Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
-            }
-        }
         
         view.backgroundColor = .white
         
@@ -60,58 +53,6 @@ class DashboardViewController: MenuBarViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        self.data = Utils.getDashboardTableData()
-        self.tableView.reloadData()
-        
-        // fetch Data
-        fetchData() {
-            self.data = Utils.getDashboardTableData()
-            self.tableView.reloadData()
-        }
-    }
-    
-    private func fetchWorkspaceUsers(completion: @escaping () -> Void) {
-        let allEmployeeIds = Utils.workspace.employees.map { $0.employeeId }
-        
-        if allEmployeeIds.count > 0 {
-            User.fetchUsersByIDs(userIDs: allEmployeeIds) { fetchedUsers in
-                Utils.workSpaceUsers = fetchedUsers
-                completion()
-            }
-        }
-    }
-    
-    private func fetchWorkspaceShifts(completion: @escaping () -> Void) {
-        var allShiftIds = Utils.workspace.openShiftsIds
-        allShiftIds.append(contentsOf: Utils.workspace.shiftIds)
-        
-        if allShiftIds.count > 0 {
-            Shift.fetchShiftsByIDs(shiftIDs: allShiftIds) { fetchedShifts in
-                
-                Utils.workspaceOpenShifts = fetchedShifts.filter { $0.employeeIds.isEmpty }
-                Utils.workspaceAssignedShifts = fetchedShifts.filter { !$0.employeeIds.isEmpty }
-                Utils.currentUserShifts = fetchedShifts.filter { $0.employeeIds.contains(Utils.user.id) }
-                completion()
-            }
-        }
-    }
-    
-    func fetchData(completion: @escaping () -> Void) {
-        let group = DispatchGroup()
-        
-        group.enter()
-        fetchWorkspaceShifts {
-            group.leave()
-        }
-        
-        group.enter()
-        fetchWorkspaceUsers {
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            completion()
-        }
     }
 }
 

@@ -35,6 +35,7 @@
 		C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */; };
 		C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */; };
 		C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */; };
+		C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD372A80C577009D636D /* RequestsList.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -105,6 +106,7 @@
 		C7CF598F2A619C5400D2A3D3 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCell.swift; sourceTree = "<group>"; };
+		C7D5BD372A80C577009D636D /* RequestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsList.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			children = (
 				C7DDC5002A7A64BF007E3564 /* EmailListView.swift */,
 				C7DDC5042A7ADF89007E3564 /* InvitingWorkspacesList.swift */,
+				C7D5BD372A80C577009D636D /* RequestsList.swift */,
 				C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */,
 				C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */,
 				C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */,
@@ -571,6 +574,7 @@
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
 				C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */,
+				C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */,
 				C705144B2A6A79C2003A69EA /* ButtonGroup.swift in Sources */,
 				C7DDC5072A7AE160007E3564 /* ConfirmInvitingWorkspacesViewController.swift in Sources */,
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,

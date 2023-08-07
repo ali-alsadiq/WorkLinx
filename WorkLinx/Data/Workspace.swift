@@ -50,11 +50,12 @@ class Workspace: Codable {
     }
     
     
-    init(workspaceId: String, name: String, address: String, admins: [String]) {
+    init(workspaceId: String, name: String, address: String, admins: [String], employees: [Employee]) {
         self.workspaceId = workspaceId
         self.name = name
         self.address = address
         self.admins = admins
+        self.employees = employees
     }
     
     var description: String {
@@ -62,11 +63,10 @@ class Workspace: Codable {
     }
     
     // Function to create a new workspace in Firestore
-    static func createWorkspace(name: String, address: String, completion: @escaping (Result<String, Error>) -> Void) {
+    static func createWorkspace(workspace: Workspace, completion: @escaping (Result<String, Error>) -> Void) {
         do {
-            Utils.workspace = Workspace(workspaceId: "", name: name , address: address, admins: [])
-            
-            let workspaceDocumentData = try Utils.encodeData(data: Utils.workspace)
+            // Encode the provided workspace object
+            let workspaceDocumentData = try Utils.encodeData(data: workspace)
             
             // Declare newDocumentRef as an optional variable outside the closure
             var newDocumentRef: DocumentReference?
@@ -78,7 +78,11 @@ class Workspace: Codable {
                 } else {
                     // Workspace added successfully, get the ID and return it
                     if let documentID = newDocumentRef?.documentID {
-                        Utils.workspace.workspaceId = documentID
+                        // Update the workspace object with the document ID
+                        var updatedWorkspace = workspace
+                        updatedWorkspace.workspaceId = documentID
+                        
+                        // Call the completion handler with the updated workspace
                         completion(.success(documentID))
                     } else {
                         completion(.failure(NSError(domain: "WorkspaceCreationError", code: 0, userInfo: nil)))

@@ -76,7 +76,12 @@ class ImageSelectionViewController: UIViewController, UICollectionViewDelegate, 
             requestOptions.deliveryMode = .highQualityFormat
             requestOptions.resizeMode = .exact
             
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFill, options: requestOptions) { image, _ in
+            let targetWidth = min(CGFloat(asset.pixelWidth) / 4, 500)
+            let originalAspectRatio = CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth)
+            let targetHeight = targetWidth * originalAspectRatio
+            let targetSize = CGSize(width: targetWidth, height: targetHeight)
+
+            PHImageManager.default().requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: requestOptions) { image, _ in
                 if let image = image {
                     fetchedImages.append(image)
                 }

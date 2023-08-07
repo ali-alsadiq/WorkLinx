@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 struct Shift: Codable, Hashable {
+    var id: String = ""
     var employeeIds: [String]
     var workspaceId: String
     var date: Date
@@ -19,6 +20,7 @@ struct Shift: Codable, Hashable {
     
     
     enum CodingKeys: String, CodingKey {
+        case id
         case employeeIds
         case workspaceId
         case date
@@ -41,9 +43,20 @@ struct Shift: Codable, Hashable {
                     // Error occurred while adding the workspace
                     completion(.failure(error))
                 } else {
-                    // Shift created successfully, get the ID and return it
+                    // Shift created successfully, get the ID and update the document
                     if let documentID = newDocumentRef?.documentID {
-                        completion(.success(documentID))
+                        var updatedData = shiftDocumentData ?? [:] // Make sure to replace this with your actual data
+                        
+                        // Set the id field to the document ID
+                        updatedData["id"] = documentID
+                        
+                        newDocumentRef?.updateData(updatedData) { updateError in
+                            if let updateError = updateError {
+                                completion(.failure(updateError))
+                            } else {
+                                completion(.success(documentID))
+                            }
+                        }
                     } else {
                         completion(.failure(NSError(domain: "ShiftCreationError", code: 0, userInfo: nil)))
                     }
@@ -54,12 +67,11 @@ struct Shift: Codable, Hashable {
             completion(.failure(error))
         }
     }
-
     
     // Function to fetch an array of users by IDs from Firestore
     static func fetchShiftsByIDs(shiftIDs: [String], completion: @escaping ([Shift]) -> Void) {
         let query = Utils.db.collection("shifts").whereField(FieldPath.documentID(), in: shiftIDs)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching shifts: \(error.localizedDescription)")
