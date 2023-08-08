@@ -16,7 +16,6 @@
 		C70CCEB32A6B7D4A000677F1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C70CCEB22A6B7D4A000677F1 /* FirebaseAuth */; };
 		C70CCEB52A6B7D4A000677F1 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = C70CCEB42A6B7D4A000677F1 /* FirebaseDatabase */; };
 		C70CCEB72A6B7D4A000677F1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C70CCEB62A6B7D4A000677F1 /* FirebaseFirestore */; };
-		C70CCEB92A6B7D4A000677F1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C70CCEB82A6B7D4A000677F1 /* FirebaseMessaging */; };
 		C73392C62A6D4B40004A7E60 /* UserProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */; };
 		C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73392C72A6D4B81004A7E60 /* UserProfileCell.swift */; };
 		C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDFFB2A4AA1F0007A8D06 /* AppDelegate.swift */; };
@@ -36,13 +35,13 @@
 		C7CF59922A6237B200D2A3D3 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */; };
 		C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */; };
 		C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD372A80C577009D636D /* RequestsList.swift */; };
+		C7D5BD3A2A81820F009D636D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
-		C7DDC4F42A7900A2007E3564 /* AssignUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */; };
+		C7DDC4F42A7900A2007E3564 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F32A7900A2007E3564 /* UsersTableViewController.swift */; };
 		C7DDC4F62A790B56007E3564 /* AssignPositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F52A790B56007E3564 /* AssignPositionCell.swift */; };
 		C7DDC4F82A795FD3007E3564 /* EditPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F72A795FD3007E3564 /* EditPositionViewController.swift */; };
-		C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */; };
 		C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */; };
 		C7DDC5012A7A64BF007E3564 /* EmailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC5002A7A64BF007E3564 /* EmailListView.swift */; };
 		C7DDC5032A7AB034007E3564 /* UserInforFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC5022A7AB034007E3564 /* UserInforFormViewController.swift */; };
@@ -66,7 +65,6 @@
 		C7F2BB522A7D98730071D0B2 /* AssignedUsersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */; };
 		C7F2BB572A7E1B020071D0B2 /* CompactDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */; };
 		C7F2BB592A7E1B380071D0B2 /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */; };
-		C7F2BB5B2A7E40210071D0B2 /* TimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */; };
 		C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */; };
 		C7F2BB5F2A7F859B0071D0B2 /* AddRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */; };
 		C7F2BB622A7FC9300071D0B2 /* ImageSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */; };
@@ -107,13 +105,13 @@
 		C7CF59912A6237B200D2A3D3 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCell.swift; sourceTree = "<group>"; };
 		C7D5BD372A80C577009D636D /* RequestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsList.swift; sourceTree = "<group>"; };
+		C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
-		C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignUsersViewController.swift; sourceTree = "<group>"; };
+		C7DDC4F32A7900A2007E3564 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		C7DDC4F52A790B56007E3564 /* AssignPositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignPositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F72A795FD3007E3564 /* EditPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPositionViewController.swift; sourceTree = "<group>"; };
-		C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		C7DDC5002A7A64BF007E3564 /* EmailListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailListView.swift; sourceTree = "<group>"; };
 		C7DDC5022A7AB034007E3564 /* UserInforFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInforFormViewController.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 		C7F2BB512A7D98730071D0B2 /* AssignedUsersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedUsersList.swift; sourceTree = "<group>"; };
 		C7F2BB562A7E1B020071D0B2 /* CompactDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactDatePickerView.swift; sourceTree = "<group>"; };
 		C7F2BB582A7E1B380071D0B2 /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
-		C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffViewController.swift; sourceTree = "<group>"; };
 		C7F2BB5C2A7E43780071D0B2 /* EmptyListMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListMessageView.swift; sourceTree = "<group>"; };
 		C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRequestViewController.swift; sourceTree = "<group>"; };
 		C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectionViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +151,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C70CCEB92A6B7D4A000677F1 /* FirebaseMessaging in Frameworks */,
 				C70CCEAF2A6B7D4A000677F1 /* FirebaseAnalytics in Frameworks */,
 				C70CCEB32A6B7D4A000677F1 /* FirebaseAuth in Frameworks */,
 				C70CCEB52A6B7D4A000677F1 /* FirebaseDatabase in Frameworks */,
@@ -266,7 +262,6 @@
 				C73392C92A6D56FB004A7E60 /* More */,
 				C7F2BB542A7D9AE70071D0B2 /* Shared */,
 				C7E0A2562A59B24700003473 /* AttendanceViewController.swift */,
-				C7F2BB5A2A7E40210071D0B2 /* TimeOffViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -307,8 +302,8 @@
 		C7DDC4FB2A7A48DF007E3564 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				C7DDC4F92A7A47CE007E3564 /* UsersViewController.swift */,
 				C7DDC4FC2A7A48E7007E3564 /* AddUserViewController.swift */,
+				C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -361,7 +356,7 @@
 		C7F2BB542A7D9AE70071D0B2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C7DDC4F32A7900A2007E3564 /* AssignUsersViewController.swift */,
+				C7DDC4F32A7900A2007E3564 /* UsersTableViewController.swift */,
 				C7E0A2502A58824C00003473 /* MenuBarViewController.swift */,
 			);
 			path = Shared;
@@ -425,7 +420,6 @@
 				C70CCEB22A6B7D4A000677F1 /* FirebaseAuth */,
 				C70CCEB42A6B7D4A000677F1 /* FirebaseDatabase */,
 				C70CCEB62A6B7D4A000677F1 /* FirebaseFirestore */,
-				C70CCEB82A6B7D4A000677F1 /* FirebaseMessaging */,
 				C7F2BB632A7FF3CD0071D0B2 /* FirebaseStorage */,
 			);
 			productName = WorkLinx;
@@ -564,11 +558,12 @@
 				C77BE01B2A4AD48C007A8D06 /* CustomButton.swift in Sources */,
 				C70AB40D2A6987E4009736B8 /* WorkspaceCell.swift in Sources */,
 				C7CF59902A619C5400D2A3D3 /* MoreCell.swift in Sources */,
-				C7DDC4F42A7900A2007E3564 /* AssignUsersViewController.swift in Sources */,
+				C7DDC4F42A7900A2007E3564 /* UsersTableViewController.swift in Sources */,
 				C7F2BB522A7D98730071D0B2 /* AssignedUsersList.swift in Sources */,
 				C7F2BB4E2A7D58030071D0B2 /* AddShiftViewController.swift in Sources */,
 				C73392C62A6D4B40004A7E60 /* UserProfileTableViewController.swift in Sources */,
 				C77BDFFE2A4AA1F0007A8D06 /* SceneDelegate.swift in Sources */,
+				C7D5BD3A2A81820F009D636D /* UserDetailsViewController.swift in Sources */,
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
@@ -580,13 +575,11 @@
 				C7ECD8432A6258B700D494EB /* User.swift in Sources */,
 				C7E0506F2A5428DE0026971C /* CreateNewWorkspaceViewController.swift in Sources */,
 				C7E0A2532A59A90E00003473 /* DashboardViewController.swift in Sources */,
-				C7DDC4FA2A7A47CE007E3564 /* UsersViewController.swift in Sources */,
 				C7F2BB592A7E1B380071D0B2 /* TimePickerView.swift in Sources */,
 				C7F2BB572A7E1B020071D0B2 /* CompactDatePickerView.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,
 				C7DDC5052A7ADF89007E3564 /* InvitingWorkspacesList.swift in Sources */,
 				C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */,
-				C7F2BB5B2A7E40210071D0B2 /* TimeOffViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,11 +838,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C70CCEAD2A6B7D4A000677F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
-		};
-		C70CCEB82A6B7D4A000677F1 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C70CCEAD2A6B7D4A000677F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		C7F2BB632A7FF3CD0071D0B2 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;

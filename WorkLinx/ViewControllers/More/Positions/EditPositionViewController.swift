@@ -213,11 +213,11 @@ class EditPositionViewController: UIViewController {
     }
     
     @objc func assignButtonTapped(){
-        let assignVC = AssignUsersViewController()
+        let assignVC = UsersTableViewController()
         assignVC.modalPresentationStyle = .formSheet
         assignVC.isEditMode = true
         assignVC.currentPosition = currentPosition
-        assignVC.editView = self
+        assignVC.editPositionView = self
         assignVC.previouslyAssignedUsers = AddPositionViewController.assignedUsers
         
         present(assignVC, animated: true, completion: nil)

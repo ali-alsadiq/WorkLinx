@@ -11,6 +11,7 @@ import UIKit
 class AddPositionViewController: UIViewController {
     
     public var positionsTableView: PositionsViewController!
+    public var userDetailVC: UserDetailsViewController!
     
     private var navigationBar: CustomNavigationBar!
     private var saveButton: UIBarButtonItem!
@@ -109,25 +110,28 @@ class AddPositionViewController: UIViewController {
         
         
         // Add Assign users button
-        let assignButton = UIButton()
-        assignButton.setTitle("Assign Users", for: .normal)
-        assignButton.addTarget(self, action: #selector(assignButtonTapped), for: .touchUpInside)
-        assignButton.layer.borderWidth = 1.0
-        assignButton.layer.borderColor = UIColor.gray.cgColor
-        assignButton.setTitleColor(.white, for: .normal)
-        assignButton.backgroundColor = .darkGray
-        assignButton.layer.cornerRadius = 15
-        assignButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        assignButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(assignButton)
-        
-        NSLayoutConstraint.activate([
-            assignButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -85),
-            assignButton.heightAnchor.constraint(equalToConstant: 55),
-            assignButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
-            assignButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+        if userDetailVC == nil {
+            let assignButton = UIButton()
+            assignButton.setTitle("Assign Users", for: .normal)
+            assignButton.addTarget(self, action: #selector(assignButtonTapped), for: .touchUpInside)
+            assignButton.layer.borderWidth = 1.0
+            assignButton.layer.borderColor = UIColor.gray.cgColor
+            assignButton.setTitleColor(.white, for: .normal)
+            assignButton.backgroundColor = .darkGray
+            assignButton.layer.cornerRadius = 15
+            assignButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+            assignButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(assignButton)
+            
+            
+            NSLayoutConstraint.activate([
+                assignButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -85),
+                assignButton.heightAnchor.constraint(equalToConstant: 55),
+                assignButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
+                assignButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            ])
+        }
     }
     
     // Use the textFieldDidChange method to capture text changes
@@ -143,7 +147,7 @@ class AddPositionViewController: UIViewController {
     }
     
     @objc func assignButtonTapped(){
-        let assignVC = AssignUsersViewController()
+        let assignVC = UsersTableViewController()
         assignVC.modalPresentationStyle = .formSheet
         present(assignVC, animated: true, completion: nil)
     }
@@ -200,7 +204,13 @@ class AddPositionViewController: UIViewController {
             }
         }
         
-        let employeeIds = AddPositionViewController.assignedUsers.map { $0.id }
+        var employeeIds: [String]
+        
+        if userDetailVC == nil {
+            employeeIds = AddPositionViewController.assignedUsers.map { $0.id }
+        } else {
+            employeeIds = [userDetailVC.user.id]
+        }
         
         Utils.workspace.employees = Utils.workspace.employees.map { employee in
             if employeeIds.contains(employee.employeeId) {
@@ -222,7 +232,15 @@ class AddPositionViewController: UIViewController {
             }
         }
         
-        dismiss(animated: true, completion: nil)
+        if userDetailVC != nil {
+            userDetailVC?.position = position
+            userDetailVC?.dismiss(animated: true, completion: {
+                [weak self] in self?.dismiss(animated: true, completion: nil)
+            })
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+        
         
     }
     

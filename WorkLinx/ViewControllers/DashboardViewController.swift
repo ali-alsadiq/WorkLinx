@@ -9,7 +9,7 @@ import UIKit
 
 class DashboardViewController: MenuBarViewController {
     
-    var tableView: UITableView!
+    var tableView = UITableView()
     var data: [(String, [CellDashboard])] = []
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,9 +21,7 @@ class DashboardViewController: MenuBarViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        tableView = UITableView()
-        
+                
         // Add nav bar
         let navigationBar = CustomNavigationBar(title: Utils.workspace.name)
         navigationBar.translatesAutoresizingMaskIntoConstraints = false

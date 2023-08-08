@@ -17,9 +17,6 @@ class MenuBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(Utils.user.description)
-        print(Utils.workspace.description)
-
         // Create the stack view
         menuBarStack = UIStackView()
         menuBarStack.axis = .horizontal

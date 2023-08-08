@@ -290,7 +290,7 @@ class AddShiftViewController: UIViewController {
     }
     
     @objc func assignButtonTapped(){
-        let assignVC = AssignUsersViewController()
+        let assignVC = UsersTableViewController()
         assignVC.modalPresentationStyle = .formSheet
         assignVC.addShiftsView = self
         present(assignVC, animated: true, completion: nil)

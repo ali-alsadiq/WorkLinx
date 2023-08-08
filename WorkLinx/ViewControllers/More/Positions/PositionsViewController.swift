@@ -13,6 +13,7 @@ class PositionsViewController: UIViewController {
     private var infoMessageView: UIView? // Info message view
     private var arrowImageView: UIImageView?
     private var navigationBar: CustomNavigationBar!
+    public var userDetailVC: UserDetailsViewController?
     
     private var data = Utils.getPositionsData()
     
@@ -81,11 +82,12 @@ class PositionsViewController: UIViewController {
     
     // Function to handle the + button tap
     @objc func addButtonTapped() {
-        let positionsVC = AddPositionViewController()
-        positionsVC.positionsTableView = self
-        positionsVC.modalPresentationStyle = .fullScreen
+        let addPositionsVC = AddPositionViewController()
+        addPositionsVC.positionsTableView = self
+        addPositionsVC.userDetailVC = userDetailVC
+        addPositionsVC.modalPresentationStyle = .fullScreen
 
-        present(positionsVC, animated: true, completion: nil)
+        present(addPositionsVC, animated: true, completion: nil)
     }
     
     // Function to update the info message view based on data availability
@@ -117,10 +119,16 @@ extension PositionsViewController: UITableViewDelegate {
         let role = data[indexPath.section].0.contains("Admins") ? "Administrator" : "User"
         let position = data[indexPath.section].1[indexPath.row]
         
-        let editPositionVC = EditPositionViewController(currentPosition: position, role: role, positionsTableView: self)
-        editPositionVC.modalPresentationStyle = .fullScreen
+        if userDetailVC != nil {
+            userDetailVC?.position = position
+            dismiss(animated: true)
+        }
+        else {
+            let editPositionVC = EditPositionViewController(currentPosition: position, role: role, positionsTableView: self)
+            editPositionVC.modalPresentationStyle = .fullScreen
 
-        present(editPositionVC, animated: true, completion: nil)
+            present(editPositionVC, animated: true, completion: nil)
+        }
     }
 }
 

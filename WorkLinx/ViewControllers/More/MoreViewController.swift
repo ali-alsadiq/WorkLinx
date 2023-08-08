@@ -67,6 +67,9 @@ class MoreViewController : MenuBarViewController {
             Utils.invitingWorkspaces = []
             Utils.workspace = Workspace(workspaceId: "", name: "", address: "", admins: [], employees: [])
             ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater = false
+            Utils.currentUserShifts = []
+            Utils.workSpaceUsers = []
+            Utils.workspaceAssignedShifts = []
             
             // Go back to splash screen
             Utils.navigate("SplashView", self, transitionTime: 0.4)
@@ -135,7 +138,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Task Lists":
                 print(cellData.text)
             case "Coworkers":
-                print(cellData.text)
+                navigateToUsersViewController()
             case "Publish & Notify":
                 print(cellData.text)
             case "Add Annotation":
@@ -148,9 +151,8 @@ extension MoreViewController: UITableViewDelegate{
     }
     
     func navigateToUsersViewController() {
-        let usersVC = UsersViewController()
-        
-        // Present the UserProfileTableViewController modally
+        let usersVC = UsersTableViewController()
+        usersVC.isUsersView = true
         usersVC.modalPresentationStyle = .fullScreen
         present(usersVC, animated: true, completion: nil)
     }

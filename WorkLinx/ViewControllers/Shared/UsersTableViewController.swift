@@ -1,5 +1,5 @@
 //
-//  AssignUsersViewController.swift
+//  UsersTableViewController.swift
 //  WorkLinx
 //
 //  Created by Ali Alsadiq on 2023-08-01.
@@ -7,15 +7,18 @@
 
 import UIKit
 
-class AssignUsersViewController: UIViewController {
-    public var editView: EditPositionViewController?
+class UsersTableViewController: UIViewController {
+    public var editPositionView: EditPositionViewController?
     public var addShiftsView: AddShiftViewController?
+    public var isUsersView = false
     
     public var previouslyAssignedUsers: [User]?
     
     private var navigationBar: CustomNavigationBar!
     private var doneButton: UIBarButtonItem!
     private var cancelButton: UIBarButtonItem!
+    private var addButton: UIBarButtonItem!
+    private var backButton: BackButton!
     
     private var assignUsersTableView: UITableView!
     private var cell: AssignPositionCell!
@@ -31,10 +34,10 @@ class AssignUsersViewController: UIViewController {
         view.backgroundColor = UIColor.white
         
         // Add nav bar
-        navigationBar = CustomNavigationBar(title: "Add Users")
+        navigationBar = CustomNavigationBar(title: isUsersView ? "Users" : "Add Users")
         cancelButton = UIBarButtonItem()
         cancelButton.title = "Cancel"
-        cancelButton.action = #selector(goBack)
+        cancelButton.action = #selector(canecel)
         
         doneButton = UIBarButtonItem()
         doneButton.title = "Done"
@@ -42,8 +45,23 @@ class AssignUsersViewController: UIViewController {
         doneButton.action = #selector(doneButtonTapped)
         doneButton.isEnabled = false
         
-        navigationBar.items?.first?.leftBarButtonItem = cancelButton
-        navigationBar.items?.first?.rightBarButtonItem = doneButton
+        backButton = BackButton(text: nil, target: self, action: #selector(goBack))
+        
+        if isUsersView {
+            if Utils.isAdmin {
+                let addButtonImage = UIImage(systemName: "plus")
+                // Resize and recolor the addButton image
+                let symbolConfiguration = UIImage.SymbolConfiguration(weight: .heavy)
+                let resizedImage = addButtonImage!.withConfiguration(symbolConfiguration).withTintColor(.black, renderingMode: .alwaysOriginal)
+                addButton = UIBarButtonItem(image: resizedImage, style: .plain, target: self, action: #selector(addButtonTapped))
+                
+                navigationBar.items?.first?.rightBarButtonItem = addButton
+            }
+            navigationBar.items?.first?.leftBarButtonItem = backButton
+        } else {
+            navigationBar.items?.first?.leftBarButtonItem = cancelButton
+            navigationBar.items?.first?.rightBarButtonItem = doneButton
+        }
         
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         
@@ -99,8 +117,21 @@ class AssignUsersViewController: UIViewController {
         ])
     }
     
-    
+    // Function to handle the + button tap
+    @objc func addButtonTapped() {
+        let positionsVC = AddUserViewController()
+        positionsVC.modalPresentationStyle = .fullScreen
+
+        present(positionsVC, animated: true, completion: nil)
+    }
+
     @objc func goBack() {
+        // Pop the current view controller from the navigation stack
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @objc func canecel() {
         
         // Empty assignedUsers array
         AddPositionViewController.assignedUsers = []
@@ -113,9 +144,9 @@ class AssignUsersViewController: UIViewController {
     }
     
     @objc func doneButtonTapped() {
-        if isEditMode && editView != nil {
-            editView!.editButtonTapped()
-            editView!.saveButton.isEnabled = true
+        if isEditMode && editPositionView != nil {
+            editPositionView!.editButtonTapped()
+            editPositionView!.saveButton.isEnabled = true
         }
         
         // Pop the current view controller from the navigation stack
@@ -123,7 +154,7 @@ class AssignUsersViewController: UIViewController {
     }
 }
 
-extension AssignUsersViewController: UITableViewDataSource, UITableViewDelegate {
+extension UsersTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return Dictionary(grouping: users, by: { $0.firstName.prefix(1).uppercased() }).count
@@ -166,7 +197,14 @@ extension AssignUsersViewController: UITableViewDataSource, UITableViewDelegate 
         let sortedKeys = firstLetters.keys.sorted()
         let key = sortedKeys[indexPath.section]
         if let user = firstLetters[key]?[indexPath.row] {
-            if addShiftsView == nil {
+            
+            if isUsersView {
+                // navigate to a page where you can see users info, assign shifts, set position, etc...
+                print(user)
+                let userDetailVC = UserDetailsViewController(user: user)
+                Utils.navigate(userDetailVC, self)
+            }
+            else if addShiftsView == nil {
                 if AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) {
                     AddPositionViewController.assignedUsers.removeAll(where: { $0.id == user.id })
                 } else {

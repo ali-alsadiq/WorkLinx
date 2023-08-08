@@ -117,12 +117,11 @@ class CreateNewWorkspaceViewController: UIViewController {
                 
                 // Creating aditional workspace
                 Utils.user.workSpaces.append(workspaceId)
-                print("COUNT:   \(Utils.user.workSpaces.count)")
-
+                Utils.user.defaultWorkspaceId = workspaceId
+                
                 Utils.user.setUserData { result in
                     switch result {
                     case .success:
-                        print("Workspace added successfully!")
                         
                         // Set new workspace and navigate to dashboard
                         Workspace.getWorkspaceByID(workspaceID: workspaceId) { workspace in
@@ -142,40 +141,6 @@ class CreateNewWorkspaceViewController: UIViewController {
                         print("Error adding workspace: \(error)")
                     }
                 }
-                
-                
-                // Add the initial admin
-                let addInitialAdminGroup = DispatchGroup()
-                addInitialAdminGroup.enter()
-                Utils.workspace = Workspace(workspaceId: workspaceId,
-                                            name: companyName,
-                                            address: companyAddress,
-                                            admins: [Utils.user.id],
-                                            employees: [Workspace.Employee(employeeId: Utils.user.id, payrate: 0, position: "")])
-                
-                // Check why addInitialAdminAndEmployee and not update workspace?
-                Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
-                    switch adminResult {
-                        
-                    case .success:
-                        print("Initial admin and employee added successfully.")
-                        
-                        // All tasks completed, navigate to the dashboard view
-                        Utils.isAdmin = true
-                        Utils.fetchData {}
-                        Utils.navigate(DashboardViewController(), self)
-                        
-                    case .failure(let error):
-                        print("Error adding initial admin: \(error.localizedDescription)")
-                        // Handle the error appropriately.
-                    }
-                }
-                
-                addInitialAdminGroup.wait() // Wait for the completion of addInitialAdmin function
-            } else {
-                // Handle the workspace creation failure
-                // Show an alert or perform any other necessary action
-                print("Workspace creation failed.")
             }
         }
     }

@@ -115,9 +115,14 @@ class SignInForm {
                             Utils.fetchData {
                                 dashboardVC.data = Utils.getDashboardTableData()
                                 dashboardVC.tableView.reloadData()
+                                
                                 print("Done fetching data and updating Dashboard Table")
                             }
-                            Utils.navigate(dashboardVC, self.viewController)
+                            
+                            Workspace.updateInvitingWorkspaces {
+                                Utils.navigate(ConfirmInvitingWorkspacesViewController(), self.viewController)
+                            }
+                            
                         } else {
                             // Failed to fetch the workspace or some data is missing
                             // Handle the error or show an appropriate alert

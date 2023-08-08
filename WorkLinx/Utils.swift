@@ -95,7 +95,7 @@ class Utils{
         var scheduleSection: [CellDashboard] = []
         scheduleSection.append(CellDashboard(number: Utils.currentUserShifts.count, text: "My Shifts"))
         scheduleSection.append(CellDashboard(number: Utils.workspace.openShiftsIds.count, text: "Open Shifts"))
-        scheduleSection.append(CellDashboard(number: Utils.user.timeOffRequestIds.count, text: "My Time Off"))
+        scheduleSection.append(CellDashboard(number: Utils.workSpceTimeOffs.filter{$0.userId == Utils.user.id}.count, text: "My Time Off"))
         
         callDataArray.append(("My Schedule", scheduleSection))
         
@@ -117,13 +117,10 @@ class Utils{
         
         for workspaceId in Utils.user.workSpaces {
             dispatchGroup.enter() // Enter the dispatch group before starting the async call
-            print("dispaching")
             Workspace.getWorkspaceByID(workspaceID: workspaceId) { workspace in
                 if let workspace = workspace {
-                    print(workspace.description)
                     userType = workspace.admins.contains(where: { $0 == Utils.user.id }) ? "Admin" : "Employee"
                     workspaces.append(CellWorkspace(workspace: workspace, userType: userType, isExtendable: false))
-                    print(workspaces.count)
                 } else {
                     print("Error getting workspace by Id")
                 }

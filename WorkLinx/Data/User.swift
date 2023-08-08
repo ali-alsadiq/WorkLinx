@@ -18,7 +18,6 @@ struct User : Codable, Equatable, Hashable {
     var address = ""
     var workSpaces: [String] = []
     var defaultWorkspaceId: String
-    var position = ""
     var availabilityIds: [String] = []
     var timeOffRequestIds: [String] = []
     var shiftIds: [String] = []
@@ -33,7 +32,6 @@ struct User : Codable, Equatable, Hashable {
         case address
         case workSpaces
         case defaultWorkspaceId
-        case position
         case availabilityIds
         case timeOffRequestIds
         case shiftIds
@@ -53,10 +51,6 @@ struct User : Codable, Equatable, Hashable {
         self.id = id
         self.emailAddress = emailAddress
         self.defaultWorkspaceId = defaultWorkspaceId
-    }
-    
-    var description: String {
-        return "User ID: \(id), Email: \(emailAddress), Default Workspace ID: \(defaultWorkspaceId), First Name: \(firstName), Last Name: \(lastName), Position: \(position)"
     }
     
     // Function to create a new user in Firebase Authentication

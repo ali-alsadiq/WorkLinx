@@ -180,7 +180,6 @@ class UserInfoFormViewController: UIViewController {
             var workspaceId: String?
             var userDataError: Error?
             
-            
             // Execute createUser function
             let createUserGroup = DispatchGroup()
             createUserGroup.enter()
@@ -241,41 +240,6 @@ class UserInfoFormViewController: UIViewController {
                     }
                 }
                 createUserDataGroup.wait() // Wait for the completion of createUserData function
-                
-                // Check if there was an error while creating user data
-                if userDataError != nil {
-                    // Handle the user data creation failure
-                    // Show an alert or perform any other necessary action
-                    print("User data creation failed.")
-                    return
-                }
-                
-                // Add the initial admin
-                let addInitialAdminGroup = DispatchGroup()
-                addInitialAdminGroup.enter()
-                Utils.workspace = Workspace(workspaceId: workspaceId, name: companyName, address: companyAddress, admins: [], employees: [])
-                Utils.workspace.addInitialAdminAndEmployee(userId: Utils.user.id) { adminResult in
-                    switch adminResult {
-                        
-                    case .success:
-                        print("Initial admin and employee added successfully.")
-                        
-                        // All tasks completed, navigate to the dashboard view
-                        // isAdmin is initially true in MenuBarViewController
-                        Utils.fetchData {}
-                        Utils.navigate(DashboardViewController(), self)
-                        
-                    case .failure(let error):
-                        print("Error adding initial admin: \(error.localizedDescription)")
-                        // Handle the error appropriately.
-                    }
-                }
-                
-                addInitialAdminGroup.wait() // Wait for the completion of addInitialAdmin function
-            } else {
-                // Handle the workspace creation failure
-                // Show an alert or perform any other necessary action
-                print("Workspace creation failed.")
             }
         }
     }
