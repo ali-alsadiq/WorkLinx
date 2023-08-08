@@ -138,24 +138,85 @@ class UserInfoFormViewController: UIViewController {
         Utils.user.lastName = lastName
         Utils.user.address = addressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
-        if Utils.isAdmin {
-            guard let companyName = texboxComopanyName.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyName.isEmpty,
-                  let companyAddress = textBoxCompanyAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyAddress.isEmpty else {
-                // Display an alert indicating that first name and last name are required
-                showAlert(title: "Incomplete Information", message: "Please enter your workspace name and address.")
+        AddressValidationResponse.validateAddress(address: Utils.user.address) { [unowned self] response, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Invalid User Address", message: "Please enter a valid address.")
+                }
                 return
+            } else if let response = response {
+                let formattedAddress = response.result.address.formattedAddress
+                let hasInferredComponents = response.result.verdict.hasInferredComponents
+                
+                if hasInferredComponents != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Confirm Address", message: "Do you want to confirm the following address?\n\n\(formattedAddress)", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+                            Utils.user.address = formattedAddress
+                            self.addressTextField.text = formattedAddress
+                            self.completeButtonTapped()
+                        }))
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                            return
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    return
+                }
             }
             
-            Utils.workspace.name = companyName
-            Utils.workspace.address = companyAddress
-            createUserAndWorkSpace()
-        }
-        
-        if Utils.isAdmin {
-            Utils.navigate(DashboardViewController(), self)
-        }
-        else {
-            Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+            if Utils.isAdmin {
+                DispatchQueue.main.async { [unowned self] in
+                    guard let companyName = self.texboxComopanyName.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyName.isEmpty,
+                          let companyAddress = self.textBoxCompanyAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyAddress.isEmpty else {
+                        // Display an alert indicating that first name and last name are required
+                        self.showAlert(title: "Incomplete Information", message: "Please enter your workspace name and address.")
+                        return
+                    }
+                    
+                    Utils.workspace.name = companyName
+                    Utils.workspace.address = companyAddress
+                }
+                
+                AddressValidationResponse.validateAddress(address: Utils.workspace.address) { [unowned self] response, error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            self.showAlert(title: "Invalid Workspace Address", message: "Please enter a valid address.")
+                        }
+                        return
+                    } else if let response = response {
+                        let formattedAddress = response.result.address.formattedAddress
+                        let hasInferredComponents = response.result.verdict.hasInferredComponents
+                        
+                        if let hasInferredComponents {
+                            DispatchQueue.main.async {
+                                let alert = UIAlertController(title: "Confirm Address", message: "Do you want to confirm the following address?\n\n\(formattedAddress)", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+                                    Utils.workspace.address = formattedAddress
+                                    self.textBoxCompanyAddress.text = formattedAddress
+                                    self.completeButtonTapped()
+                                }))
+                                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                                    return
+                                }))
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.createUserAndWorkSpace()
+
+                            if Utils.isAdmin {
+                                Utils.navigate(DashboardViewController(), self)
+                            }
+                            else {
+                                Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+                            }
+                        }
+                    }
+                }
+            }
+           
         }
     }
     
@@ -242,4 +303,3 @@ class UserInfoFormViewController: UIViewController {
         }
     }
 }
-

@@ -37,6 +37,7 @@
 		C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD372A80C577009D636D /* RequestsList.swift */; };
 		C7D5BD3A2A81820F009D636D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */; };
 		C7D5BD3C2A823AA5009D636D /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */; };
+		C7D5BD3E2A82B18E009D636D /* AddressValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -107,6 +108,7 @@
 		C7D5BD372A80C577009D636D /* RequestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsList.swift; sourceTree = "<group>"; };
 		C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
+		C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressValidationResponse.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				C7E0506C2A5410030026971C /* Utils.swift */,
+				C7D5BD3F2A82E41D009D636D /* API */,
 				C7ECD8482A625C3900D494EB /* Data */,
 				C7D43BC52A69D9CB00798A63 /* Cells */,
 				C77BE0132A4AB222007A8D06 /* Components */,
@@ -287,6 +290,14 @@
 				C7DDC4EE2A780D92007E3564 /* PositionCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C7D5BD3F2A82E41D009D636D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		C7DDC4F22A790082007E3564 /* Positions */ = {
@@ -525,6 +536,7 @@
 			files = (
 				C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */,
 				C7F2BB622A7FC9300071D0B2 /* ImageSelectionViewController.swift in Sources */,
+				C7D5BD3E2A82B18E009D636D /* AddressValidationResponse.swift in Sources */,
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
 				C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */,
