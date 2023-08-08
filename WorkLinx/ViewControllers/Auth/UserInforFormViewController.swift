@@ -178,7 +178,6 @@ class UserInfoFormViewController: UIViewController {
         // Execute the functions sequentially
         serialQueue.async {
             var workspaceId: String?
-            var userDataError: Error?
             
             // Execute createUser function
             let createUserGroup = DispatchGroup()
@@ -235,7 +234,6 @@ class UserInfoFormViewController: UIViewController {
                     case .failure(let error):
                         // Error occurred while saving user data
                         print("Error saving user data: \(error.localizedDescription)")
-                        userDataError = error
                         createUserDataGroup.leave()
                     }
                 }

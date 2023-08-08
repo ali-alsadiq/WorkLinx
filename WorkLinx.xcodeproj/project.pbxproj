@@ -36,6 +36,7 @@
 		C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */; };
 		C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD372A80C577009D636D /* RequestsList.swift */; };
 		C7D5BD3A2A81820F009D636D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */; };
+		C7D5BD3C2A823AA5009D636D /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -72,7 +73,6 @@
 		C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */; };
 		C7F2BB682A8021940071D0B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB672A8021940071D0B2 /* Image.swift */; };
 		CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */; };
-		FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */; };
 		FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */; };
 		FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
@@ -106,6 +106,7 @@
 		C7CF59932A62414E00D2A3D3 /* DashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCell.swift; sourceTree = "<group>"; };
 		C7D5BD372A80C577009D636D /* RequestsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsList.swift; sourceTree = "<group>"; };
 		C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
+		C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -141,7 +142,6 @@
 		C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reimbursement.swift; sourceTree = "<group>"; };
 		C7F2BB672A8021940071D0B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvailabilityViewController.swift; path = WorkLinx/ViewControllers/More/AvailabilityViewController.swift; sourceTree = SOURCE_ROOT; };
 		FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,12 +196,12 @@
 			isa = PBXGroup;
 			children = (
 				C7E0A25A2A59B26000003473 /* MoreViewController.swift */,
+				C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */,
 				FACABB2C2A7D0A90006A4D6A /* Message */,
 				C7DDC4F22A790082007E3564 /* Positions */,
 				C7DDC4FB2A7A48DF007E3564 /* Users */,
 				C7DDC5082A7BF0DA007E3564 /* Workspaces */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
-				FA08079F2A71292C001761E8 /* AvailabilityViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -538,10 +538,10 @@
 				C7E0A2572A59B24700003473 /* AttendanceViewController.swift in Sources */,
 				C7F2BB682A8021940071D0B2 /* Image.swift in Sources */,
 				FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */,
-				FA0807A02A71292C001761E8 /* AvailabilityViewController.swift in Sources */,
 				C7DDC5032A7AB034007E3564 /* UserInforFormViewController.swift in Sources */,
 				C77BE0152A4AB2B6007A8D06 /* AuthViewController.swift in Sources */,
 				C7ECD8452A625A4700D494EB /* Shift.swift in Sources */,
+				C7D5BD3C2A823AA5009D636D /* AvailabilityViewController.swift in Sources */,
 				C7ECD8472A625BA400D494EB /* TimeOff.swift in Sources */,
 				FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */,
 				C7F2BB5F2A7F859B0071D0B2 /* AddRequestViewController.swift in Sources */,

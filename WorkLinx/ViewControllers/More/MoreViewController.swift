@@ -114,7 +114,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Calendar Sync":
                 print(cellData.text)
             case "Availabilty":
-                print(cellData.text)
+                Utils.navigate(AvailabilityViewController(), self)
             case "My Hours":
                 print(cellData.text)
             case "Switch Workplaces":
