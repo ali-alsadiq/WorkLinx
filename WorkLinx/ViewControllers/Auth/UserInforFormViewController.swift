@@ -19,7 +19,6 @@ class UserInfoFormViewController: UIViewController {
     public var addressTextField: CustomTextField!
     private var texboxComopanyName: CustomTextField!
     private var textBoxCompanyAddress: CustomTextField!
-    public var userSignedIn: Bool?
     
     private var completeButton: CustomButton!
     
@@ -28,6 +27,11 @@ class UserInfoFormViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        if AuthViewController.userSignedIn {
+            firstNameTextField.text = Utils.user.firstName
+            lastNameTextField.text = Utils.user.lastName
+        }
                 
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "User Information")
@@ -166,6 +170,9 @@ class UserInfoFormViewController: UIViewController {
             
             if Utils.isAdmin {
                 DispatchQueue.main.async { [unowned self] in
+                    
+                    print(self.texboxComopanyName.text!)
+                    
                     guard let companyName = self.texboxComopanyName.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyName.isEmpty,
                           let companyAddress = self.textBoxCompanyAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyAddress.isEmpty else {
                         // Display an alert indicating that first name and last name are required
@@ -175,47 +182,47 @@ class UserInfoFormViewController: UIViewController {
                     
                     Utils.workspace.name = companyName
                     Utils.workspace.address = companyAddress
-                }
-                
-                AddressValidationResponse.validateAddress(address: Utils.workspace.address) { [unowned self] response, error in
-                    if error != nil {
-                        DispatchQueue.main.async {
-                            self.showAlert(title: "Invalid Workspace Address", message: "Please enter a valid address.")
-                        }
-                        return
-                    } else if let response = response {
-                        let formattedAddress = response.result.address.formattedAddress
-                        let hasInferredComponents = response.result.verdict.hasInferredComponents
-                        
-                        if hasInferredComponents != nil {
+                    
+                    AddressValidationResponse.validateAddress(address: companyAddress) { [unowned self] response, error in
+                        if error != nil {
                             DispatchQueue.main.async {
-                                let alert = UIAlertController(title: "Confirm Address", message: "Do you want to confirm the following address?\n\n\(formattedAddress)", preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
-                                    Utils.workspace.address = formattedAddress
-                                    self.textBoxCompanyAddress.text = formattedAddress
-                                    self.completeButtonTapped()
-                                }))
-                                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                                    return
-                                }))
-                                self.present(alert, animated: true, completion: nil)
+                                self.showAlert(title: "Invalid Workspace Address", message: "Please enter a valid address.")
                             }
                             return
+                        } else if let response = response {
+                            let formattedAddress = response.result.address.formattedAddress
+                            let hasInferredComponents = response.result.verdict.hasInferredComponents
+                            
+                            if hasInferredComponents != nil {
+                                DispatchQueue.main.async {
+                                    let alert = UIAlertController(title: "Confirm Address", message: "Do you want to confirm the following address?\n\n\(formattedAddress)", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+                                        Utils.workspace.address = formattedAddress
+                                        self.textBoxCompanyAddress.text = formattedAddress
+                                        self.completeButtonTapped()
+                                    }))
+                                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                                        return
+                                    }))
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                                return
+                            }
+                            DispatchQueue.main.async {
+                                self.createUserAndWorkSpace()
+                            }
                         }
                         DispatchQueue.main.async {
-                            self.createUserAndWorkSpace()
-
-                            if Utils.isAdmin {
-                                Utils.navigate(DashboardViewController(), self)
-                            }
-                            else {
-                                Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
-                            }
+                            Utils.navigate(DashboardViewController(), self)
                         }
-                    }
+                    } // End of AddressValidationResponse.validateAddress
                 }
             }
-           
+            else {
+                DispatchQueue.main.async {
+                    Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+                }
+            }
         }
     }
     
@@ -240,7 +247,7 @@ class UserInfoFormViewController: UIViewController {
             var workspaceId: String?
             
             // Create a new user if using email and password
-            if  self.userSignedIn != nil && !self.userSignedIn! {
+            if !AuthViewController.userSignedIn {
                 // Execute createUser function
                 let createUserGroup = DispatchGroup()
                 createUserGroup.enter()

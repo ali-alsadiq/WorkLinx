@@ -107,6 +107,21 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func updateConfimedInvitations(workspace: Workspace) {
+        Utils.user.workSpaces.append(workspace.workspaceId)
+        
+        // Create usersData doc
+        Utils.user.setUserData() { _ in }
+        
+        // Update workspace
+        Utils.workspace.employees.append(Workspace.Employee(employeeId: Utils.user.id, payrate: 0, position: ""))
+        Utils.workspace.invitedUsers.removeAll(where: { $0 == Utils.user.emailAddress })
+        Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
+        
+        self.workspaceManager.removeWorkspace(workspace)
+        self.continueIfEmpty()
+    }
+    
     func confirmInvitation(workspace: Workspace) {
         
         if Utils.user.defaultWorkspaceId.isEmpty {
@@ -118,29 +133,22 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
             Utils.workspace = workspace
             
             // Register a new user
-            Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { result in
-                switch result {
-                case .success(let authResult):
-                    // User registered successfully
-                    Utils.user.id = authResult.user.uid
-                    Utils.user.workSpaces.append(workspace.workspaceId)
-                    
-                    // Create usersData doc
-                    Utils.user.setUserData() { _ in }
-                    
-                    // Update workspace
-                    Utils.workspace.employees.append(Workspace.Employee(employeeId: Utils.user.id, payrate: 0, position: ""))
-                    Utils.workspace.invitedUsers.removeAll(where: { $0 == Utils.user.emailAddress })
-                    Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
-                    
-                    self.workspaceManager.removeWorkspace(workspace)
-                    self.continueIfEmpty()
-                    
-                case .failure(let error):
-                    // Error occurred while creating the user
-                    print("Error creating user: \(error.localizedDescription)")
+            if !AuthViewController.userSignedIn {
+                Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { [unowned self] result in
+                    switch result {
+                    case .success(let authResult):
+                        // User registered successfully
+                        Utils.user.id = authResult.user.uid
+                        updateConfimedInvitations(workspace: workspace)
+                    case .failure(let error):
+                        // Error occurred while creating the user
+                        print("Error creating user: \(error.localizedDescription)")
+                    }
                 }
+            } else {
+                updateConfimedInvitations(workspace: workspace)
             }
+            
         }
         else {
             Utils.user.workSpaces.append(workspace.workspaceId)

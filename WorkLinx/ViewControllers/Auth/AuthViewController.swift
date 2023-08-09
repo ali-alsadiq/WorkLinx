@@ -15,6 +15,8 @@ class AuthViewController: UIViewController {
     private var buttonStackView: UIStackView!
     private var formStackView: UIStackView!
     
+    static var userSignedIn = false
+    
     private var signInForm: SignInForm!
     private var signUpForm: SignUpForm!
     
@@ -118,8 +120,6 @@ class AuthViewController: UIViewController {
                 
                 Utils.user.firstName = firstName
                 Utils.user.lastName = lastName
-                print(Utils.user)
-                
             } else {
                 print("User Data Incomplete")
             }
@@ -150,6 +150,8 @@ class AuthViewController: UIViewController {
                 return
             } else if let authResult = authResult {
                 Utils.user.id = authResult.user.uid
+                AuthViewController.userSignedIn = true
+                
                 User.fetchUserByID(userID: authResult.user.uid) { user in
                     if let user = user {
                         // User data was found - Set Data and Sign In
@@ -201,21 +203,12 @@ class AuthViewController: UIViewController {
                         }
                         
                     } else {
-                        let userInfoVC = UserInfoFormViewController()
-                        userInfoVC.firstNameTextField.text = Utils.user.firstName
-                        userInfoVC.lastNameTextField.text = Utils.user.lastName
-                        userInfoVC.userSignedIn = true
-
-                        Utils.navigate(userInfoVC, self)
+                        Utils.navigate("RegisterView", self)
                     }
                 }
             }
         }
     }
-
-
-
-    
     
     @objc private func buttonTapped(_ sender: UIButton) {
         if let signInButton = signInButton, let signUpButton = signUpButton {
