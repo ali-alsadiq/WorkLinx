@@ -40,6 +40,7 @@
 		C7D5BD432A8350CE009D636D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */; };
 		C7D5BD462A8351A1009D636D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD452A8351A1009D636D /* GoogleSignIn */; };
 		C7D5BD482A8351A1009D636D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD472A8351A1009D636D /* GoogleSignInSwift */; };
+		C7D5BD4C2A83E18C009D636D /* EditTimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -111,6 +112,7 @@
 		C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressValidationResponse.swift; sourceTree = "<group>"; };
 		C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeOffViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 			children = (
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 				C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */,
+				C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */,
 				C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */,
 			);
 			path = Requests;
@@ -598,6 +601,7 @@
 				C7F2BB572A7E1B020071D0B2 /* CompactDatePickerView.swift in Sources */,
 				C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */,
 				C7DDC5052A7ADF89007E3564 /* InvitingWorkspacesList.swift in Sources */,
+				C7D5BD4C2A83E18C009D636D /* EditTimeOffViewController.swift in Sources */,
 				C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

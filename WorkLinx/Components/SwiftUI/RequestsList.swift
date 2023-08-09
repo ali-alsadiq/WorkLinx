@@ -12,6 +12,8 @@ class RequestListManger: ObservableObject {
     @Published var workspaceTimeOffs: [TimeOff] = Utils.workSpceTimeOffs
     @Published var workspaceReimbursements: [Reimbursement] = Utils.workspaceReimbursements
     @Published var tab: String = ""
+    var hostingVC: RequestViewController?
+   
 }
 
 struct RequestsList: View {
@@ -28,7 +30,7 @@ struct RequestsList: View {
                 .padding(.top, 10)
             List {
                 ForEach(filteredTimeOffs) { timeOff in
-                    TimeOffRow(timeOff: timeOff)
+                    TimeOffRow(timeOff: timeOff, requestListManger: requestListManger)
                 }
             }
         }
@@ -121,6 +123,7 @@ struct ReimbursementRow: View {
 
 struct TimeOffRow: View {
     var timeOff: TimeOff
+    var requestListManger: RequestListManger
     
     var userName: String {
         let user = Utils.workSpaceUsers.first{$0.id == timeOff.userId}
@@ -128,26 +131,37 @@ struct TimeOffRow: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text("Requested by: \(userName)")
-                .font(.system(size: 14))
-            
-            Text("\(Utils.formattedDateWithDayName(timeOff.startTime)) - \(Utils.formattedDateWithDayName(timeOff.endTime))")
+        if let user = Utils.workSpaceUsers.first(where: {$0.id == timeOff.userId}) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Requested by: \(userName)")
+                    .font(.system(size: 14))
+                
+                Text("\(Utils.formattedDateWithDayName(timeOff.startTime)) - \(Utils.formattedDateWithDayName(timeOff.endTime))")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(.blue)
+                
+                HStack (spacing: 3){
+                    Text("Status:")
+                    Text(timeOff.status)
+                        .foregroundColor(timeOff.status == "Accepted" ? Color(Utils.darkGreen)
+                                         : timeOff.status == "Pending" ? Color(Utils.darkOrange) : Color(Utils.darkRed))
+                }
                 .font(.system(size: 12, weight: .bold))
-                .foregroundColor(.blue)
-            
-            Text("Status: \(timeOff.isApproved ? "Approved" : "Not Approved")")
-                .font(.system(size: 12, weight: .bold))
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(10)
-        .onTapGesture {
-            // navigate to edit view
-            // pass the request manger - userName - timeOff
-            print(userName)
-            print(timeOff)
+               
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(10)
+            .onTapGesture {
+                // navigate to edit view
+                // pass the request manger - userName - timeOff
+                print(userName)
+                print(timeOff)
+                let editREquestVC = EditTimeOffViewController(user: user, timeOff: timeOff)
+                Utils.navigate(editREquestVC, requestListManger.hostingVC!)
+                // navigate in here 
+            }
         }
     }
 }

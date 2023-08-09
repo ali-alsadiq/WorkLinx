@@ -161,7 +161,7 @@ struct ShiftDetailView: View {
                     )
             }
             
-            Text("\(formattedTime(shift.startTime)) - \(formattedTime(shift.endTime))")
+            Text("\(shift.startTime.formattedHourly()) - \(shift.endTime.formattedHourly())")
                 .foregroundColor(.blue)
                 .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -170,11 +170,11 @@ struct ShiftDetailView: View {
         .background(RoundedRectangle(cornerRadius: 8).fill(Color(white: 0.95)))
     }
     
-    private func formattedTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "h:mm a"
-        return dateFormatter.string(from: date)
-    }
+//    private func formattedTime(_ date: Date) -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "h:mm a"
+//        return dateFormatter.string(from: date)
+//    }
 }
 
 class SelectedDateManager: ObservableObject {
@@ -194,6 +194,12 @@ extension Date {
         let minutes = components.minute ?? 0
         let totalHours = Double(hours) + Double(minutes) / 60.0
         return String(format: "%.1f hrs", totalHours)
+    }
+    
+    func formattedHourly() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        return dateFormatter.string(from: self)
     }
 }
 

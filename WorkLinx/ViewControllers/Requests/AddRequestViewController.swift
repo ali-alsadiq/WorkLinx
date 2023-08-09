@@ -251,7 +251,8 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
                 userId: Utils.user.id,
                 startTime: selectedStartDate,
                 endTime: selectedEndDate,
-                isApproved: false
+                isApproved: Utils.isAdmin,
+                isModifiedByAdmin: Utils.isAdmin
             )
 
             // Call the createTimeOff function

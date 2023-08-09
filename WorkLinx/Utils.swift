@@ -55,6 +55,13 @@ class Utils{
     static var workSpceTimeOffs: [TimeOff] = []
     static var workspaceReimbursements: [Reimbursement] = []
     
+    
+    
+    // colors
+    static let darkOrange = UIColor(red: 0.8, green: 0.4, blue: 0.0, alpha: 1.0)
+    static let darkGreen = UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)
+    static let darkRed = UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+
     static let db = Firestore.firestore()
     
     static func encodeData(data: Encodable) throws -> [String: Any]? {

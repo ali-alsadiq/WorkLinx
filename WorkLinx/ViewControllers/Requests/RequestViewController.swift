@@ -32,6 +32,8 @@ class RequestViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestListManger.hostingVC = self
+        
         view.backgroundColor = .white
         
         let navigationBar = CustomNavigationBar(title: "Requests")

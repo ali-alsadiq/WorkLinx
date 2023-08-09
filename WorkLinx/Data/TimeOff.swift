@@ -16,6 +16,13 @@ struct TimeOff: Codable, Identifiable {
     var startTime: Date
     var endTime: Date
     var isApproved: Bool
+    var isModifiedByAdmin: Bool
+    
+    // use enum Pending Rejected Accepted
+    var status: String {
+        !isApproved && !isModifiedByAdmin ? "Pending" : !isApproved ? "Rejected" : "Accepted"
+    }
+                        
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,6 +31,7 @@ struct TimeOff: Codable, Identifiable {
         case startTime
         case endTime
         case isApproved
+        case isModifiedByAdmin
     }
     
     func createTimeOff(completion: @escaping (Result<String, Error>) -> Void) {
