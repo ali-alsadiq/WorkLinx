@@ -14,11 +14,12 @@ class UserInfoFormViewController: UIViewController {
     private var backButton: UIBarButtonItem!
     
     private var scrollView: UIScrollView!
-    private var firstNameTextField: CustomTextField!
-    private var lastNameTextField: CustomTextField!
-    private var addressTextField: CustomTextField!
+    public var firstNameTextField = CustomTextField(placeholder: "First Name", textContentType: .givenName)
+    public var lastNameTextField = CustomTextField(placeholder: "Last Name", textContentType: .familyName)
+    public var addressTextField: CustomTextField!
     private var texboxComopanyName: CustomTextField!
     private var textBoxCompanyAddress: CustomTextField!
+    public var userSignedIn: Bool?
     
     private var completeButton: CustomButton!
     
@@ -27,7 +28,7 @@ class UserInfoFormViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
+                
         // Add nav bar
         navigationBar = CustomNavigationBar(title: "User Information")
         backButton = BackButton(text: nil, target: self, action: #selector(goBack))
@@ -56,8 +57,6 @@ class UserInfoFormViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        firstNameTextField = CustomTextField(placeholder: "First Name", textContentType: .givenName)
-        lastNameTextField = CustomTextField(placeholder: "Last Name", textContentType: .familyName)
         addressTextField = CustomTextField(placeholder: "Adress", textContentType: .fullStreetAddress)
         
         scrollView.addSubview(firstNameTextField)
@@ -139,7 +138,7 @@ class UserInfoFormViewController: UIViewController {
         Utils.user.address = addressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         AddressValidationResponse.validateAddress(address: Utils.user.address) { [unowned self] response, error in
-            if let error = error {
+            if error != nil {
                 DispatchQueue.main.async {
                     self.showAlert(title: "Invalid User Address", message: "Please enter a valid address.")
                 }
@@ -179,7 +178,7 @@ class UserInfoFormViewController: UIViewController {
                 }
                 
                 AddressValidationResponse.validateAddress(address: Utils.workspace.address) { [unowned self] response, error in
-                    if let error = error {
+                    if error != nil {
                         DispatchQueue.main.async {
                             self.showAlert(title: "Invalid Workspace Address", message: "Please enter a valid address.")
                         }
@@ -188,7 +187,7 @@ class UserInfoFormViewController: UIViewController {
                         let formattedAddress = response.result.address.formattedAddress
                         let hasInferredComponents = response.result.verdict.hasInferredComponents
                         
-                        if let hasInferredComponents {
+                        if hasInferredComponents != nil {
                             DispatchQueue.main.async {
                                 let alert = UIAlertController(title: "Confirm Address", message: "Do you want to confirm the following address?\n\n\(formattedAddress)", preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
@@ -240,32 +239,35 @@ class UserInfoFormViewController: UIViewController {
         serialQueue.async {
             var workspaceId: String?
             
-            // Execute createUser function
-            let createUserGroup = DispatchGroup()
-            createUserGroup.enter()
-            Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { result in
-                switch result {
-                case .success(let authResult):
-                    // User successfully created
-                    Utils.user.id = authResult.user.uid // Update the user ID with the ID from Firebase Authentication
-                case .failure(let error):
-                    // Error occurred while creating the user
-                    print("Error creating user: \(error.localizedDescription)")
-                    return
+            // Create a new user if using email and password
+            if  self.userSignedIn != nil && !self.userSignedIn! {
+                // Execute createUser function
+                let createUserGroup = DispatchGroup()
+                createUserGroup.enter()
+                Utils.user.createUser(email: Utils.user.emailAddress, password: Utils.password) { result in
+                    switch result {
+                    case .success(let authResult):
+                        // User successfully created
+                        Utils.user.id = authResult.user.uid // Update the user ID with the ID from Firebase Authentication
+                    case .failure(let error):
+                        // Error occurred while creating the user
+                        print("Error creating user: \(error.localizedDescription)")
+                        return
+                    }
+                    createUserGroup.leave()
                 }
-                createUserGroup.leave()
+                createUserGroup.wait() // Wait for the completion of createUser function
             }
-            createUserGroup.wait() // Wait for the completion of createUser function
             
             // User successfully created, now create the workspace
             let createWorkspaceGroup = DispatchGroup()
             createWorkspaceGroup.enter()
-            let newWorkspace =  Workspace(workspaceId: "",
+            Utils.workspace =  Workspace(workspaceId: "",
                                           name: companyName,
                                           address: companyAddress,
                                           admins: [Utils.user.id],
                                           employees: [Workspace.Employee(employeeId: Utils.user.id, payrate: 0, position: "")])
-            Workspace.createWorkspace(workspace: newWorkspace) { result in
+            Workspace.createWorkspace(workspace: Utils.workspace) { result in
                 switch result {
                 case .success(let id):
                     workspaceId = id

@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import GoogleSignIn
 
 
 struct User : Codable, Equatable, Hashable {
@@ -168,5 +169,4 @@ struct User : Codable, Equatable, Hashable {
             completion(users)
         }
     }
-    
 }

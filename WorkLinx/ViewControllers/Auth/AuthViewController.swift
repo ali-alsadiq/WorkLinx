@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import GoogleSignIn
+import Firebase
 
 class AuthViewController: UIViewController {
     private var signInButton: UIButton!
@@ -18,6 +20,22 @@ class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        // Create Google Sign-In button
+        let googleSignInButton = GIDSignInButton()
+        googleSignInButton.style = .wide //
+        googleSignInButton.translatesAutoresizingMaskIntoConstraints = false
+        googleSignInButton.addTarget(self, action: #selector(googleSignInButtonTapped), for: .touchUpInside)
+
+        
+        // Add the Google Sign-In button to the button stack view
+        view.addSubview(googleSignInButton)
         
         let logoImageView = UIImageView(image: UIImage(named: "LogoBlack"))
         logoImageView.contentMode = .scaleAspectFit
@@ -66,9 +84,138 @@ class AuthViewController: UIViewController {
             buttonStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200.0),
             
             formStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            formStackView.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 20.0)
+            formStackView.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 20.0),
+            
+            googleSignInButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            googleSignInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
+    @objc private func googleSignInButtonTapped() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
+            if let error = error {
+                print("Google Sign-In Error: \(error.localizedDescription)")
+                return
+            }
+
+            guard let user = result?.user else {
+                print("Google Sign-In Error: No user data found")
+                return
+            }
+
+            if let email = user.profile?.email,
+               let firstName = user.profile?.givenName,
+               let lastName = user.profile?.familyName {
+                
+                Utils.user = User(id: "", emailAddress: email, defaultWorkspaceId: "")
+                
+                Utils.user.firstName = firstName
+                Utils.user.lastName = lastName
+                print(Utils.user)
+                
+            } else {
+                print("User Data Incomplete")
+            }
+
+            guard let user = result?.user,
+                let idToken = user.idToken?.tokenString
+              else {
+                // ... What error could be printed here???
+                return
+              }
+
+              let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                             accessToken: user.accessToken.tokenString)
+
+            if let userId = user.userID {
+                print("User ID: \(userId)")
+            }
+            
+            signInWithCredential(credential: credential)
+        }
+    }
+    
+    func signInWithCredential(credential: AuthCredential) {
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+                // Error occurred while creating the user
+                print(error.localizedDescription)
+                return
+            } else if let authResult = authResult {
+                Utils.user.id = authResult.user.uid
+                User.fetchUserByID(userID: authResult.user.uid) { user in
+                    if let user = user {
+                        // User data was found - Set Data and Sign In
+                        let userDataCollection = Utils.db.collection("usersData")
+                        
+                        userDataCollection.whereField("id", isEqualTo: Utils.user.id).getDocuments { (snapshot, error) in
+                            if let error = error {
+                                // Error occurred while querying the database
+                                print("Error querying database: \(error.localizedDescription)")
+                                return
+                            }
+                            
+                            if let snapshot = snapshot {
+                                if let userData = snapshot.documents.first?.data() {
+                                    do {
+                                        let jsonData = try JSONSerialization.data(withJSONObject: userData)
+                                        let decoder = JSONDecoder()
+                                        let user = try decoder.decode(User.self, from: jsonData)
+                                        
+                                        // Set the decoded user to Utils.user
+                                        Utils.user = user
+                                        
+                                    } catch {
+                                        print("Error decoding user data: \(error)")
+                                    }
+                                }
+                            }
+                            
+                            Workspace.getWorkspaceByID(workspaceID: Utils.user.defaultWorkspaceId) { workspace in
+                                if let workspace = workspace {
+                                    Utils.workspace = workspace
+                                    Utils.isAdmin = workspace.admins.contains(Utils.user.id)
+                                    // Navigate to the DashboardView inside the completion block
+                                    let dashboardVC = DashboardViewController()
+                                    Utils.fetchData {
+                                        dashboardVC.data = Utils.getDashboardTableData()
+                                        dashboardVC.tableView.reloadData()
+                                    }
+                                    
+                                    Workspace.updateInvitingWorkspaces {
+                                        Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)
+                                    }
+                                    
+                                } else {
+                                    print ("error")
+                                    return
+                                }
+                            }
+                        }
+                        
+                    } else {
+                        let userInfoVC = UserInfoFormViewController()
+                        userInfoVC.firstNameTextField.text = Utils.user.firstName
+                        userInfoVC.lastNameTextField.text = Utils.user.lastName
+                        userInfoVC.userSignedIn = true
+
+                        Utils.navigate(userInfoVC, self)
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    
     
     @objc private func buttonTapped(_ sender: UIButton) {
         if let signInButton = signInButton, let signUpButton = signUpButton {
@@ -126,11 +273,11 @@ class AuthViewController: UIViewController {
         let alertController = UIAlertController(title: "Invalid Password",
                                                 message: "Password must be at least 6 characters long.",
                                                 preferredStyle: .alert)
-
+        
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-
+        
         alertController.addAction(okAction)
-
+        
         // Present the alert
         // Make sure to have a reference to the current view controller and use it to present the alert
         present(alertController, animated: true, completion: nil)

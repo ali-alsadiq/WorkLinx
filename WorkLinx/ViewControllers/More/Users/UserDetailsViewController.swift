@@ -51,7 +51,7 @@ class UserDetailsViewController: UIViewController {
     
     private func setupUI() {
         // Add nav bar
-        navigationBar = CustomNavigationBar(title: "Positions")
+        navigationBar = CustomNavigationBar(title: "User Info")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
         
         navigationBar.items?.first?.leftBarButtonItem = backButton

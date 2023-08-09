@@ -126,31 +126,12 @@
             </objects>
             <point key="canvasLocation" x="2698.4732824427479" y="14.788732394366198"/>
         </scene>
-        <!--Create New Workspace View Controller-->
-        <scene sceneID="1qp-Sm-34n">
-            <objects>
-                <viewController storyboardIdentifier="RegisterEmployerView" id="v5g-G4-4mW" customClass="CreateNewWorkspaceViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="bzf-ez-PbU">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="mTS-6Y-YzO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="7H9-Ej-ZOP"/>
-                    <connections>
-                        <segue destination="663-bB-28R" kind="show" identifier="DashboardSegue" id="2u0-ta-aDj"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VIu-AY-mQ9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3498" y="468"/>
-        </scene>
         <!--Dashboard View Controller-->
         <scene sceneID="7V6-y2-2Hj">
             <objects>
                 <viewController storyboardIdentifier="DashboardView" id="663-bB-28R" customClass="DashboardViewController" customModule="WorkLinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r9l-bj-qx2">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hXZ-kj-WZd">
