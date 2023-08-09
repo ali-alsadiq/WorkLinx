@@ -8,5 +8,6 @@ target 'WorkLinx' do
   # Pods for WorkLinx
 
 pod "MessageKit"
+pod 'DGCharts'
 
 end
