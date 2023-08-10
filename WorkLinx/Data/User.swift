@@ -48,6 +48,10 @@ struct User : Codable, Equatable, Hashable {
         return !(lhs == rhs)
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id) // Use a unique property for hashing
+    }
+    
     init(id: String, emailAddress: String, defaultWorkspaceId: String) {
         self.id = id
         self.emailAddress = emailAddress

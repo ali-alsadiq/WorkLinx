@@ -11,6 +11,13 @@ struct CalendarListView: View {
     @ObservedObject var selectedDateManager: SelectedDateManager
     @ObservedObject var shiftsListManger: ShiftsListManager
     
+    private var shiftListBinding: Binding<[Shift]> {
+        Binding<[Shift]>(
+            get: { self.shiftsListManger.shifts },
+            set: { self.shiftsListManger.shifts = $0 }
+        )
+    }
+    
     var body: some View {
         VStack {
             VStack{
@@ -18,6 +25,7 @@ struct CalendarListView: View {
                     .datePickerStyle(.graphical)
                     .padding(.horizontal, 25)
             }
+            
             
             
             ScrollViewReader { scrollView in
@@ -34,28 +42,10 @@ struct CalendarListView: View {
                                 Spacer()
                                 
                                 let calendar = Calendar.current
-                                let shiftsForDate = shiftsListManger.shifts.filter { calendar.isDate($0.date, inSameDayAs: date) }
+                                let shiftsForDate = shiftListBinding.wrappedValue.filter { calendar.isDate($0.date, inSameDayAs: date) }
                                 
                                 if !shiftsForDate.isEmpty {
                                     ForEach(shiftsForDate, id: \.self) { shift in
-                                        if Utils.isAdmin {
-                                            ForEach(Utils.workSpaceUsers.filter { shift.employeeIds.contains($0.id) }, id: \.self) { user in
-                                                ShiftDetailView(shift: shift, user: user, isOpenShift: false)
-                                                    .onTapGesture(perform: {
-                                                        print(date)
-                                                        print(shift)
-                                                        print(user.firstName)
-                                                    })
-                                            }
-                                        } else if shift.employeeIds.count != 0{
-                                            ShiftDetailView(shift: shift, user: Utils.user, isOpenShift: false)
-                                                .onTapGesture(perform: {
-                                                    print(date)
-                                                    print(shift)
-                                                    print(Utils.user.firstName)
-                                                })
-                                        }
-                                        
                                         if shift.employeeIds.count == 0 {
                                             ShiftDetailView(shift: shift, user: nil, isOpenShift: true)
                                                 .onTapGesture(perform: {
@@ -63,8 +53,20 @@ struct CalendarListView: View {
                                                     print(shift)
                                                 })
                                         }
-                                        
+                                        else {
+                                            ForEach(shift.employeeIds, id: \.self) { employeeId in
+                                                if let user = Utils.workSpaceUsers.first(where: { $0.id == employeeId }) {
+                                                    ShiftDetailView(shift: shift, user: user, isOpenShift: false)
+                                                        .onTapGesture(perform: {
+                                                            print(date)
+                                                            print(shift)
+                                                            print(user.firstName)
+                                                        })
+                                                }
+                                            }
+                                        }
                                     }
+                                    
                                 } else {
                                     Text("No shifts for this date")
                                         .foregroundColor(.gray)
@@ -84,7 +86,9 @@ struct CalendarListView: View {
                         }
                     }
                 }
-            }.listStyle(PlainListStyle())
+                .listStyle(PlainListStyle())
+            }
+            
         }
         
     }
@@ -169,12 +173,6 @@ struct ShiftDetailView: View {
         .padding(8)
         .background(RoundedRectangle(cornerRadius: 8).fill(Color(white: 0.95)))
     }
-    
-//    private func formattedTime(_ date: Date) -> String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "h:mm a"
-//        return dateFormatter.string(from: date)
-//    }
 }
 
 class SelectedDateManager: ObservableObject {

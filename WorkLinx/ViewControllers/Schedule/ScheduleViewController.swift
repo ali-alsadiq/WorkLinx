@@ -17,8 +17,8 @@ class ScheduleViewController: MenuBarViewController {
     var selectedDateManager = SelectedDateManager()
     var shiftsListManger = ShiftsListManager()
     
-     var shifts: [Shift] = []
-    
+    var shifts: [Shift] = []
+    var calenderListView: CalendarListView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +86,8 @@ class ScheduleViewController: MenuBarViewController {
         
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
 
-        
-        let hostingController = UIHostingController(rootView: CalendarListView(selectedDateManager: selectedDateManager, shiftsListManger: shiftsListManger))
+        calenderListView = CalendarListView(selectedDateManager: selectedDateManager, shiftsListManger: shiftsListManger)
+        let hostingController = UIHostingController(rootView: calenderListView)
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hostingController.view)
         
@@ -105,7 +105,9 @@ class ScheduleViewController: MenuBarViewController {
     }
     
     @objc func addButtonTapped() {
-        Utils.navigate(AddShiftViewController(selectedDate: selectedDateManager.selectedDate), self)
+        let addShiftView = AddShiftViewController(selectedDate: selectedDateManager.selectedDate)
+        addShiftView.shiftsListManger = calenderListView.shiftsListManger
+        Utils.navigate(addShiftView, self)
     }
     
     @objc func allShiftsButtonTapped() {

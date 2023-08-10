@@ -38,26 +38,7 @@ struct EmailListView: View {
     
     var body: some View {
         List {
-            // Xcode suddenly broke
-            // Error: Cannot convert value of type '[String]' to expected argument type 'Binding<C>'
-            // Test later
             
-//            ForEach(emailListManager.emails, id: \.self) { email in
-//                HStack {
-//                    Text(email)
-//                    Spacer()
-//                    Button(action: {
-//                        emailToRemove = email
-//                        showAlert = true
-//                    }) {
-//                        Image(systemName: "xmark.circle.fill")
-//                            .foregroundColor(.red)
-//                    }
-//                }
-//                .contentShape(Rectangle())
-//            }
-            
-            // Quick fix
             ForEach(emailListBinding, id:\.self) {email in
                 HStack {
                     Text(email.wrappedValue)
@@ -66,9 +47,7 @@ struct EmailListView: View {
                         emailToRemove = email.wrappedValue
                         showAlert = true
                     }) {
-//                        Image(systemName: "xmark.circle.fill")
-//                            .foregroundColor(.red)
-                        Text("X")
+                        Text("Remove")
                             .font(.largeTitle)
                             .foregroundColor(.red)
                     }

@@ -22,11 +22,14 @@ class AddShiftViewController: UIViewController {
     var selectedEndTime: Date
     
     @ObservedObject public var userManger = UsereManager(assignedUsers: AddShiftViewController.assignedUsers)
+    var shiftsListManger: ShiftsListManager!
     
     private var assignedUsersList: UIHostingController<AssignedUserList>!
     private var compactDatePicker: UIHostingController<CompactDatePickerView>!
     private var startTimePicker: UIHostingController<TimePickerView>!
     private var endTimePicker: UIHostingController<TimePickerView>!
+    
+
     
     private var selectedDateBinding: Binding<Date> {
         Binding<Date>(
@@ -221,6 +224,8 @@ class AddShiftViewController: UIViewController {
             return
         }
         let employeeIds = AddShiftViewController.assignedUsers.map { $0.id }
+        
+        print (AddShiftViewController.assignedUsers)
         let newShift = Shift(employeeIds: employeeIds,
                              workspaceId: Utils.workspace.workspaceId,
                              date: selectedDate,
@@ -241,10 +246,12 @@ class AddShiftViewController: UIViewController {
                 if AddShiftViewController.assignedUsers.count == 0 {
                     Utils.workspace.openShiftsIds.append(id)
                     Utils.workspaceOpenShifts.append(newShift)
+                    self?.shiftsListManger.shifts.append(newShift)
                 }
                 else {
                     Utils.workspace.shiftIds.append(id)
                     Utils.workspaceAssignedShifts.append(newShift)
+                    self?.shiftsListManger.shifts.append(newShift)
                 }
                 
                 Workspace.updateWorkspace(workspace: Utils.workspace) {_ in
