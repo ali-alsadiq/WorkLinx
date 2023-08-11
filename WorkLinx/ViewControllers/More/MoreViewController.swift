@@ -124,7 +124,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Delete Profile":
                 showDeleteProfileAlert()
             case "Documents":
-                print(cellData.text)
+                navigateToDocumentsViewController()
             case "Send Message":
                 navigateToMessageViewController()
             case "Users":
@@ -177,6 +177,13 @@ extension MoreViewController: UITableViewDelegate{
         messageVC.modalPresentationStyle = .fullScreen
         present(messageVC, animated: true, completion: nil)
         
+    }
+    
+    func navigateToDocumentsViewController() {
+        let documentsVC = DocumentsViewController()
+        documentsVC.modalPresentationStyle = .fullScreen
+
+        present(documentsVC, animated: true, completion: nil)
     }
 }
 
