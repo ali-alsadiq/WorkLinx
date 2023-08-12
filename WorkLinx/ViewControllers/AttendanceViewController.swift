@@ -85,7 +85,7 @@ class AttendanceViewController: MenuBarViewController {
             barChartView.topAnchor.constraint(equalTo: positionLabel.bottomAnchor, constant: 50),
             barChartView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             barChartView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            barChartView.heightAnchor.constraint(equalToConstant: 500)
+            barChartView.bottomAnchor.constraint(equalTo: menuBarStack.topAnchor)
         ])
 
         let day = ["SUN", "MON", "TUE", "WED", "THU","FRI","SAT"]
