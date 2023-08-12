@@ -44,6 +44,7 @@
 		C7D5BD4E2A861C49009D636D /* EditReimbursementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */; };
 		C7D5BD502A8627C3009D636D /* EditRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */; };
 		C7D5BD522A86857C009D636D /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD512A86857C009D636D /* FullScreenImageViewController.swift */; };
+		C7D5BD542A877AE9009D636D /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD532A877AE9009D636D /* DocumentsViewController.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -80,7 +81,6 @@
 		C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */; };
 		C7F2BB682A8021940071D0B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB672A8021940071D0B2 /* Image.swift */; };
 		CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */; };
-		FA6ABE4B2A8650B300A49FD6 /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */; };
 		FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */; };
 		FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
@@ -120,6 +120,7 @@
 		C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReimbursementViewController.swift; sourceTree = "<group>"; };
 		C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRequestViewController.swift; sourceTree = "<group>"; };
 		C7D5BD512A86857C009D636D /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
+		C7D5BD532A877AE9009D636D /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reimbursement.swift; sourceTree = "<group>"; };
 		C7F2BB672A8021940071D0B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentsViewController.swift; path = ../../../../../../DocumentsViewController.swift; sourceTree = "<group>"; };
 		FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,7 +218,6 @@
 				C7DDC4FB2A7A48DF007E3564 /* Users */,
 				C7DDC5082A7BF0DA007E3564 /* Workspaces */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
-				FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -274,6 +273,7 @@
 			children = (
 				C77BDFFF2A4AA1F0007A8D06 /* SplashViewController.swift */,
 				C7E0A2522A59A90E00003473 /* DashboardViewController.swift */,
+				C7D5BD532A877AE9009D636D /* DocumentsViewController.swift */,
 				C70514492A6A5838003A69EA /* Auth */,
 				C7F2BB532A7D9A850071D0B2 /* Schedule */,
 				C7F2BB602A7F922D0071D0B2 /* Requests */,
@@ -562,6 +562,7 @@
 				C7D5BD4E2A861C49009D636D /* EditReimbursementViewController.swift in Sources */,
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
+				C7D5BD542A877AE9009D636D /* DocumentsViewController.swift in Sources */,
 				C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */,
 				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
 				C7D5BD502A8627C3009D636D /* EditRequestViewController.swift in Sources */,
@@ -604,7 +605,6 @@
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
-				FA6ABE4B2A8650B300A49FD6 /* DocumentsViewController.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
 				C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */,
 				C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */,
