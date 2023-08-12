@@ -21,31 +21,28 @@ struct InvitingWorkspacesList: View {
     let onAccept: (Workspace) -> Void
     let onReject: (Workspace) -> Void
     
+    private var workspaceBinding: Binding<[Workspace]> {
+        Binding<[Workspace]>(
+            get: { self.workspaceManager.invitingWorkspaces },
+            set: { self.workspaceManager.invitingWorkspaces = $0 }
+        )
+    }
+    
     var body: some View {
-        List(workspaceManager.invitingWorkspaces, id: \.workspaceId) { workspace in
+        List(workspaceBinding, id: \.workspaceId) { workspace in
             HStack(spacing: 20) { // Add spacing between elements
-                Text(workspace.name)
+                Text(workspace.name.wrappedValue)
                 Spacer()
                 
                 // Xcode suddenly broke on image
                 
-                Button(action: {onAccept(workspace)} ) { // Use an empty action for the Text to prevent tapping outside the image
+                Button(action: { onAccept(workspace.wrappedValue)} ) {
                     Text("Accept")
-//                    Image(systemName: "checkmark.circle.fill")
-//                        .imageScale(.large)
-//                        .foregroundColor(.green)
-//                        .onTapGesture {
-//                            onAccept(workspace)
-//                        }
+                        .foregroundColor(Color(Utils.darkGreen))
                 }
-                Button(action: { onReject(workspace) }) {
+                Button(action: { onReject(workspace.wrappedValue) }) {
                     Text("Reject")
-//                    Image(systemName: "xmark.circle.fill")
-//                        .imageScale(.large)
-//                        .foregroundColor(.red)
-//                        .onTapGesture {
-//                            onReject(workspace)
-//                        }
+                        .foregroundColor(Color(Utils.darkRed))
                 }
             }
         }

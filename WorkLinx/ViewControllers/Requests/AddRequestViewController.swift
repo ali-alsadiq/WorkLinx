@@ -61,7 +61,6 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
         
         view.backgroundColor = .white
         
-        
         let navigationBar = CustomNavigationBar(title: "Add Request")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
         navigationBar.items?.first?.leftBarButtonItem = backButton
@@ -246,7 +245,7 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
             }
             
             // Create an instance of TimeOff with the required data
-            let newTimeOff = TimeOff(
+            var newTimeOff = TimeOff(
                 workSpaceId: Utils.workspace.workspaceId,
                 userId: Utils.user.id,
                 startTime: selectedStartDate,
@@ -259,9 +258,12 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
             newTimeOff.createTimeOff { [weak self] result in
                 switch result {
                 case .success(let timeOffId):
+                    newTimeOff.id = timeOffId
+                    
                     // Update static data
                     Utils.user.timeOffRequestIds.append(timeOffId)
                     Utils.workspace.timeOffRequestIds.append(timeOffId)
+                   
                     Utils.workSpceTimeOffs.append(newTimeOff)
                     self?.requestListManger.workspaceTimeOffs.append(newTimeOff)
                     
@@ -291,7 +293,6 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
                             
                             switch result {
                             case .success(let uploadedURLs):
-                                print("Uploaded URLs: \(uploadedURLs)")
                                 self?.createReimbursement(imagesUrls: uploadedURLs, amount: amountValue)
                                 
                                 // update table in the parent view
@@ -321,7 +322,7 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
     
     private func createReimbursement(imagesUrls:  Set<URL> = [], amount: Double) {
         
-        let newReimbursement = Reimbursement(
+        var newReimbursement = Reimbursement(
             workSpaceId: Utils.workspace.workspaceId,
             userId: Utils.user.id,
             requestDate: Date(),
@@ -334,16 +335,18 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
         // Clear images
         AddRequestViewController.selectedImages = []
         
-        Utils.workspaceReimbursements.append(newReimbursement)
-        requestListManger.workspaceReimbursements.append(newReimbursement)
-        
         newReimbursement.createReimbursement(){ [unowned self] result in
             switch result {
             case .success(let documentID):
+                newReimbursement.id = documentID
+                
                 // Update static data
                 Utils.user.reimbursementRequestIds.append(documentID)
                 Utils.workspace.reimbursementRequestIds.append(documentID)
                 
+                Utils.workspaceReimbursements.append(newReimbursement)
+                self.requestListManger.workspaceReimbursements.append(newReimbursement)
+
                 // Update Firebase
                 Utils.user.setUserData() { _ in }
                 Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }

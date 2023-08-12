@@ -21,7 +21,7 @@ struct RequestsList: View {
     
     private func timeOffListView() -> some View {
         let filteredTimeOffs = Utils.isAdmin ?
-        requestListManger.workspaceTimeOffs :
+        requestListManger.workspaceTimeOffs.filter {!$0.isModifiedByAdmin} :
         requestListManger.workspaceTimeOffs.filter { $0.userId == Utils.user.id }
         
         return VStack {
@@ -29,7 +29,7 @@ struct RequestsList: View {
                 .font(.headline)
                 .padding(.top, 10)
             List {
-                ForEach(filteredTimeOffs) { timeOff in
+                ForEach(filteredTimeOffs, id: \.id) { timeOff in
                     TimeOffRow(timeOff: timeOff, requestListManger: requestListManger)
                 }
             }
@@ -38,8 +38,9 @@ struct RequestsList: View {
     }
     
     private func reimbursementListView() -> some View {
+        
         let filteredReimbursements = Utils.isAdmin ?
-        requestListManger.workspaceReimbursements :
+        requestListManger.workspaceReimbursements.filter {!$0.isModifiedByAdmin} :
         requestListManger.workspaceReimbursements.filter { $0.userId == Utils.user.id }
         
         return VStack {
@@ -48,7 +49,7 @@ struct RequestsList: View {
                 .padding(.top, 10)
             
             List {
-                ForEach(filteredReimbursements) { reimbursement in
+                ForEach(filteredReimbursements, id: \.id) { reimbursement in
                     ReimbursementRow(reimbursement: reimbursement, requestListManger: requestListManger)
                 }
             }
@@ -61,14 +62,14 @@ struct RequestsList: View {
             
             if  (requestListManger.tab == "Time Off" || requestListManger.tab == "All Requests") &&
                     ((!Utils.isAdmin && requestListManger.workspaceTimeOffs.filter { $0.userId == Utils.user.id }.count > 0)
-                     || (Utils.isAdmin && requestListManger.workspaceTimeOffs.count > 0))
+                     || (Utils.isAdmin && requestListManger.workspaceTimeOffs.filter { !$0.isModifiedByAdmin }.count > 0))
             {
                 timeOffListView()
             }
             
             if  (requestListManger.tab == "All Requests" || requestListManger.tab == "Reimbursement") &&
                     ((!Utils.isAdmin && requestListManger.workspaceReimbursements.filter { $0.userId == Utils.user.id }.count > 0)
-                     || (Utils.isAdmin && requestListManger.workspaceReimbursements.count > 0))
+                     || (Utils.isAdmin && requestListManger.workspaceReimbursements.filter { !$0.isModifiedByAdmin }.count > 0))
             {
                 reimbursementListView()
             }
@@ -104,10 +105,13 @@ struct ReimbursementRow: View {
             Text("Amount: $\(String(format: "%.2f",reimbursement.amount))")
                 .font(.system(size: 12, weight: .bold))
 
-            Text("Status: \(reimbursement.isApproved ? "Approved" : "Not Approved")")
-                .font(.system(size: 12, weight: .bold))
-                .foregroundColor(reimbursement.status == "Accepted" ? Color(Utils.darkGreen)
-                                 : reimbursement.status == "Pending" ? Color(Utils.darkOrange) : Color(Utils.darkRed))
+            HStack (spacing: 3){
+                Text("Status:")
+                Text(reimbursement.status)
+                    .foregroundColor(reimbursement.status == "Accepted" ? Color(Utils.darkGreen)
+                                     : reimbursement.status == "Pending" ? Color(Utils.darkOrange) : Color(Utils.darkRed))
+            }
+            .font(.system(size: 12, weight: .bold))
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -115,7 +119,7 @@ struct ReimbursementRow: View {
         .cornerRadius(10)
         .onTapGesture {
             let user = Utils.workSpaceUsers.first{$0.id == reimbursement.userId}!
-            let editTimeOffRequestVC = EditReimbursementViewController(user: user, reimbursement: reimbursement)
+            let editTimeOffRequestVC = EditReimbursementViewController(user: user, reimbursement: reimbursement, requestListManger: requestListManger)
             Utils.navigate(editTimeOffRequestVC, requestListManger.hostingVC!)
         }
     }
@@ -154,7 +158,7 @@ struct TimeOffRow: View {
             .background(Color.gray.opacity(0.1))
             .cornerRadius(10)
             .onTapGesture {
-                let editTimeOffRequestVC = EditTimeOffViewController(user: user, timeOff: timeOff)
+                let editTimeOffRequestVC = EditTimeOffViewController(user: user, timeOff: timeOff, requestListManger: requestListManger)
                 Utils.navigate(editTimeOffRequestVC, requestListManger.hostingVC!)
             }
         }

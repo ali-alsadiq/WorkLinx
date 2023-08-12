@@ -10,10 +10,6 @@ import UIKit
 class MenuBarViewController: UIViewController {
     var menuBarStack: UIStackView!
 
-//    let defaultWorkspace =
-//    let isAdmin =  Workspace.getWorkspaceByID(workspaceID: Utils.user.defaultWorkspaceId)!.admins.contains(where: { $0 == Utils.user.id })
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +28,7 @@ class MenuBarViewController: UIViewController {
             menuBarStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             menuBarStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             menuBarStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            menuBarStack.heightAnchor.constraint(equalToConstant: 50) // Adjust height as needed
+            menuBarStack.heightAnchor.constraint(equalToConstant: 50)
             
         ])
         
@@ -144,7 +140,7 @@ class MenuBarViewController: UIViewController {
     }
     
     @objc private func attendanceButtonTapped() {
-        let attendanceStoryboard = UIStoryboard(name: "Main", bundle: nil) // Replace "Main" with your storyboard name
+        let attendanceStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let attendanceVC = attendanceStoryboard.instantiateViewController(withIdentifier: "AttendanceView") as! AttendanceViewController
         let attendanceNavigationController = UINavigationController(rootViewController: attendanceVC)
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

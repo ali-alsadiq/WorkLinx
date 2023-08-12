@@ -14,11 +14,17 @@ class EditReimbursementViewController: EditRequestViewController {
     private var reimbursement: Reimbursement
     private var requestStack: UIStackView!
     private var imagesStack: UIStackView!
+    private var requestListManger: RequestListManger
     
     
-    init(user: User, reimbursement: Reimbursement) {
+    private var index: Int {
+        return requestListManger.workspaceReimbursements.firstIndex { $0.id == reimbursement.id }!
+    }
+    
+    init(user: User, reimbursement: Reimbursement, requestListManger: RequestListManger) {
         self.user = user
         self.reimbursement = reimbursement
+        self.requestListManger = requestListManger
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,6 +34,8 @@ class EditReimbursementViewController: EditRequestViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationBar.setTitle(to: "Edit Reimbursement")
         
         let userNameHeader = createHeaderLabel(text: "User Name")
         let requestDateHeader = createHeaderLabel(text: "Start Date")
@@ -171,5 +179,33 @@ class EditReimbursementViewController: EditRequestViewController {
             fullScreenImageVC.modalPresentationStyle = .formSheet
             present(fullScreenImageVC, animated: true, completion: nil)
         }
+    }
+    
+    override func approveButtonTapped() {
+        reimbursement.isApproved = true
+        reimbursement.isModifiedByAdmin = true
+        reimbursement.setReimbursementData { _ in }
+        requestListManger.workspaceReimbursements[index] = reimbursement
+        requestListManger.hostingVC?.setupInfoMessageView()
+
+        goBack()
+    }
+    
+    override func rejectButtonTapped() {
+        reimbursement.isApproved = false
+        reimbursement.isModifiedByAdmin = true
+        reimbursement.setReimbursementData { _ in }
+        requestListManger.workspaceReimbursements[index] = reimbursement
+        requestListManger.hostingVC?.setupInfoMessageView()
+
+        goBack()
+    }
+    
+    override func cancelButtonTapped() {
+        requestListManger.workspaceReimbursements.remove(at: index)
+        reimbursement.removeReimbursement(requestVC: requestListManger.hostingVC!) { _ in}
+        
+        requestListManger.hostingVC?.setupInfoMessageView()
+        goBack()
     }
 }

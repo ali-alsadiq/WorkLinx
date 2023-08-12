@@ -22,7 +22,7 @@ struct TimeOff: Codable, Identifiable {
     var status: String {
         !isApproved && !isModifiedByAdmin ? "Pending" : !isApproved ? "Rejected" : "Accepted"
     }
-                        
+    
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -74,7 +74,7 @@ struct TimeOff: Codable, Identifiable {
     // Function to fetch an array of TimeOff by IDs from Firestore
     static func fetchtimeOffsByIDs(timeOffIDs: [String], completion: @escaping ([TimeOff]) -> Void) {
         let query = Utils.db.collection("timeOff").whereField(FieldPath.documentID(), in: timeOffIDs)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching Time Off: \(error.localizedDescription)")
@@ -107,6 +107,56 @@ struct TimeOff: Codable, Identifiable {
             }
             
             completion(timeOffs)
+        }
+    }
+    
+    // Function to update timeOff data
+    func setTimeOffData(completion: @escaping (Result<Void, Error>) -> Void) {
+        
+        print(id)
+        // Update the document with the existing timeOff ID
+        do {
+            let timeOffDocumentData = try Utils.encodeData(data: self)
+            
+            Utils.db.collection("timeOff").document(id).setData(timeOffDocumentData!) { error in
+                if let error = error {
+                    // Print the specific error details for debugging
+                    print("Error updating time off data: \(error.localizedDescription)")
+                    completion(.failure(error)) // Call the completion handler with the error
+                } else {
+                    print("User time off updated successfully.")
+                    
+                    if let index = Utils.workSpceTimeOffs.firstIndex(where: { $0.id == self.id }) {
+                        Utils.workSpceTimeOffs[index] = self
+                    }
+                    
+                    completion(.success(())) // Call the completion handler with success (empty tuple)
+                }
+            }
+        }
+        catch {
+            print("Error encoding user data: \(error.localizedDescription)")
+        }
+    }
+    
+    // Function to remove timeOff doc
+    func removeTimeOffData(requestVC: RequestViewController ,completion: @escaping (Result<Void, Error>) -> Void) {
+        // Remove the document from Firestore
+        Utils.db.collection("timeOff").document(id).delete { error in
+            if let error = error {
+                // Print the specific error details for debugging
+                print("Error deleting time off data: \(error.localizedDescription)")
+                completion(.failure(error)) // Call the completion handler with the error
+            } else {
+                print("User time off deleted successfully.")
+                
+                Utils.workSpceTimeOffs.removeAll { $0.id == self.id } // Remove element from the array
+                requestVC.setupInfoMessageView()
+                
+                Workspace.updateWorkspace(workspace: Utils.workspace) { _ in
+                    completion(.success(()))
+                }
+            }
         }
     }
 }

@@ -48,13 +48,11 @@ struct EmailListView: View {
                         showAlert = true
                     }) {
                         Text("Remove")
-                            .font(.largeTitle)
                             .foregroundColor(.red)
                     }
                 }
                 .contentShape(Rectangle())
             }
-            
         }
         .edgesIgnoringSafeArea(.all)
         .alert(isPresented: $showAlert) {

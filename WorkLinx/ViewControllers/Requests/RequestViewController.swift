@@ -140,14 +140,13 @@ class RequestViewController: MenuBarViewController {
         let isAllRequestsTab = tab == "All Requests"
         
         let isEmptyReimbursements = Utils.isAdmin
-                                            ? Utils.workspaceReimbursements.isEmpty
+                                            ? Utils.notModifiedByAdminReimbursements.isEmpty
                                             : Utils.workspaceReimbursements.filter{ Utils.user.id == $0.userId}.isEmpty
-        
+
         let isEmptyTimeOffs =  Utils.isAdmin
-                                        ? Utils.workSpceTimeOffs.isEmpty
+                                        ? Utils.notModifiedByAdmiTimeOffs.isEmpty
                                         : Utils.workSpceTimeOffs.filter{ Utils.user.id == $0.userId}.isEmpty
 
-        
         if (isReimbursementTab && isEmptyReimbursements) ||
             (isTimeOffTab && isEmptyTimeOffs) ||
             (isAllRequestsTab && isEmptyReimbursements && isEmptyTimeOffs) {
@@ -159,7 +158,7 @@ class RequestViewController: MenuBarViewController {
             if infoMessageView != nil {
                 infoMessageView!.removeFromSuperview()
             }
-          
+            
             infoMessageView = EmptyListMessageView(message: message)
             
             infoMessageView!.arrowImageView.removeFromSuperview()

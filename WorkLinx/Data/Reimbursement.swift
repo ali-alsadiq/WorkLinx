@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 struct Reimbursement: Codable, Identifiable {
-    var id = UUID()
+    var id = ""
     var workSpaceId: String
     var userId: String
     var requestDate: Date
@@ -25,6 +25,7 @@ struct Reimbursement: Codable, Identifiable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case id
         case workSpaceId
         case userId
         case requestDate
@@ -75,7 +76,7 @@ struct Reimbursement: Codable, Identifiable {
     // Function to fetch an array of Reimbursemet by IDs from Firestore
     static func fetchReimbursementsByIDs(reimbursementOffIDs: [String], completion: @escaping ([Reimbursement]) -> Void) {
         let query = Utils.db.collection("reimbursement").whereField(FieldPath.documentID(), in: reimbursementOffIDs)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching Reimbursement: \(error.localizedDescription)")
@@ -108,6 +109,46 @@ struct Reimbursement: Codable, Identifiable {
             }
             
             completion(reimbursements)
+        }
+    }
+    
+    // Update Reimbursement
+    func setReimbursementData(completion: @escaping (Result<Void, Error>) -> Void) {
+        do {
+            let reimbursementDocumentData = try Utils.encodeData(data: self)!
+            
+            Utils.db.collection("reimbursement").document(id).setData(reimbursementDocumentData) { error in
+                if let error = error {
+                    print("Error updating reimbursement data: \(error.localizedDescription)")
+                    completion(.failure(error))
+                } else {
+                    
+                    if let index = Utils.workspaceReimbursements.firstIndex(where: { $0.id == self.id }) {
+                        Utils.workspaceReimbursements[index] = self
+                    }
+                    completion(.success(()))
+                }
+            }
+        } catch {
+            print("Error encoding reimbursement data: \(error.localizedDescription)")
+            completion(.failure(error))
+        }
+    }
+    
+    // Remove Reimbursement
+    func removeReimbursement(requestVC: RequestViewController ,completion: @escaping (Result<Void, Error>) -> Void) {
+        Utils.db.collection("reimbursement").document(id).delete { error in
+            if let error = error {
+                print("Error deleting reimbursement data: \(error.localizedDescription)")
+                completion(.failure(error))
+            } else {
+                Utils.workspaceReimbursements.removeAll { $0.id == self.id }
+                requestVC.setupInfoMessageView()
+                
+                Workspace.updateWorkspace(workspace: Utils.workspace) { _ in
+                    completion(.success(()))
+                }
+            }
         }
     }
 }

@@ -13,11 +13,16 @@ class EditTimeOffViewController: EditRequestViewController {
     private var user: User
     private var timeOff: TimeOff
     private var requestStack: UIStackView!
+    private var requestListManger: RequestListManger
     
+    private var index: Int {
+        return requestListManger.workspaceTimeOffs.firstIndex { $0.id == timeOff.id }!
+    }
     
-    init(user: User, timeOff: TimeOff) {
+    init(user: User, timeOff: TimeOff, requestListManger: RequestListManger) {
         self.user = user
         self.timeOff = timeOff
+        self.requestListManger = requestListManger
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,6 +33,8 @@ class EditTimeOffViewController: EditRequestViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationBar.setTitle(to: "Edit Time Off")
         
         let userNameHeader = createHeaderLabel(text: "User Name")
         let startDateHeader = createHeaderLabel(text: "Start Date")
@@ -75,5 +82,33 @@ class EditTimeOffViewController: EditRequestViewController {
             requestStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             requestStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
+    }
+    
+    override func approveButtonTapped() {
+        timeOff.isApproved = true
+        timeOff.isModifiedByAdmin = true
+        timeOff.setTimeOffData { _ in }
+        requestListManger.workspaceTimeOffs[index] = timeOff
+        requestListManger.hostingVC?.setupInfoMessageView()
+
+        goBack()
+    }
+    
+    override func rejectButtonTapped() {
+        timeOff.isApproved = false
+        timeOff.isModifiedByAdmin = true
+        timeOff.setTimeOffData { _ in }
+        requestListManger.workspaceTimeOffs[index] = timeOff
+        requestListManger.hostingVC?.setupInfoMessageView()
+
+        goBack()
+    }
+    
+    override func cancelButtonTapped() {
+        requestListManger.workspaceTimeOffs.remove(at: index)
+        timeOff.removeTimeOffData(requestVC: requestListManger.hostingVC!) { _ in}
+        
+        requestListManger.hostingVC?.setupInfoMessageView()
+        goBack()
     }
 }

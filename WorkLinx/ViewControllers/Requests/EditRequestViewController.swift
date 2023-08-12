@@ -17,7 +17,7 @@ class EditRequestViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        navigationBar = CustomNavigationBar(title: "Edit Time Off")
+        navigationBar = CustomNavigationBar(title: "Edit Requests")
         let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
         navigationBar.items?.first?.leftBarButtonItem = backButton
         
@@ -32,16 +32,22 @@ class EditRequestViewController: UIViewController {
         
         let approveButton = createButton(title: "Approve",
                                          target: self,
-                                         action: #selector(goBack),
-                                         color: UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0))
+                                         action: #selector(approveButtonTapped),
+                                         color: Utils.darkGreen)
         
         let rejectButton = createButton(title: "Reject",
                                         target: self,
-                                        action: #selector(goBack),
-                                        color: UIColor(red: 0.5, green: 0.0, blue: 0.0, alpha: 1.0))
+                                        action: #selector(rejectButtonTapped),
+                                        color: Utils.darkRed)
+        
+        let cancelButton = createButton(title: "Cencel",
+                                        target: self,
+                                        action: #selector(cancelButtonTapped),
+                                        color: Utils.darkRed)
+        
         
         // Add form elements to a stack
-        buttonsStack = UIStackView(arrangedSubviews: [approveButton, rejectButton])
+        buttonsStack = UIStackView()
         buttonsStack.axis = .horizontal
         buttonsStack.spacing = 20
         buttonsStack.distribution = .fillEqually
@@ -57,11 +63,11 @@ class EditRequestViewController: UIViewController {
         ])
         
         if Utils.isAdmin {
-            buttonsStack.isHidden = false
+            buttonsStack.addArrangedSubview(approveButton)
+            buttonsStack.addArrangedSubview(rejectButton)
+
         } else {
-            buttonsStack.isHidden = true
-            // user view own request, add button to cancel and
-            // implement logic to remove from db and Utils.workSpceTimeOffs
+            buttonsStack.addArrangedSubview(cancelButton)
         }
     }
     
@@ -122,5 +128,17 @@ class EditRequestViewController: UIViewController {
     
     @objc func goBack() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc dynamic func approveButtonTapped() {
+        // get logic from child class
+    }
+    
+    @objc dynamic func rejectButtonTapped() {
+        // get logic from child class
+    }
+    
+    @objc dynamic func cancelButtonTapped() {
+        // get logic from child class
     }
 }

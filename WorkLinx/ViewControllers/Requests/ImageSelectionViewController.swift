@@ -39,12 +39,27 @@ class ImageSelectionViewController: UIViewController, UICollectionViewDelegate, 
                     }
                 }
             }
-        case .denied, .restricted:
-            // Denied or restricted access
-            break
+            
         default:
-            break
+            requestPhotoLibraryAccess()
+
         }
+    }
+    
+    private func requestPhotoLibraryAccess() {
+        let alert = UIAlertController(title: "Photo Library Access Denied",
+                                      message: "Please grant permission to access the photo library in Settings.",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     private func setupCollectionView() {

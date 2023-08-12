@@ -55,6 +55,14 @@ class Utils{
     static var workSpceTimeOffs: [TimeOff] = []
     static var workspaceReimbursements: [Reimbursement] = []
     
+    static var notModifiedByAdmiTimeOffs: [TimeOff] {
+        Utils.workSpceTimeOffs.filter {!$0.isModifiedByAdmin}
+    }
+    
+    static var notModifiedByAdminReimbursements: [Reimbursement] {
+        Utils.workspaceReimbursements.filter {!$0.isModifiedByAdmin}
+    }
+    
     
     
     // colors
@@ -84,15 +92,17 @@ class Utils{
     
     static func getDashboardTableData() -> [(String, [CellDashboard])] {
         
+        //fetch data here then contine adjusting
+        
         // Create dashboard data
         var callDataArray: [(String, [CellDashboard])] = []
         
         // Requests section
         var requestsSection: [CellDashboard] = []
-        let requestsCount = Utils.workspace.timeOffRequestIds.count + Utils.workspace.reimbursementRequestIds.count
+        let requestsCount =  notModifiedByAdmiTimeOffs.count + notModifiedByAdminReimbursements.count
         requestsSection.append(CellDashboard(number: requestsCount, text: "All Requests"))
-        requestsSection.append(CellDashboard(number: Utils.workspace.timeOffRequestIds.count, text: "Time Off"))
-        requestsSection.append(CellDashboard(number: Utils.workspace.reimbursementRequestIds.count, text: "Reimbursement"))
+        requestsSection.append(CellDashboard(number: notModifiedByAdmiTimeOffs.count, text: "Time Off"))
+        requestsSection.append(CellDashboard(number:  notModifiedByAdminReimbursements.count, text: "Reimbursement"))
         
         if isAdmin {
             callDataArray.append(("Requests Needing Approval", requestsSection))
