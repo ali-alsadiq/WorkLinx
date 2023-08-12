@@ -91,8 +91,8 @@ class RegisterViewController: UIViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let createWorkspaceAction = UIAlertAction(title: "Create Workspace", style: .default) { (_) in
-            self.employerBttnTapped()
+        let createWorkspaceAction = UIAlertAction(title: "Create Workspace", style: .default) { [weak self] _ in
+            self?.employerBttnTapped()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in}
