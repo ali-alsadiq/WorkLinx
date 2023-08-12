@@ -80,6 +80,7 @@
 		C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */; };
 		C7F2BB682A8021940071D0B2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2BB672A8021940071D0B2 /* Image.swift */; };
 		CF37DD142FBFDDF438A17507 /* Pods_WorkLinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */; };
+		FA6ABE4B2A8650B300A49FD6 /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */; };
 		FACABB2E2A7D0AAF006A4D6A /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */; };
 		FACABB302A7D0AD1006A4D6A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
@@ -154,6 +155,7 @@
 		C7F2BB652A7FFA3E0071D0B2 /* Reimbursement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reimbursement.swift; sourceTree = "<group>"; };
 		C7F2BB672A8021940071D0B2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EE9A29268E97E83ED0A84302 /* Pods_WorkLinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkLinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentsViewController.swift; path = ../../../../../../DocumentsViewController.swift; sourceTree = "<group>"; };
 		FACABB2D2A7D0AAF006A4D6A /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		FACABB2F2A7D0AD1006A4D6A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +218,7 @@
 				C7DDC4FB2A7A48DF007E3564 /* Users */,
 				C7DDC5082A7BF0DA007E3564 /* Workspaces */,
 				C73392C52A6D4B3F004A7E60 /* UserProfileTableViewController.swift */,
+				FA6ABE4A2A8650B300A49FD6 /* DocumentsViewController.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				C7CF59942A62414E00D2A3D3 /* DashboardCell.swift in Sources */,
 				C73392C82A6D4B81004A7E60 /* UserProfileCell.swift in Sources */,
 				C77BE0172A4ACFCD007A8D06 /* SignInForm.swift in Sources */,
+				FA6ABE4B2A8650B300A49FD6 /* DocumentsViewController.swift in Sources */,
 				C77BE0192A4ACFEF007A8D06 /* SignUpForm.swift in Sources */,
 				C7DDC4FD2A7A48E7007E3564 /* AddUserViewController.swift in Sources */,
 				C7D5BD382A80C577009D636D /* RequestsList.swift in Sources */,
