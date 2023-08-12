@@ -49,7 +49,7 @@ struct RequestsList: View {
             
             List {
                 ForEach(filteredReimbursements) { reimbursement in
-                    ReimbursementRow(reimbursement: reimbursement)
+                    ReimbursementRow(reimbursement: reimbursement, requestListManger: requestListManger)
                 }
             }
         }
@@ -78,7 +78,8 @@ struct RequestsList: View {
 
 struct ReimbursementRow: View {
     var reimbursement: Reimbursement
-    
+    var requestListManger: RequestListManger
+
     var userName: String {
         let user = Utils.workSpaceUsers.first{$0.id == reimbursement.userId}
         return user!.firstName + " " + user!.lastName
@@ -105,18 +106,17 @@ struct ReimbursementRow: View {
 
             Text("Status: \(reimbursement.isApproved ? "Approved" : "Not Approved")")
                 .font(.system(size: 12, weight: .bold))
-                .foregroundColor(reimbursement.isApproved ? .green : .red)
+                .foregroundColor(reimbursement.status == "Accepted" ? Color(Utils.darkGreen)
+                                 : reimbursement.status == "Pending" ? Color(Utils.darkOrange) : Color(Utils.darkRed))
         }
         .padding()
         .frame(maxWidth: .infinity)
         .background(Color.gray.opacity(0.1))
         .cornerRadius(10)
         .onTapGesture {
-            
-            // navigate to edit view
-            // pass the request manger - userName - reimbursement
-            print(userName)
-            print(reimbursement)
+            let user = Utils.workSpaceUsers.first{$0.id == reimbursement.userId}!
+            let editTimeOffRequestVC = EditReimbursementViewController(user: user, reimbursement: reimbursement)
+            Utils.navigate(editTimeOffRequestVC, requestListManger.hostingVC!)
         }
     }
 }
@@ -154,13 +154,8 @@ struct TimeOffRow: View {
             .background(Color.gray.opacity(0.1))
             .cornerRadius(10)
             .onTapGesture {
-                // navigate to edit view
-                // pass the request manger - userName - timeOff
-                print(userName)
-                print(timeOff)
-                let editREquestVC = EditTimeOffViewController(user: user, timeOff: timeOff)
-                Utils.navigate(editREquestVC, requestListManger.hostingVC!)
-                // navigate in here 
+                let editTimeOffRequestVC = EditTimeOffViewController(user: user, timeOff: timeOff)
+                Utils.navigate(editTimeOffRequestVC, requestListManger.hostingVC!)
             }
         }
     }

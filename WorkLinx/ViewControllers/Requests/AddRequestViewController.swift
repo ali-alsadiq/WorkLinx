@@ -327,8 +327,12 @@ class AddRequestViewController: UIViewController, UITextViewDelegate {
             requestDate: Date(),
             imagesUrls: imagesUrls,
             amount: amount,
-            description: descriptionTextView.text!,
-            isApproved: false)
+            description: isEmptyDescription ? "No Description Entered" : descriptionTextView.text!,
+            isApproved: Utils.isAdmin,
+            isModifiedByAdmin: Utils.isAdmin)
+        
+        // Clear images
+        AddRequestViewController.selectedImages = []
         
         Utils.workspaceReimbursements.append(newReimbursement)
         requestListManger.workspaceReimbursements.append(newReimbursement)

@@ -41,6 +41,9 @@
 		C7D5BD462A8351A1009D636D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD452A8351A1009D636D /* GoogleSignIn */; };
 		C7D5BD482A8351A1009D636D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD472A8351A1009D636D /* GoogleSignInSwift */; };
 		C7D5BD4C2A83E18C009D636D /* EditTimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */; };
+		C7D5BD4E2A861C49009D636D /* EditReimbursementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */; };
+		C7D5BD502A8627C3009D636D /* EditRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */; };
+		C7D5BD522A86857C009D636D /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD512A86857C009D636D /* FullScreenImageViewController.swift */; };
 		C7DDC4ED2A780BAC007E3564 /* PositionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */; };
 		C7DDC4EF2A780D92007E3564 /* PositionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4EE2A780D92007E3564 /* PositionCell.swift */; };
 		C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */; };
@@ -113,6 +116,9 @@
 		C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressValidationResponse.swift; sourceTree = "<group>"; };
 		C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeOffViewController.swift; sourceTree = "<group>"; };
+		C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReimbursementViewController.swift; sourceTree = "<group>"; };
+		C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRequestViewController.swift; sourceTree = "<group>"; };
+		C7D5BD512A86857C009D636D /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EC2A780BAC007E3564 /* PositionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionsViewController.swift; sourceTree = "<group>"; };
 		C7DDC4EE2A780D92007E3564 /* PositionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionCell.swift; sourceTree = "<group>"; };
 		C7DDC4F02A78DD6E007E3564 /* AddPositionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPositionViewController.swift; sourceTree = "<group>"; };
@@ -400,7 +406,10 @@
 				C7E0A2582A59B25800003473 /* RequestViewController.swift */,
 				C7F2BB5E2A7F859B0071D0B2 /* AddRequestViewController.swift */,
 				C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */,
+				C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */,
+				C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */,
 				C7F2BB612A7FC9300071D0B2 /* ImageSelectionViewController.swift */,
+				C7D5BD512A86857C009D636D /* FullScreenImageViewController.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -547,10 +556,12 @@
 				C7F2BB662A7FFA3E0071D0B2 /* Reimbursement.swift in Sources */,
 				C7F2BB622A7FC9300071D0B2 /* ImageSelectionViewController.swift in Sources */,
 				C7D5BD3E2A82B18E009D636D /* AddressValidationResponse.swift in Sources */,
+				C7D5BD4E2A861C49009D636D /* EditReimbursementViewController.swift in Sources */,
 				C77BE01D2A4B2744007A8D06 /* RegisterViewController.swift in Sources */,
 				C70AB40B2A69870A009736B8 /* SelectWorkPlaceViewController.swift in Sources */,
 				C7F2BB5D2A7E43780071D0B2 /* EmptyListMessageView.swift in Sources */,
 				C77BE0122A4AB216007A8D06 /* CustomTextField.swift in Sources */,
+				C7D5BD502A8627C3009D636D /* EditRequestViewController.swift in Sources */,
 				C7E0A2552A59B23700003473 /* ScheduleViewController.swift in Sources */,
 				C7E050692A53F4120026971C /* BackButton.swift in Sources */,
 				C77BE0002A4AA1F0007A8D06 /* SplashViewController.swift in Sources */,
@@ -571,6 +582,7 @@
 				C7E0506D2A5410030026971C /* Utils.swift in Sources */,
 				C7E0A2592A59B25800003473 /* RequestViewController.swift in Sources */,
 				C7DDC4F12A78DD6E007E3564 /* AddPositionViewController.swift in Sources */,
+				C7D5BD522A86857C009D636D /* FullScreenImageViewController.swift in Sources */,
 				C7F2BB4C2A7CCB3C0071D0B2 /* CalendarListView.swift in Sources */,
 				C77BDFFC2A4AA1F0007A8D06 /* AppDelegate.swift in Sources */,
 				C7ECD8412A6258AC00D494EB /* Workspace.swift in Sources */,

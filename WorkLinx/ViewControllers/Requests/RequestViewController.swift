@@ -139,8 +139,14 @@ class RequestViewController: MenuBarViewController {
         let isTimeOffTab = tab == "Time Off"
         let isAllRequestsTab = tab == "All Requests"
         
-        let isEmptyReimbursements = Utils.workspaceReimbursements.isEmpty
-        let isEmptyTimeOffs = Utils.workSpceTimeOffs.isEmpty
+        let isEmptyReimbursements = Utils.isAdmin
+                                            ? Utils.workspaceReimbursements.isEmpty
+                                            : Utils.workspaceReimbursements.filter{ Utils.user.id == $0.userId}.isEmpty
+        
+        let isEmptyTimeOffs =  Utils.isAdmin
+                                        ? Utils.workSpceTimeOffs.isEmpty
+                                        : Utils.workSpceTimeOffs.filter{ Utils.user.id == $0.userId}.isEmpty
+
         
         if (isReimbursementTab && isEmptyReimbursements) ||
             (isTimeOffTab && isEmptyTimeOffs) ||

@@ -18,6 +18,11 @@ struct Reimbursement: Codable, Identifiable {
     var amount: Double
     var description: String
     var isApproved: Bool
+    var isModifiedByAdmin: Bool
+    
+    var status: String {
+        !isApproved && !isModifiedByAdmin ? "Pending" : !isApproved ? "Rejected" : "Accepted"
+    }
     
     enum CodingKeys: String, CodingKey {
         case workSpaceId
@@ -27,6 +32,7 @@ struct Reimbursement: Codable, Identifiable {
         case amount
         case description
         case isApproved
+        case isModifiedByAdmin
     }
     
     func createReimbursement(completion: @escaping (Result<String, Error>) -> Void) {
