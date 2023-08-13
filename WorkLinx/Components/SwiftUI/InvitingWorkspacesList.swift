@@ -9,7 +9,7 @@ import SwiftUI
 
 class WorkspaceManager: ObservableObject {
     @Published var invitingWorkspaces: [Workspace] = Utils.invitingWorkspaces
-
+    
     func removeWorkspace(_ workspace: Workspace) {
         invitingWorkspaces.removeAll { $0.workspaceId == workspace.workspaceId }
         Utils.invitingWorkspaces.removeAll { $0.workspaceId == workspace.workspaceId }
@@ -34,16 +34,27 @@ struct InvitingWorkspacesList: View {
                 Text(workspace.name.wrappedValue)
                 Spacer()
                 
-                // Xcode suddenly broke on image
-                
-                Button(action: { onAccept(workspace.wrappedValue)} ) {
+                // Button action suddenly broke the code
+                // Text onTapGesture seems to be working fine for now
+                Button(action: {}) {
                     Text("Accept")
                         .foregroundColor(Color(Utils.darkGreen))
+                        .onTapGesture {
+                            onAccept(workspace.wrappedValue)
+                        }
                 }
-                Button(action: { onReject(workspace.wrappedValue) }) {
+                .contentShape(Rectangle())
+                
+                
+                Button(action: {}) {
                     Text("Reject")
                         .foregroundColor(Color(Utils.darkRed))
+                        .onTapGesture {
+                            onReject(workspace.wrappedValue)
+                        }
                 }
+                .contentShape(Rectangle())
+                
             }
         }
     }

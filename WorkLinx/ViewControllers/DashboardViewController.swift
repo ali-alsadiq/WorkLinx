@@ -12,13 +12,26 @@ class DashboardViewController: MenuBarViewController {
     var tableView = UITableView()
     var data: [(String, [CellDashboard])] = []
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.data = Utils.getDashboardTableData()
-        self.tableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Workspace.getWorkspaceByID(workspaceID: Utils.workspace.workspaceId) { workspace in
+            if workspace != nil {                
+                Utils.workspace = workspace!
+                
+                Utils.fetchData {
+                    // only fetch shifts and requests instead
+                    Utils.fetchData {
+                        self.data = Utils.getDashboardTableData()
+                        self.tableView.reloadData()
+                    }
+                }
+                
+               
+            }
+            
+        }
+       
         
         view.backgroundColor = .white
         
@@ -68,6 +81,7 @@ extension DashboardViewController: UITableViewDelegate{
         if let requestVC = view as? RequestViewController {
             requestVC.isGoingBack = true
             requestVC.tab = tab
+            requestVC.dashboardVC = self
             Utils.embedViewControllerInNavigationAndNavigate(self, to: requestVC)
         } else if let scheduleVC = view as? ScheduleViewController {
             scheduleVC.isGoingBack = true

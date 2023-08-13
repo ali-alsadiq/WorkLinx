@@ -170,9 +170,7 @@ class UserInfoFormViewController: UIViewController {
             
             if Utils.isAdmin {
                 DispatchQueue.main.async { [unowned self] in
-                    
-                    print(self.texboxComopanyName.text!)
-                    
+                                        
                     guard let companyName = self.texboxComopanyName.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyName.isEmpty,
                           let companyAddress = self.textBoxCompanyAddress.text?.trimmingCharacters(in: .whitespacesAndNewlines), !companyAddress.isEmpty else {
                         // Display an alert indicating that first name and last name are required
@@ -213,7 +211,12 @@ class UserInfoFormViewController: UIViewController {
                             }
                         }
                         DispatchQueue.main.async {
-                            Utils.navigate(DashboardViewController(), self)
+                            let dashboardVC = DashboardViewController()
+                            
+                            dashboardVC.data = Utils.getDashboardTableData()
+                            dashboardVC.tableView.reloadData()
+                            
+                            Utils.embedViewControllerInNavigationAndSetAsRoot(dashboardVC)
                         }
                     } // End of AddressValidationResponse.validateAddress
                 }

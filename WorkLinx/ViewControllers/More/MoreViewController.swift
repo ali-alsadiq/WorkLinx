@@ -22,19 +22,10 @@ class MoreViewController : MenuBarViewController {
         
         view.backgroundColor = .white
         
-        data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
-        // Add nav bar
-//        let navigationBar = CustomNavigationBar(title: "More")
-//        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        view.addSubview(navigationBar)
-//        
-//        NSLayoutConstraint.activate([
-//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        ])
+        title = "More"
         
+        data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
+       
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -74,7 +65,7 @@ class MoreViewController : MenuBarViewController {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "SplashView")
             
-            Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
+            Utils.embedViewControllerInNavigationAndSetAsRoot(vc)
         }
         alertController.addAction(logoutAction)
         self.present(alertController, animated: true, completion: nil)

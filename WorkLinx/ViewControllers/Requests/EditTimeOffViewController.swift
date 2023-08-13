@@ -86,20 +86,31 @@ class EditTimeOffViewController: EditRequestViewController {
     override func approveButtonTapped() {
         timeOff.isApproved = true
         timeOff.isModifiedByAdmin = true
-        timeOff.setTimeOffData { _ in }
+        
+        timeOff.setTimeOffData { [unowned self] _ in
+            requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+            requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+        }
+        
         requestListManger.workspaceTimeOffs[index] = timeOff
         requestListManger.hostingVC?.setupInfoMessageView()
-
+        
+     
         goBack()
     }
     
     override func rejectButtonTapped() {
         timeOff.isApproved = false
         timeOff.isModifiedByAdmin = true
-        timeOff.setTimeOffData { _ in }
+        
+        timeOff.setTimeOffData { [unowned self] _ in
+            requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+            requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+        }
+        
         requestListManger.workspaceTimeOffs[index] = timeOff
         requestListManger.hostingVC?.setupInfoMessageView()
-
+        
         goBack()
     }
     
@@ -108,6 +119,10 @@ class EditTimeOffViewController: EditRequestViewController {
         timeOff.removeTimeOffData(requestVC: requestListManger.hostingVC!) { _ in}
         
         requestListManger.hostingVC?.setupInfoMessageView()
+        
+        requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+        requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+
         goBack()
     }
 }

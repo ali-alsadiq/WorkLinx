@@ -130,7 +130,7 @@ class CreateNewWorkspaceViewController: UIViewController {
                                 Utils.user.defaultWorkspaceId = workspaceId
                                 Utils.isAdmin = true
                                 // Navigate to the DashboardView inside the completion block
-                                Utils.navigate(DashboardViewController(), self)
+                                Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
                             } else {
                                 // Failed to fetch the workspace or some data is missing
                                 // Handle the error or show an appropriate alert

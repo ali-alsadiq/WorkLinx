@@ -81,7 +81,8 @@ extension SelectWorkPlaceViewController: UITableViewDelegate{
                 dashboardVC.data = Utils.getDashboardTableData()
                 dashboardVC.tableView.reloadData()
             }
-            Utils.navigate(dashboardVC, self)
+            
+            Utils.embedViewControllerInNavigationAndSetAsRoot(dashboardVC)
             
         } else if let createWorkspaceCell = cellData as? CellCreateWorkspace {
             if createWorkspaceCell.cellText.lowercased().contains("create".lowercased()){

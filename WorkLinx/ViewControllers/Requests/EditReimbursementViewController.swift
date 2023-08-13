@@ -184,20 +184,33 @@ class EditReimbursementViewController: EditRequestViewController {
     override func approveButtonTapped() {
         reimbursement.isApproved = true
         reimbursement.isModifiedByAdmin = true
-        reimbursement.setReimbursementData { _ in }
+        
+        reimbursement.setReimbursementData { [unowned self] _ in
+            self.requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+            self.requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+        }
+        
         requestListManger.workspaceReimbursements[index] = reimbursement
         requestListManger.hostingVC?.setupInfoMessageView()
-
+        
+       
         goBack()
     }
     
     override func rejectButtonTapped() {
         reimbursement.isApproved = false
         reimbursement.isModifiedByAdmin = true
-        reimbursement.setReimbursementData { _ in }
+        
+        reimbursement.setReimbursementData { [unowned self] _ in
+            self.requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+            self.requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+        }
+        
         requestListManger.workspaceReimbursements[index] = reimbursement
         requestListManger.hostingVC?.setupInfoMessageView()
 
+       
+        
         goBack()
     }
     
@@ -206,6 +219,10 @@ class EditReimbursementViewController: EditRequestViewController {
         reimbursement.removeReimbursement(requestVC: requestListManger.hostingVC!) { _ in}
         
         requestListManger.hostingVC?.setupInfoMessageView()
+        
+        requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
+        requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
+        
         goBack()
     }
 }

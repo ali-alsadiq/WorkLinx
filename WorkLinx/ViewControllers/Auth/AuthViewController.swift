@@ -185,11 +185,6 @@ class AuthViewController: UIViewController {
                                     Utils.workspace = workspace
                                     Utils.isAdmin = workspace.admins.contains(Utils.user.id)
                                     // Navigate to the DashboardView inside the completion block
-                                    let dashboardVC = DashboardViewController()
-                                    Utils.fetchData {
-                                        dashboardVC.data = Utils.getDashboardTableData()
-                                        dashboardVC.tableView.reloadData()
-                                    }
                                     
                                     Workspace.updateInvitingWorkspaces {
                                         Utils.navigate(ConfirmInvitingWorkspacesViewController(), self)

@@ -110,14 +110,6 @@ class SignInForm {
                         if let workspace = workspace {
                             Utils.workspace = workspace
                             Utils.isAdmin = workspace.admins.contains(Utils.user.id)
-                            // Navigate to the DashboardView inside the completion block
-                            let dashboardVC = DashboardViewController()
-                            Utils.fetchData {
-                                dashboardVC.data = Utils.getDashboardTableData()
-                                dashboardVC.tableView.reloadData()
-                                
-                                print("Done fetching data and updating Dashboard Table")
-                            }
                             
                             Workspace.updateInvitingWorkspaces {
                                 Utils.navigate(ConfirmInvitingWorkspacesViewController(), self.viewController)

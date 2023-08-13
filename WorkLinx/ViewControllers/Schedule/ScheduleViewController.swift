@@ -78,6 +78,11 @@ class ScheduleViewController: MenuBarViewController {
         ])
         
         buttonGroup = ButtonGroup(buttons: [button1, button2, button3], targetViewController: self)
+        
+        Workspace.getWorkspaceByID(workspaceID: Utils.workspace.workspaceId) { workspace in
+            Utils.workspace = workspace!
+            Utils.fetchWorkspaceShifts {}
+        }
 
         calenderListView = CalendarListView(selectedDateManager: selectedDateManager, shiftsListManger: shiftsListManger)
         let hostingController = UIHostingController(rootView: calenderListView)

@@ -51,7 +51,7 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
         if isLoggedIn {
             navigationBar.items?.first?.leftBarButtonItem = backButton
         }
-
+        
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(navigationBar)
@@ -122,8 +122,21 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
         self.continueIfEmpty()
     }
     
-    func confirmInvitation(workspace: Workspace) {
+    
+    
+    func continueIfEmpty() {
+        if isUserAddingMultipleWorkspaces {
+            // Update usersData doc
+            Utils.user.setUserData() { _ in }
+        }
         
+        if Utils.invitingWorkspaces.isEmpty {
+            isLoggedIn ? goBack() : Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
+        }
+    }
+    
+    func confirmInvitation(workspace: Workspace) {
+        print("confirming")
         if Utils.user.defaultWorkspaceId.isEmpty {
             // Assign default workspace ID to the user
             Utils.user.defaultWorkspaceId = workspace.workspaceId
@@ -148,7 +161,7 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
             } else {
                 updateConfimedInvitations(workspace: workspace)
             }
-            
+            self.continueIfEmpty()
         }
         else {
             Utils.user.workSpaces.append(workspace.workspaceId)
@@ -169,17 +182,7 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
         Workspace.updateWorkspace(workspace: workspace) { _ in }
         workspaceManager.removeWorkspace(workspace)
         continueIfEmpty()
-    }
-    
-    func continueIfEmpty() {
-        if isUserAddingMultipleWorkspaces {
-            // Update usersData doc
-            Utils.user.setUserData() { _ in }
-        }
-        
-        if Utils.invitingWorkspaces.isEmpty {
-            isLoggedIn ? goBack() : Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
-        }
+        print("reject")
     }
     
     @objc func confirmLaterButtonTapped() {

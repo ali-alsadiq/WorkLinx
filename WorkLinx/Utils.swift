@@ -373,7 +373,7 @@ class Utils{
     }
     
     static func fetchWorkspaceShifts(completion: @escaping () -> Void) {
-        var allShiftIds = Utils.workspace.openShiftsIds
+        var allShiftIds = Utils.workspace.shiftIds + Utils.workspace.openShiftsIds
         allShiftIds.append(contentsOf: Utils.workspace.shiftIds)
         
         if allShiftIds.count > 0 {

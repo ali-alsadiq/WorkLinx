@@ -18,6 +18,8 @@ class RequestViewController: MenuBarViewController {
         }
     }
     
+    var dashboardVC: DashboardViewController!
+    
     private var infoMessageView: EmptyListMessageView?
     
     private var requestsHostingController: UIHostingController<RequestsList>!
@@ -34,6 +36,12 @@ class RequestViewController: MenuBarViewController {
         
         requestListManger.hostingVC = self
         
+        Workspace.getWorkspaceByID(workspaceID: Utils.workspace.workspaceId) { workspace in
+            Utils.workspace = workspace!
+            Utils.fetchReimbursementRequests {}
+            Utils.fetchTimeOffRequests {}
+        }
+        
         view.backgroundColor = .white
         
        title = "Requests"
@@ -43,15 +51,6 @@ class RequestViewController: MenuBarViewController {
             navigationItem.leftBarButtonItem = backButton
             menuBarStack.removeFromSuperview()
         }
-        
-//        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(navigationBar)
-//
-//        NSLayoutConstraint.activate([
-//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        ])
         
         let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         plusButton.setTitleTextAttributes([.font: UIFont.boldSystemFont(ofSize: 17)], for: .normal)
@@ -140,11 +139,11 @@ class RequestViewController: MenuBarViewController {
         let isAllRequestsTab = tab == "All Requests"
         
         let isEmptyReimbursements = Utils.isAdmin
-                                            ? Utils.notModifiedByAdminReimbursements.isEmpty
+                                            ? requestListManger.workspaceReimbursements.filter { !$0.isModifiedByAdmin }.isEmpty
                                             : Utils.workspaceReimbursements.filter{ Utils.user.id == $0.userId}.isEmpty
 
         let isEmptyTimeOffs =  Utils.isAdmin
-                                        ? Utils.notModifiedByAdmiTimeOffs.isEmpty
+                                        ? requestListManger.workspaceTimeOffs.filter { !$0.isModifiedByAdmin }.isEmpty
                                         : Utils.workSpceTimeOffs.filter{ Utils.user.id == $0.userId}.isEmpty
 
         if (isReimbursementTab && isEmptyReimbursements) ||
@@ -152,7 +151,7 @@ class RequestViewController: MenuBarViewController {
             (isAllRequestsTab && isEmptyReimbursements && isEmptyTimeOffs) {
             
             // Create the info message view
-            let message = "No \(isReimbursementTab ? "Reimbursement" : isTimeOffTab ? "Time Off" : "") requests added.\nTap + to add a request."
+            let message = "No \(isReimbursementTab ? "Reimbursement" : isTimeOffTab ? "Time Off" : "") requests \(Utils.isAdmin ? "pending" : "added").\nTap + to add a request."
             
             // Remove from view before adding a new one
             if infoMessageView != nil {
