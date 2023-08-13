@@ -8,18 +8,9 @@ class AttendanceViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Attendance")
+        view.backgroundColor = .white
         
-        let navigationBar = CustomNavigationBar(title: "Attendance")
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(navigationBar)
-        
-        NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        title = "Attendance"
         
         let userInfoView = UIView()
         userInfoView.backgroundColor = .white
@@ -28,7 +19,7 @@ class AttendanceViewController: MenuBarViewController {
         view.addSubview(userInfoView)
         
         NSLayoutConstraint.activate([
-            userInfoView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+            userInfoView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             userInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             userInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             userInfoView.heightAnchor.constraint(equalToConstant: 100)

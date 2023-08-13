@@ -21,18 +21,8 @@ class DashboardViewController: MenuBarViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-                
-        // Add nav bar
-        let navigationBar = CustomNavigationBar(title: Utils.workspace.name)
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(navigationBar)
-        
-        NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        title = Utils.workspace.name
         
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +33,7 @@ class DashboardViewController: MenuBarViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: menuBarStack.topAnchor),
-            tableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
         
         //registration of the DashboardCell which is a UITableViewCell
@@ -78,11 +68,11 @@ extension DashboardViewController: UITableViewDelegate{
         if let requestVC = view as? RequestViewController {
             requestVC.isGoingBack = true
             requestVC.tab = tab
-            Utils.navigate(requestVC, self)
+            Utils.embedViewControllerInNavigationAndNavigate(self, to: requestVC)
         } else if let scheduleVC = view as? ScheduleViewController {
             scheduleVC.isGoingBack = true
             scheduleVC.tab = tab
-            Utils.navigate(scheduleVC, self)
+            Utils.embedViewControllerInNavigationAndNavigate(self, to: scheduleVC)
         }
     }
 }

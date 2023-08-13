@@ -34,8 +34,7 @@ class EditTimeOffViewController: EditRequestViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationBar.setTitle(to: "Edit Time Off")
-        
+
         let userNameHeader = createHeaderLabel(text: "User Name")
         let startDateHeader = createHeaderLabel(text: "Start Date")
         let endDateHeader = createHeaderLabel(text: "End Date")

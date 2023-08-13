@@ -178,12 +178,12 @@ class ConfirmInvitingWorkspacesViewController: UIViewController {
         }
         
         if Utils.invitingWorkspaces.isEmpty {
-            isLoggedIn ? goBack() : Utils.navigate(DashboardViewController(), self)
+            isLoggedIn ? goBack() : Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
         }
     }
     
     @objc func confirmLaterButtonTapped() {
         ConfirmInvitingWorkspacesViewController.isConfirmingInvitationLater = true
-        isLoggedIn ? goBack() : Utils.navigate(DashboardViewController(), self)
+        isLoggedIn ? goBack() : Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
     }
 }

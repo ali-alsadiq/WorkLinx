@@ -15,7 +15,6 @@ class MoreViewController : MenuBarViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.navigationItem.title = "More"
     }
     
     override func viewDidLoad() {
@@ -25,16 +24,16 @@ class MoreViewController : MenuBarViewController {
         
         data = Utils.getMoreTableData(isAdmin: Utils.workspace.admins.contains(where: { $0 == Utils.user.id }))
         // Add nav bar
-        let navigationBar = CustomNavigationBar(title: "More")
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(navigationBar)
-        
-        NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+//        let navigationBar = CustomNavigationBar(title: "More")
+//        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        view.addSubview(navigationBar)
+//        
+//        NSLayoutConstraint.activate([
+//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
         
         // Set constraints for the table view
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +44,7 @@ class MoreViewController : MenuBarViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: menuBarStack.topAnchor),
-            tableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
         
         //registration of the MoreCell which is a UITableViewCell
@@ -72,7 +71,10 @@ class MoreViewController : MenuBarViewController {
             Utils.workspaceAssignedShifts = []
             
             // Go back to splash screen
-            Utils.navigate("SplashView", self, transitionTime: 0.4)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "SplashView")
+            
+            Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
         }
         alertController.addAction(logoutAction)
         self.present(alertController, animated: true, completion: nil)

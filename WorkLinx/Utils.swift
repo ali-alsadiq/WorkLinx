@@ -275,6 +275,22 @@ class Utils{
         }
     }
     
+    static func embedViewControllerInNavigationAndSetAsRoot(_ viewController: UIViewController) {
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            window.rootViewController = navigationController
+        }
+    }
+    
+    static func embedViewControllerInNavigationAndNavigate(_ sourceViewController: UIViewController, to destinationViewController: UIViewController) {
+        let navigationController = UINavigationController(rootViewController: destinationViewController)
+        Utils.navigate(navigationController, sourceViewController)
+    }
+
+
+    
     // Navigate using UIViewController
     static func navigate(_ vc: UIViewController,
                          _ sender: UIViewController,

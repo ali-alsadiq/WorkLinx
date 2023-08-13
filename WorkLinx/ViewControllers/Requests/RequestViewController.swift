@@ -36,26 +36,26 @@ class RequestViewController: MenuBarViewController {
         
         view.backgroundColor = .white
         
-        let navigationBar = CustomNavigationBar(title: "Requests")
+       title = "Requests"
         
         if isGoingBack {
             let backButton = BackButton(text: nil, target: self, action: #selector(goBack))
-            navigationBar.items?.first?.leftBarButtonItem = backButton
+            navigationItem.leftBarButtonItem = backButton
             menuBarStack.removeFromSuperview()
         }
         
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(navigationBar)
-        
-        NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+//        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(navigationBar)
+//
+//        NSLayoutConstraint.activate([
+//            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
         
         let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         plusButton.setTitleTextAttributes([.font: UIFont.boldSystemFont(ofSize: 17)], for: .normal)
-        navigationBar.items?.first?.rightBarButtonItem = plusButton
+        navigationItem.rightBarButtonItem = plusButton
         
         let button1 = Utils.createButton(withTitle: "All Requests")
         let button2 = Utils.createButton(withTitle: "Time Off")
@@ -69,7 +69,7 @@ class RequestViewController: MenuBarViewController {
         view.addSubview(buttonsStack)
         
         NSLayoutConstraint.activate([
-            buttonsStack.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 20),
+            buttonsStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             buttonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             buttonsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             button1.widthAnchor.constraint(equalTo: button2.widthAnchor),

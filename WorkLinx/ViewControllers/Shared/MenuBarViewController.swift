@@ -104,48 +104,22 @@ class MenuBarViewController: UIViewController {
     }
     
     @objc private func dashboardButtonTapped() {
-        let dashboardVC = DashboardViewController()
-        let dashboardNavigationController = UINavigationController(rootViewController: dashboardVC)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let window = windowScene.windows.first {
-            window.rootViewController = dashboardNavigationController
-        }
+        Utils.embedViewControllerInNavigationAndSetAsRoot(DashboardViewController())
     }
     
     @objc private func scheduleButtonTapped() {
-        let scheduleVC = ScheduleViewController()
-        let scheduleNavigationController = UINavigationController(rootViewController: scheduleVC)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController = scheduleNavigationController
-        }
+        Utils.embedViewControllerInNavigationAndSetAsRoot(ScheduleViewController())
     }
     
     @objc private func requestButtonTapped() {
-        let requestVC = RequestViewController()
-        let requestNavigationController = UINavigationController(rootViewController: requestVC)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController = requestNavigationController
-        }
+        Utils.embedViewControllerInNavigationAndSetAsRoot(RequestViewController())
     }
     
     @objc private func moreButtonTapped() {
-        let moreVC = MoreViewController()
-        let moreNavigationController = UINavigationController(rootViewController: moreVC)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController = moreNavigationController
-        }
+        Utils.embedViewControllerInNavigationAndSetAsRoot(MoreViewController())
     }
     
     @objc private func attendanceButtonTapped() {
-        let attendanceStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let attendanceVC = attendanceStoryboard.instantiateViewController(withIdentifier: "AttendanceView") as! AttendanceViewController
-        let attendanceNavigationController = UINavigationController(rootViewController: attendanceVC)
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController = attendanceNavigationController
-        }
+        Utils.embedViewControllerInNavigationAndSetAsRoot(AttendanceViewController())
     }
 }
