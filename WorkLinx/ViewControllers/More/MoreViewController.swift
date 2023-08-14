@@ -107,7 +107,7 @@ extension MoreViewController: UITableViewDelegate{
             case "Calendar Sync":
                 print(cellData.text)
             case "Availabilty":
-                Utils.navigate(AvailabilityViewController(), self)
+                navigateToAvailabilty()
             case "My Hours":
                 print(cellData.text)
             case "Switch Workplaces":
@@ -177,6 +177,20 @@ extension MoreViewController: UITableViewDelegate{
         documentsVC.modalPresentationStyle = .fullScreen
 
         present(documentsVC, animated: true, completion: nil)
+    }
+    
+    func navigateToAvailabilty() {
+        let availabitlyVC = AvailabilityViewController()
+
+        if !Utils.user.availabilityIds.isEmpty {
+            Availability.fetchAvailabilitesByIDs(availabilityIDs: Utils.user.availabilityIds) { userAvailabilties in
+                availabitlyVC.currentAvailabilty = userAvailabilties.first {$0.workSpaceId == Utils.workspace.workspaceId}
+                Utils.navigate(availabitlyVC, self)
+            }
+        } else {
+            Utils.navigate(availabitlyVC, self)
+        }
+       
     }
 }
 

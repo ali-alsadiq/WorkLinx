@@ -13,6 +13,22 @@ class UserDetailsViewController: UIViewController {
     public var user: User
     private var navigationBar: CustomNavigationBar!
     private var positionLabel: UILabel!
+    private var payRateLabel: UILabel!
+    
+    public var currentAvailabilty: Availability!
+    
+    let payRateTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Add pay rate"
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+        textField.layer.cornerRadius = 8
+        textField.clipsToBounds = true
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
     
     var position: String {
         get {
@@ -24,12 +40,26 @@ class UserDetailsViewController: UIViewController {
         set {
             if let index = Utils.workspace.employees.firstIndex(where: { $0.employeeId == user.id }) {
                 Utils.workspace.employees[index].position = newValue
-                print(Utils.workspace.employees)
                 Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
                 positionLabel.text = newValue
             }
         }
-       
+    }
+    
+    var payRate: Double {
+        get {
+            if let index = Utils.workspace.employees.firstIndex(where: { $0.employeeId == user.id }) {
+                return Utils.workspace.employees[index].payrate
+            }
+            return 0
+        }
+        set {
+            if let index = Utils.workspace.employees.firstIndex(where: { $0.employeeId == user.id }) {
+                Utils.workspace.employees[index].payrate = newValue
+                Workspace.updateWorkspace(workspace: Utils.workspace) { _ in }
+                payRateLabel.text = String(newValue)
+            }
+        }
     }
     
     init(user: User) {
@@ -71,6 +101,8 @@ class UserDetailsViewController: UIViewController {
         let emailAddressHeader = createHeaderLabel(text: "Email Address")
         let addressHeader = createHeaderLabel(text: "Address")
         let positionHeader = createHeaderLabel(text: "Position")
+        let payRateHeader = createHeaderLabel(text: "Pay rate")
+        let availaibiltyHeader = createHeaderLabel(text: "Availabilty")
         
         // Create and configure value labels
         let firstNameLabel = createLabel(text: user.firstName, font: UIFont.systemFont(ofSize: 16, weight: .medium))
@@ -84,12 +116,85 @@ class UserDetailsViewController: UIViewController {
         positionStack.isUserInteractionEnabled = Utils.isAdmin
         positionStack.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(positionLabelTapped)))
         
+        
+        payRateTextField.text = payRateTextField.text != "0" ? String(payRate) : nil
+        let payRateStack =  createStackView(headerLabel: payRateHeader, payRateTextField: payRateTextField)
+        payRateStack.isUserInteractionEnabled = Utils.isAdmin
+        payRateStack.isHidden = !Utils.isAdmin && user != Utils.user
+
+        // Create an availability stack view
+        let availabilityStackView = UIStackView()
+        availabilityStackView.axis = .vertical
+        availabilityStackView.spacing = 8
+        availabilityStackView.alignment = .leading
+        availabilityStackView.layer.borderWidth = 1
+        availabilityStackView.layer.borderColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        availabilityStackView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        availabilityStackView.layer.cornerRadius = 8
+        availabilityStackView.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        availabilityStackView.isLayoutMarginsRelativeArrangement = true
+
+        availabilityStackView.addArrangedSubview(availaibiltyHeader)
+
+        if let currentAvailabilty = currentAvailabilty {
+            for availableDay in currentAvailabilty.availableDays {
+                var availabilityText = ""
+                var availabilityTextColor = UIColor.black // Default color
+                
+                if availableDay.isAvailable {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "h:mm a"
+                    
+                    let startTimeString = dateFormatter.string(from: availableDay.startTime)
+                    let endTimeString = dateFormatter.string(from: availableDay.endTime)
+                    
+                    availabilityText = "\(startTimeString) - \(endTimeString)"
+                    availabilityTextColor = UIColor.blue
+                } else if availableDay.isSet {
+                    availabilityText = "Not Available"
+                    availabilityTextColor = Utils.darkRed
+                } else {
+                    availabilityText = "Not Set"
+                    availabilityTextColor = Utils.darkOrange
+                }
+                
+                let dayLabel = createLabel(
+                    text: availableDay.day,
+                    font: UIFont.systemFont(ofSize: 16, weight: .bold)
+                )
+                dayLabel.widthAnchor.constraint(equalToConstant: 110).isActive = true
+                
+                let availabilityTimeLabel = UILabel()
+                availabilityTimeLabel.text = availabilityText
+                availabilityTimeLabel.font = UIFont.systemFont(ofSize: 16)
+                availabilityTimeLabel.textColor = availabilityTextColor
+                
+                let availabilityRowStack = UIStackView()
+                availabilityRowStack.axis = .horizontal
+                availabilityRowStack.spacing = 8
+                
+                availabilityRowStack.addArrangedSubview(dayLabel)
+                availabilityRowStack.addArrangedSubview(availabilityTimeLabel)
+                
+                availabilityStackView.addArrangedSubview(availabilityRowStack)
+            }
+        } else {
+            // Add an availability header with "Availability Not Set" text
+            let availabilityHeaderLabel = createHeaderLabel(text: "Availability")
+            let availabilityNotSetText = "Availability Not Set"
+            let availabilityNotSetLabel = createLabel(text: availabilityNotSetText, font: UIFont.systemFont(ofSize: 16))
+            availabilityStackView.addArrangedSubview(availaibiltyHeader)
+            availabilityStackView.addArrangedSubview(availabilityNotSetLabel)
+        }
+        
         let stackView = UIStackView(arrangedSubviews: [
             createStackView(headerLabel: firstNameHeader, valueLabel: firstNameLabel),
             createStackView(headerLabel: lastNameHeader, valueLabel: lastNameLabel),
             createStackView(headerLabel: emailAddressHeader, valueLabel: emailAddressLabel),
             createStackView(headerLabel: addressHeader, valueLabel: addressLabel),
-            positionStack
+            positionStack,
+            payRateStack,
+            availabilityStackView
         ])
         
         stackView.axis = .vertical
@@ -102,12 +207,24 @@ class UserDetailsViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+           
+            payRateTextField.widthAnchor.constraint(equalTo: stackView.widthAnchor, constant: -50)
         ])
     }
     
-    private func createStackView(headerLabel: UILabel, valueLabel: UILabel) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [headerLabel, valueLabel])
+    private func createStackView(headerLabel: UILabel,
+                                 valueLabel: UILabel? = nil,
+                                 payRateTextField: UITextField? = nil) -> UIStackView {
+        let stackView = UIStackView()
+        
+        stackView.addArrangedSubview(headerLabel)
+        if valueLabel != nil {
+            stackView.addArrangedSubview(valueLabel!)
+        } else {
+            stackView.addArrangedSubview(payRateTextField!)
+        }
+        
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.alignment = .leading
@@ -150,12 +267,23 @@ class UserDetailsViewController: UIViewController {
     
     @objc func goBack() {
         // Pop the current view controller from the navigation stack
-        dismiss(animated: true, completion: nil)
+        
+        // update payrate in DB here
+        if let index = Utils.workspace.employees.firstIndex(where: { $0.employeeId == user.id }) {
+            // Update the employee information at the found index
+            var updatedEmployeeInfo =  Utils.workspace.employees[index]
+            updatedEmployeeInfo.payrate =  Double(payRateTextField.text!)!
+            print(updatedEmployeeInfo)
+            
+            Utils.workspace.employees[index] = updatedEmployeeInfo
+            Workspace.updateWorkspace(workspace: Utils.workspace) { [unowned self] _ in
+                print(Utils.workspace)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     @objc private func positionLabelTapped() {
-        print(user)
-        
         let positionVC = PositionsViewController()
         positionVC.userDetailVC = self
         Utils.navigate(positionVC, self)

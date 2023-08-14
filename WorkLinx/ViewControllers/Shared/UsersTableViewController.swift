@@ -200,9 +200,15 @@ extension UsersTableViewController: UITableViewDataSource, UITableViewDelegate {
             
             if isUsersView {
                 // navigate to a page where you can see users info, assign shifts, set position, etc...
-                print(user)
                 let userDetailVC = UserDetailsViewController(user: user)
-                Utils.navigate(userDetailVC, self)
+               
+                if !user.availabilityIds.isEmpty {
+                    Availability.fetchAvailabilitesByIDs(availabilityIDs: user.availabilityIds) { userAvailabilties in
+                        userDetailVC.currentAvailabilty = userAvailabilties.first {$0.workSpaceId == Utils.workspace.workspaceId}
+                        Utils.navigate(userDetailVC, self)
+                    }
+                }
+                
             }
             else if addShiftsView == nil {
                 if AddPositionViewController.assignedUsers.contains(where: { $0.id == user.id }) {

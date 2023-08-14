@@ -12,6 +12,11 @@ class DashboardViewController: MenuBarViewController {
     var tableView = UITableView()
     var data: [(String, [CellDashboard])] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        data = Utils.getDashboardTableData()
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,10 +31,7 @@ class DashboardViewController: MenuBarViewController {
                         self.tableView.reloadData()
                     }
                 }
-                
-               
             }
-            
         }
        
         

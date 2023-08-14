@@ -87,10 +87,7 @@ class EditTimeOffViewController: EditRequestViewController {
         timeOff.isApproved = true
         timeOff.isModifiedByAdmin = true
         
-        timeOff.setTimeOffData { [unowned self] _ in
-            requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
-            requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
-        }
+        timeOff.setTimeOffData { _ in }
         
         requestListManger.workspaceTimeOffs[index] = timeOff
         requestListManger.hostingVC?.setupInfoMessageView()
@@ -103,10 +100,7 @@ class EditTimeOffViewController: EditRequestViewController {
         timeOff.isApproved = false
         timeOff.isModifiedByAdmin = true
         
-        timeOff.setTimeOffData { [unowned self] _ in
-            requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
-            requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
-        }
+        timeOff.setTimeOffData { _ in }
         
         requestListManger.workspaceTimeOffs[index] = timeOff
         requestListManger.hostingVC?.setupInfoMessageView()
@@ -119,9 +113,6 @@ class EditTimeOffViewController: EditRequestViewController {
         timeOff.removeTimeOffData(requestVC: requestListManger.hostingVC!) { _ in}
         
         requestListManger.hostingVC?.setupInfoMessageView()
-        
-        requestListManger.hostingVC?.dashboardVC.data = Utils.getDashboardTableData()
-        requestListManger.hostingVC?.dashboardVC.tableView.reloadData()
 
         goBack()
     }

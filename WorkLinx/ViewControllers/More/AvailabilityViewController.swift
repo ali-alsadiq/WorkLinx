@@ -8,9 +8,6 @@
 import UIKit
 import SwiftUI
 
-import UIKit
-import SwiftUI
-
 class AvailabilityViewController: UIViewController {
     
     private var navigationBar: CustomNavigationBar!
@@ -18,6 +15,8 @@ class AvailabilityViewController: UIViewController {
     private var taggedDatesArr: [TaggedDate] = []
     private var availabiltyScrollView: UIScrollView!
     private var availabiltyStackView: UIStackView!
+
+    public var currentAvailabilty: Availability?
 
     private let days = [
         ("Monday", 1),
@@ -81,6 +80,7 @@ class AvailabilityViewController: UIViewController {
                 tag1: day.1,
                 title2: "Not Available",
                 tag2: -day.1,
+                day: day,
                 target: self,
                 action: #selector(availabilityButtonTapped(_:))
             )
@@ -91,6 +91,8 @@ class AvailabilityViewController: UIViewController {
             
             availabiltyStackView.addArrangedSubview(dayStackView)
         }
+        
+        updateUIBasedOnAvailability()
     }
     
     func createButton(title: String, tag: Int, target: Any?, action: Selector) -> UIButton {
@@ -133,8 +135,9 @@ class AvailabilityViewController: UIViewController {
         let hostingController = UIHostingController(rootView: timePicker)
         return hostingController
     }
-
-    func createStackWithButtonsAndTimePicker(title1: String, tag1: Int, title2: String, tag2: Int, target: Any?, action: Selector) -> UIStackView {
+    
+    func createStackWithButtonsAndTimePicker(title1: String, tag1: Int, title2: String, tag2: Int,day: (String, Int), target: Any?, action: Selector) -> UIStackView {
+        
         let buttonsStackView = createStackWithButtons(title1: title1, tag1: tag1, title2: title2, tag2: tag2, target: target, action: action)
         
         let selectedStartTime = TaggedDate(date: Date(), tag: tag1 * 10 + 1)
@@ -161,7 +164,7 @@ class AvailabilityViewController: UIViewController {
         
         selectedEndTime.date = Calendar.current.date(bySettingHour: 17, minute: 0, second: 0, of: selectedEndTime.date) ?? selectedEndTime.date
         let endTimePicker = createTimePickerHostingController(selectedTime: selectedEndTimeBinding, timeTitle: "End Time")
-       
+        
         startTimePicker.view.translatesAutoresizingMaskIntoConstraints = false
         endTimePicker.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -171,6 +174,12 @@ class AvailabilityViewController: UIViewController {
         timePickersStackView.translatesAutoresizingMaskIntoConstraints = false
         
         timePickersStackView.tag = tag1 * 100
+        
+        // update selected time if it's set
+        if let availabilityForDay = currentAvailabilty?.availableDays.first(where: { $0.day == day.0 }) {
+            selectedStartTime.date = availabilityForDay.startTime
+            selectedEndTime.date = availabilityForDay.endTime
+        }
         
         // hide all times if there is an availabilty with user id in work space
         timePickersStackView.isHidden = true
@@ -212,39 +221,88 @@ class AvailabilityViewController: UIViewController {
             }
         }
     }
-
+    
     @objc func saveButtonTapped() {
+        
+        var avaialabity = Availability(workSpaceId: Utils.workspace.workspaceId,
+                                       userId: Utils.user.id,
+                                       availableDays: [])
+        var didSetAvailabitly = false
+        
         for day in days {
             let availableTag = day.1
             let availableButton = view.viewWithTag(availableTag) as? UIButton
+            let notAvailableButton = view.viewWithTag(-availableTag) as? UIButton
+            
+            let startTimePickerTag = availableTag * 10 + 1
+            let endTimePickerTag = -availableTag * 10 - 1
+            
+            let startTimePicker = taggedDatesArr.first(where: { $0.tag == startTimePickerTag })
+            let endTimePicker = taggedDatesArr.first(where: { $0.tag == endTimePickerTag })
+            
+            let startTime = startTimePicker?.date ?? Date()
+            let endTime = endTimePicker?.date ?? Date()
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "hh:mm a"
+            
+            let startTimeString = dateFormatter.string(from: startTime)
+            let endTimeString = dateFormatter.string(from: endTime)
             
             if let isSelected = availableButton?.isEnabled, !isSelected {
-                let startTimePickerTag = availableTag * 10 + 1
-                let endTimePickerTag = -availableTag * 10 - 1
+                didSetAvailabitly = true
+                // user is availabe
+                avaialabity.availableDays.append(Availability.AvailableDay(day: day.0, startTime: startTime, endTime:endTime, isSet: true, isAvailable: true))
                 
-                let startTimePicker = taggedDatesArr.first(where: { $0.tag == startTimePickerTag })
-                let endTimePicker = taggedDatesArr.first(where: { $0.tag == endTimePickerTag })
-                
-                let startTime = startTimePicker?.date ?? Date()
-                let endTime = endTimePicker?.date ?? Date()
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "hh:mm a"
-                
-                let startTimeString = dateFormatter.string(from: startTime)
-                let endTimeString = dateFormatter.string(from: endTime)
-                                
                 availabilityText += "\(day.0): \(startTimeString) - \(endTimeString)\n"
+            } else if let isSelected = notAvailableButton?.isEnabled, !isSelected {
+                didSetAvailabitly = true
+                //user is not available
+                avaialabity.availableDays.append(Availability.AvailableDay(day: day.0, startTime: startTime, endTime:endTime, isSet: true, isAvailable: false))
+            }
+            
+            else {
+                //user did not set
+                avaialabity.availableDays.append(Availability.AvailableDay(day: day.0, startTime: startTime, endTime:endTime, isSet: false, isAvailable: false))
             }
         }
         
-        print("Selected available days with times:\n \(availabilityText)")
-        print("Update database, workspaceAvailabilites: [Availabitly], and go back")
+        if didSetAvailabitly && currentAvailabilty == nil {
+            // create a new availabilty
+            avaialabity.createAvailabilty() { result in
+                switch result {
+                case .success(let availabiltyId):
+                    Utils.user.availabilityIds.append(availabiltyId)
+                    Utils.user.setUserData { _ in }
+                case .failure(let error):
+                    print("Error creating availabilty: \(error.localizedDescription)")
+                }
+            }
+        } else if currentAvailabilty != nil {
+            // update exisiting
+            avaialabity.id = currentAvailabilty!.id
+            avaialabity.setAvailabiltyData { _ in }
+        }
+        
+        goBack()
     }
-
+    
     
     @objc func goBack() {
         dismiss(animated: true)
+    }
+
+    func updateUIBasedOnAvailability() {
+        for day in days {
+            if let availabilityForDay = currentAvailabilty?.availableDays.first(where: { $0.day == day.0 }) {
+                // Update button appearance based on availability data
+                let selectedButtonTag = availabilityForDay.isAvailable ? day.1 : -day.1
+                
+                if let selectedButton = view.viewWithTag(selectedButtonTag) as? UIButton, availabilityForDay.isSet {
+                    availabilityButtonTapped(selectedButton)
+                }
+            }
+        }
     }
 }
 
