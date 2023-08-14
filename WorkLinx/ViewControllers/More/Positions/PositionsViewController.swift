@@ -17,6 +17,10 @@ class PositionsViewController: UIViewController {
     
     private var data = Utils.getPositionsData()
     
+    override func viewWillAppear(_ animated: Bool) {
+        reloadData()
+        setupInfoMessageView()
+    }
     
     override func viewDidLoad() {
         

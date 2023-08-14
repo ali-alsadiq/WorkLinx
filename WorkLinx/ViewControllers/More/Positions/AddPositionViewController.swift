@@ -221,26 +221,20 @@ class AddPositionViewController: UIViewController {
             }
         }
         
-        Workspace.updateWorkspace(workspace: Utils.workspace) { error in
+        Workspace.updateWorkspace(workspace: Utils.workspace) { [unowned self] error in
             if let error = error {
                 print("Error updating workspace: \(error.localizedDescription)")
             } else {
-                print("Workspace updated successfully")
-                // reload table data
-                self.positionsTableView.reloadData()
+                if self.userDetailVC != nil {
+                    self.userDetailVC?.position = position
+                    self.userDetailVC?.dismiss(animated: true, completion: {
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                } else {
+                    dismiss(animated: true, completion: nil)
+                }
             }
         }
-        
-        if userDetailVC != nil {
-            userDetailVC?.position = position
-            userDetailVC?.dismiss(animated: true, completion: {
-                [weak self] in self?.dismiss(animated: true, completion: nil)
-            })
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
-        
-        
     }
     
     func showAlert(message: String) {

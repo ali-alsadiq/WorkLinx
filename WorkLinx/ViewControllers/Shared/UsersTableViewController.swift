@@ -197,7 +197,7 @@ extension UsersTableViewController: UITableViewDataSource, UITableViewDelegate {
         let sortedKeys = firstLetters.keys.sorted()
         let key = sortedKeys[indexPath.section]
         if let user = firstLetters[key]?[indexPath.row] {
-            
+                        
             if isUsersView {
                 // navigate to a page where you can see users info, assign shifts, set position, etc...
                 let userDetailVC = UserDetailsViewController(user: user)
@@ -207,6 +207,8 @@ extension UsersTableViewController: UITableViewDataSource, UITableViewDelegate {
                         userDetailVC.currentAvailabilty = userAvailabilties.first {$0.workSpaceId == Utils.workspace.workspaceId}
                         Utils.navigate(userDetailVC, self)
                     }
+                } else {
+                    Utils.navigate(userDetailVC, self)
                 }
                 
             }

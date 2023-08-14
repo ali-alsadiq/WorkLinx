@@ -165,6 +165,10 @@ class UserInfoFormViewController: UIViewController {
                         self.present(alert, animated: true, completion: nil)
                     }
                     return
+                } else {
+                    DispatchQueue.main.async {
+                        self.addressTextField.text = formattedAddress
+                    }
                 }
             }
             

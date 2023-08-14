@@ -98,6 +98,9 @@ class Workspace: Codable {
     
     // Update workspace Data
     static func updateWorkspace(workspace: Workspace, completion: @escaping (Error?) -> Void) {
+        
+        Utils.workspace = workspace
+        
         do {
             // Encode the workspace instance to JSON data using the provided encodeData function
             guard let workspaceData = try Utils.encodeData(data: workspace) else {
@@ -105,6 +108,7 @@ class Workspace: Codable {
                 completion(NSError(domain: "WorkspaceUpdateError", code: 0, userInfo: nil))
                 return
             }
+            
             
             // Update the Firestore document with the new data
             Workspace.workspacesCollection.document(workspace.workspaceId).setData(workspaceData, merge: true) { error in
