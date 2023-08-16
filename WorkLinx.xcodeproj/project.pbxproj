@@ -38,7 +38,6 @@
 		C7D5BD3A2A81820F009D636D /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */; };
 		C7D5BD3C2A823AA5009D636D /* AvailabilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */; };
 		C7D5BD3E2A82B18E009D636D /* AddressValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */; };
-		C7D5BD432A8350CE009D636D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */; };
 		C7D5BD462A8351A1009D636D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD452A8351A1009D636D /* GoogleSignIn */; };
 		C7D5BD482A8351A1009D636D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C7D5BD472A8351A1009D636D /* GoogleSignInSwift */; };
 		C7D5BD4C2A83E18C009D636D /* EditTimeOffViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */; };
@@ -117,7 +116,6 @@
 		C7D5BD392A81820F009D636D /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		C7D5BD3B2A823AA5009D636D /* AvailabilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityViewController.swift; sourceTree = "<group>"; };
 		C7D5BD3D2A82B18E009D636D /* AddressValidationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressValidationResponse.swift; sourceTree = "<group>"; };
-		C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C7D5BD4B2A83E18C009D636D /* EditTimeOffViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTimeOffViewController.swift; sourceTree = "<group>"; };
 		C7D5BD4D2A861C49009D636D /* EditReimbursementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReimbursementViewController.swift; sourceTree = "<group>"; };
 		C7D5BD4F2A8627C3009D636D /* EditRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRequestViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 				C77BDFFD2A4AA1F0007A8D06 /* SceneDelegate.swift */,
 				C77BE0042A4AA1F5007A8D06 /* Assets.xcassets */,
 				C77BE0062A4AA1F5007A8D06 /* LaunchScreen.storyboard */,
-				C7D5BD422A8350CE009D636D /* GoogleService-Info.plist */,
 				C77BE0092A4AA1F5007A8D06 /* Info.plist */,
 			);
 			path = WorkLinx;
@@ -504,7 +501,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C77BE0082A4AA1F5007A8D06 /* LaunchScreen.storyboard in Resources */,
-				C7D5BD432A8350CE009D636D /* GoogleService-Info.plist in Resources */,
 				C77BE0052A4AA1F5007A8D06 /* Assets.xcassets in Resources */,
 				C77BE0032A4AA1F0007A8D06 /* Main.storyboard in Resources */,
 			);

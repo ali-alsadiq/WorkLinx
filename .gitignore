@@ -39,3 +39,4 @@ Podfile.lock
 # Misc
 *.log
 .idea/
+*.plist

@@ -8,9 +8,7 @@
 import Foundation
 
 struct AddressValidationResponse: Decodable {
-
-    static var API_KEY = "AIzaSyCvWww2MFlGeSUjvrDx0oScitG0R73bYuw"
-
+    
     struct Verdict: Decodable {
         let hasUnconfirmedComponents: Bool?
         let hasInferredComponents: Bool?
@@ -30,7 +28,18 @@ struct AddressValidationResponse: Decodable {
     
     // Validate address using API key
     static func validateAddress(address: String, completionHandler: @escaping (AddressValidationResponse?, Error?) -> Void) {
-        let urlString = "https://addressvalidation.googleapis.com/v1:validateAddress?key=\(API_KEY)"
+
+
+        // Retrieve the "API_KEY" from GoogleService-Info.plist
+        guard let googleServiceInfoPath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+              let googleServiceInfoDict = NSDictionary(contentsOfFile: googleServiceInfoPath),
+              let apiKey = googleServiceInfoDict["API_KEY"] as? String else {
+            let error = NSError(domain: "AddressValidationError", code: -1, userInfo: [NSLocalizedDescriptionKey: "API key not found in GoogleService-Info.plist"])
+            completionHandler(nil, error)
+            return
+        }
+
+        let urlString = "https://addressvalidation.googleapis.com/v1:validateAddress?key=\(apiKey)"
         let url = URL(string: urlString)!
 
         var request = URLRequest(url: url)
